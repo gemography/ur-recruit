@@ -4,23 +4,21 @@ import * as React from 'react';
 // A theme with custom primary and secondary color.
 // It's optional.
 const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: "hsl(0, 0%, 69%)",
+      main: "hsl(0, 0%, 32%)",
+      dark: "hsl(0, 0%, 13%)"
+    }
+  },
   typography: {
     useNextVariants: true,
   },
-  palette: {
-    primary: {
-      light: '#e5e5e5',
-      main: '#727272',
-      dark: '#363839',
-      contrastText: '#fff',
+  props: {
+    MuiButtonBase: {
+      disableRipple: true,
     },
-    secondary: {
-      light: '#ff5e50',
-      main: '#e41e26',
-      dark: '#a90000',
-      contrastText: '#fff',
-    },
-  },
+  }
 });
 
 function withRoot(Component: React.ComponentType) {
