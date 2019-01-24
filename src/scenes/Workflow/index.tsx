@@ -1,17 +1,34 @@
 import * as React from 'react';
 import Options from './components/Options'
 import { Button, createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
+import EventDialog from './components/EventDialog';
+import EventCommand from './modules/EventCommand'
 
 export interface Props extends WithStyles<typeof styles> {}
 
+export interface State {
+  open: boolean;
+}
+
 class Workflow extends React.PureComponent<Props> {
+  state = { open: false };
+
+  handleOpenDialog = () => this.setState({ open: true });
+  handleCloseDialog = () => this.setState({ open: false });
+
   render(): React.ReactNode {
     const { classes } = this.props;
+
     return (
       <div>
         <Options></Options>
         <main className={classes.main}>
-          <Button className={classes.eventPlaceHolder}>Add an Event</Button>
+          <EventDialog
+            open={this.state.open}
+            onClose={this.handleCloseDialog}
+            command={new EventCommand(0)}
+          />
+          <Button className={classes.eventPlaceHolder} onClick={this.handleOpenDialog}>Add an Event</Button>
         </main>
       </div>
     );
@@ -21,14 +38,15 @@ class Workflow extends React.PureComponent<Props> {
 
 const styles = (theme: Theme) => createStyles({
   main: {
-    width: 600,
+    width: 320,
     margin: "32px auto"
   },
   eventPlaceHolder: {
     border: "2px dashed " + theme.palette.primary.light,
     color: theme.palette.primary.main,
-    padding: 16,
-    fontSize: 16
+    padding: theme.spacing.unit * 2,
+    fontSize: theme.spacing.unit * 2,
+    borderRadius: theme.spacing.unit * 5
   }
 });
 
