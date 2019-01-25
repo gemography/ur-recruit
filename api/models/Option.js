@@ -1,10 +1,9 @@
-
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const { ObjectId } = Schema.Types;
 
-const WorkflowSchema = new Schema({
+const OptionSchema = new Schema({
   type: {
     type: String,
     enum: [
@@ -21,8 +20,8 @@ const WorkflowSchema = new Schema({
   },
   parent: [{
     type: ObjectId,
-    ref: 'WorkflowSchema'
+    ref: 'OptionSchema'
   }]
 });
 
-module.exports = mongoose.model('Workflow', WorkflowSchema);
+module.exports = mongoose.model('Workflow', OptionSchema);

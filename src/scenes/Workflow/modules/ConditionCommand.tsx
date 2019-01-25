@@ -1,9 +1,9 @@
-import Command from './Command'
+import Command, { CommandTypeEnum } from './Command'
 
 class ConditionCommand extends Command {
 
   execute(): void {
-    console.log("Execute ConditionCommand of type " + this.type + " on position " + this.position);
+    console.log("Execute ConditionCommand of type " + CommandTypeEnum[this.type] + " on position " + this.position);
   }
 }
 

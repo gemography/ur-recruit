@@ -1,4 +1,4 @@
-export enum CommandType {
+export enum CommandTypeEnum {
   TAG_EVENT,
   STAGE_EVENT,
   WEBHOOK_EVENT,
@@ -12,9 +12,9 @@ export enum CommandType {
 
 abstract class Command {
   private _position: number;
-  private _type: CommandType;
+  private _type: CommandTypeEnum;
 
-  constructor(position: number, type: CommandType) {
+  constructor(position: number, type: CommandTypeEnum) {
     this._position = position;
     this._type = type;
   }
@@ -27,11 +27,11 @@ abstract class Command {
     this._position = position;
   }
 
-  get type(): CommandType {
+  get type(): CommandTypeEnum {
     return this._type
   }
 
-  set type(type: CommandType) {
+  set type(type: CommandTypeEnum) {
     this._type = type;
   }
 

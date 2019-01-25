@@ -5,7 +5,7 @@ import InputIcon from '@material-ui/icons/Input';
 import BuildIcon from '@material-ui/icons/Build';
 
 import EventItem from './EventItem'
-import Command, {CommandType} from '../../modules/Command'
+import Command, {CommandTypeEnum} from '../../modules/Command'
 import EventCommand from '../../modules/EventCommand'
 
 export interface Props extends WithStyles<typeof styles> {
@@ -27,7 +27,7 @@ class EventDialog extends React.Component<Props> {
         <DialogTitle>Select an event</DialogTitle>
         <div className={classes.eventItemsContainer}>
           <EventItem
-            onEventSelect={this.handleEventSelect(new EventCommand(0, CommandType.TAG_EVENT))}
+            onEventSelect={this.handleEventSelect(new EventCommand(0, CommandTypeEnum.TAG_EVENT))}
           >
             <>
               <BookmarkIcon className={classes.eventIcon}/>
@@ -35,7 +35,7 @@ class EventDialog extends React.Component<Props> {
             </>
           </EventItem>
           <EventItem
-            onEventSelect={this.handleEventSelect(new EventCommand(0, CommandType.STAGE_EVENT))}
+            onEventSelect={this.handleEventSelect(new EventCommand(0, CommandTypeEnum.STAGE_EVENT))}
           >
             <>
               <InputIcon className={classes.eventIcon}/>
@@ -43,7 +43,7 @@ class EventDialog extends React.Component<Props> {
             </>
           </EventItem>
           <EventItem
-            onEventSelect={this.handleEventSelect(new EventCommand(0, CommandType.WEBHOOK_EVENT))}
+            onEventSelect={this.handleEventSelect(new EventCommand(0, CommandTypeEnum.WEBHOOK_EVENT))}
           >
             <>
               <BuildIcon className={classes.eventIcon}/>
