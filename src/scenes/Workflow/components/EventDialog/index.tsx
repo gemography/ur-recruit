@@ -5,36 +5,17 @@ import InputIcon from '@material-ui/icons/Input';
 import BuildIcon from '@material-ui/icons/Build';
 
 import EventItem from './EventItem'
-import Command from '../../modules/Command'
-
-export enum EventType {
-  TAG,
-  STAGE,
-  WEBHOOK
-}
+import Command, {CommandType} from '../../modules/Command'
+import EventCommand from '../../modules/EventCommand'
 
 export interface Props extends WithStyles<typeof styles> {
   open: boolean;
-  command: Command;
   onClose: () => void;
-}
-
-export interface State {
-  eventType: EventType;
 }
 
 class EventDialog extends React.Component<Props> {
 
-  state = {
-    eventType: null
-  };
-
-  static getDerivedStateFromProps(nextProps: Readonly<Props>, prevState: Readonly<State>) {
-    return { open: nextProps.open, eventType: prevState.eventType };
-  }
-
-  onEventSelect = (eventType: EventType) => () => {
-    const { command } = this.props;
+  handleEventSelect = (command: Command) => () => {
     command.execute()
     this.props.onClose();
   };
@@ -46,8 +27,7 @@ class EventDialog extends React.Component<Props> {
         <DialogTitle>Select an event</DialogTitle>
         <div className={classes.eventItemsContainer}>
           <EventItem
-            onEventSelect={this.onEventSelect}
-            eventType={EventType.TAG}
+            onEventSelect={this.handleEventSelect(new EventCommand(0, CommandType.TAG_EVENT))}
           >
             <>
               <BookmarkIcon className={classes.eventIcon}/>
@@ -55,8 +35,7 @@ class EventDialog extends React.Component<Props> {
             </>
           </EventItem>
           <EventItem
-            onEventSelect={this.onEventSelect}
-            eventType={EventType.STAGE}
+            onEventSelect={this.handleEventSelect(new EventCommand(0, CommandType.STAGE_EVENT))}
           >
             <>
               <InputIcon className={classes.eventIcon}/>
@@ -64,8 +43,7 @@ class EventDialog extends React.Component<Props> {
             </>
           </EventItem>
           <EventItem
-            onEventSelect={this.onEventSelect}
-            eventType={EventType.WEBHOOK}
+            onEventSelect={this.handleEventSelect(new EventCommand(0, CommandType.WEBHOOK_EVENT))}
           >
             <>
               <BuildIcon className={classes.eventIcon}/>

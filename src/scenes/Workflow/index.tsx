@@ -2,7 +2,6 @@ import * as React from 'react';
 import Options from './components/Options'
 import { Button, createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 import EventDialog from './components/EventDialog';
-import EventCommand from './modules/EventCommand'
 
 export interface Props extends WithStyles<typeof styles> {}
 
@@ -26,7 +25,6 @@ class Workflow extends React.PureComponent<Props> {
           <EventDialog
             open={this.state.open}
             onClose={this.handleCloseDialog}
-            command={new EventCommand(0)}
           />
           <Button className={classes.eventPlaceHolder} onClick={this.handleOpenDialog}>Add an Event</Button>
         </main>
@@ -44,7 +42,7 @@ const styles = (theme: Theme) => createStyles({
   eventPlaceHolder: {
     border: "2px dashed " + theme.palette.primary.light,
     color: theme.palette.primary.main,
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 1.5 + "px " + theme.spacing.unit * 3 + "px ",
     fontSize: theme.spacing.unit * 2,
     borderRadius: theme.spacing.unit * 5
   }

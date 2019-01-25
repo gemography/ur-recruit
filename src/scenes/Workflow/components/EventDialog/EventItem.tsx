@@ -1,17 +1,15 @@
 import * as React from 'react';
 import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
-import {EventType} from "./index"
 
 export interface Props extends WithStyles<typeof styles> {
-  eventType: EventType;
-  onEventSelect : (eventType: EventType) => () => void;
+  onEventSelect : () => void;
 }
 
 class EventItem extends React.Component<Props> {
   render() {
-    const { classes, children, onEventSelect, eventType } = this.props;
+    const { classes, children, onEventSelect } = this.props;
     return (
-      <div className={classes.root} onClick={onEventSelect(eventType)}>
+      <div className={classes.root} onClick={onEventSelect}>
         {children}
       </div>
     );
@@ -28,10 +26,6 @@ const styles = (theme: Theme) => createStyles({
     cursor: "pointer",
     textAlign: "center",
     "&:hover": {
-      borderColor:theme.palette.primary.main,
-      color: theme.palette.primary.main
-    },
-    "&.selected": {
       borderColor:theme.palette.primary.main,
       color: theme.palette.primary.main
     },
