@@ -7,7 +7,7 @@ const WorkflowSchema = new Schema({
   name: String,
   children: [{
     type: ObjectId,
-    ref: 'OptionSchema'
+    ref: 'Option'
   }]
 });
 

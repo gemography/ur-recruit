@@ -20,7 +20,7 @@ const OptionSchema = new Schema({
   },
   children: [{
     type: ObjectId,
-    ref: 'OptionSchema'
+    ref: 'Option'
   }]
 });
 
