@@ -9,9 +9,9 @@ export interface Props extends WithStyles<typeof styles> {
 
 class Action extends React.Component<Props> {
   render() {
-    const { text, onOptionSelect } = this.props;
+    const { text, onOptionSelect, classes } = this.props;
     return (
-      <ListItem button key={text} onClick={onOptionSelect}>
+      <ListItem className={classes.listItem} button key={text} onClick={onOptionSelect}>
         <ListItemText primary={text} />
         <ListItemIcon><OpenWithIcon/></ListItemIcon>
       </ListItem>
@@ -19,6 +19,10 @@ class Action extends React.Component<Props> {
   }
 }
 
-const styles = () => createStyles({});
+const styles = () => createStyles({
+  listItem: {
+    cursor: "grab"
+  }
+});
 
 export default withStyles(styles)(Action);

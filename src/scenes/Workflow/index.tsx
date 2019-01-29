@@ -1,7 +1,8 @@
 import * as React from 'react';
-import Options from './components/Options'
+import OptionMenu from './components/OptionMenu'
 import { Button, createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 import EventDialog from './components/EventDialog';
+import {Action} from './components/Options/index';
 
 export interface Props extends WithStyles<typeof styles> {}
 
@@ -20,13 +21,15 @@ class Workflow extends React.PureComponent<Props> {
 
     return (
       <div>
-        <Options></Options>
+        <OptionMenu></OptionMenu>
         <main className={classes.main}>
           <EventDialog
             open={this.state.open}
             onClose={this.handleCloseDialog}
           />
           <Button className={classes.eventPlaceHolder} onClick={this.handleOpenDialog}>Add an Event</Button>
+          <Action>action 1</Action>
+          <Action>action 1</Action>
         </main>
       </div>
     );
@@ -37,7 +40,8 @@ class Workflow extends React.PureComponent<Props> {
 const styles = (theme: Theme) => createStyles({
   main: {
     width: 320,
-    margin: "32px auto"
+    margin: "32px auto",
+    textAlign: "center"
   },
   eventPlaceHolder: {
     border: "2px dashed " + theme.palette.primary.light,

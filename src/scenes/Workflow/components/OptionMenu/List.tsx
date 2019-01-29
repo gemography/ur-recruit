@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { List, createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
-import Option from '../Option'
+import OptionMenuItem from '../OptionMenuItem'
 import Command from '../../modules/Command'
 
 export interface Props extends WithStyles<typeof styles> {
@@ -17,11 +17,11 @@ class Options extends React.PureComponent<Props> {
           subheader={subheader}
         >
           {items.map((item, index) => (
-            <Option
+            <OptionMenuItem
               key={index}
               text={item.text}
               onOptionSelect={onOptionSelect(item.command)}>
-            </Option>
+            </OptionMenuItem>
           ))}
         </List>
     );
