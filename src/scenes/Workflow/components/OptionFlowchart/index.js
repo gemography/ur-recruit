@@ -1,5 +1,3 @@
 import Action from './Action'
 
-export {
-  Action
-}
+export { Action }

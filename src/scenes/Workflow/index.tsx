@@ -2,7 +2,8 @@ import * as React from 'react';
 import OptionMenu from './components/OptionMenu'
 import { Button, createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 import EventDialog from './components/EventDialog';
-import {Action} from './components/Options/index';
+import { Action } from './components/OptionFlowchart/index';
+import { fetch } from './services/api';
 
 export interface Props extends WithStyles<typeof styles> {}
 
@@ -11,7 +12,19 @@ export interface State {
 }
 
 class Workflow extends React.PureComponent<Props> {
-  state = { open: false };
+  state = {
+    open: false,
+    workflow: null
+  };
+
+  async componentDidMount() {
+    try {
+      const workflow = await fetch("5c5056c466a577184fb85e71")
+      this.setState({ workflow })
+    } catch(e) {
+      console.log(e);
+    }
+  }
 
   handleOpenDialog = () => this.setState({ open: true });
   handleCloseDialog = () => this.setState({ open: false });
