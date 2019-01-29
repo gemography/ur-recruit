@@ -5,9 +5,16 @@ const { ObjectId } = Schema.Types;
 
 const WorkflowSchema = new Schema({
   name: String,
-  children: [{
+  event: {
     type: ObjectId,
     ref: 'Option'
+  },
+  children: [{
+    type: ObjectId,
+    ref: 'Option',
+    required: function() {
+      return this.event;
+    }
   }]
 });
 
