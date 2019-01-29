@@ -1,6 +1,6 @@
 const Option = require('../../models/Option');
 
-const addOption = (req, res) => {
+const create = (req, res) => {
   const newOption = new Option({ ...req.body });
 
   newOption
@@ -15,4 +15,4 @@ const addOption = (req, res) => {
     });
 };
 
-module.exports = { addOption };
+module.exports = { create };

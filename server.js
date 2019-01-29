@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 // Route Imports
-const optionRoutes = require('./api/routes/optionRoutes');
+const OptionRoutes = require('./api/routes/OptionRoutes');
+const WorkflowRoutes = require('./api/routes/WorkflowRoutes');
 
 // Initialize Server
 const server = express();
@@ -21,7 +22,8 @@ db.once('open', function() {
 // Initialize PORT
 const PORT = process.env.PORT || 5000;
 
-optionRoutes(server);
+OptionRoutes(server);
+WorkflowRoutes(server);
 
 server.listen(PORT, (err) => {
   if (err) console.error(err);

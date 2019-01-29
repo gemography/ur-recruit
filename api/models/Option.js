@@ -18,10 +18,10 @@ const OptionSchema = new Schema({
       "IF_ELSE_CONDITION"
     ],
   },
-  parent: [{
+  children: [{
     type: ObjectId,
     ref: 'OptionSchema'
   }]
 });
 
-module.exports = mongoose.model('Workflow', OptionSchema);
+module.exports = mongoose.model('Option', OptionSchema);
