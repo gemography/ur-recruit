@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 import Line from './Line';
 
-import {DefaultProps} from './index'
+import { DefaultProps } from './index'
 
 interface Props extends WithStyles<typeof styles>, DefaultProps {}
 

@@ -5,6 +5,8 @@ import ConditionCommand from '../../modules/ConditionCommand'
 import Command, {CommandTypeEnum} from '../../modules/Command'
 import List from './List'
 
+import OptionMenuItemModel from '../OptionMenuItem/OptionMenuItemModel'
+
 interface Props extends WithStyles<typeof styles> {}
 
 class Options extends React.PureComponent<Props> {
@@ -27,7 +29,7 @@ class Options extends React.PureComponent<Props> {
           items={[
             {text: 'if/else', command: new ConditionCommand(0, CommandTypeEnum.IF_ELSE_CONDITION)},
             {text: 'wait', command: new ConditionCommand(0, CommandTypeEnum.WAIT_CONDITION)}
-          ]}
+          ] as Array<OptionMenuItemModel>}
           onOptionSelect={this.handleOptionSelect}
         />
         <Divider />
@@ -37,7 +39,7 @@ class Options extends React.PureComponent<Props> {
             {text: 'Add tag', command: new ActionCommand(0, CommandTypeEnum.TAG_ACTION)},
             {text: 'Move to', command: new ActionCommand(0, CommandTypeEnum.STAGE_ACTION)},
             {text: 'Disqualify', command: new ActionCommand(0, CommandTypeEnum.DISQUALIFY_ACTION)}
-          ]}
+          ] as Array<OptionMenuItemModel>}
           onOptionSelect={this.handleOptionSelect}
         />
       </Drawer>
