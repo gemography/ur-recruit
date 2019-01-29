@@ -2,25 +2,27 @@ import * as React from 'react';
 import OptionMenu from './components/OptionMenu'
 import { Button, createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 import EventDialog from './components/EventDialog';
-import { Action } from './components/OptionFlowchart/index';
+import { Action, Event } from './components/OptionFlowchart/index';
 import { fetch } from './services/api';
+import { WorkflowModel} from './model'
 
-export interface Props extends WithStyles<typeof styles> {}
+interface Props extends WithStyles<typeof styles> {}
 
-export interface State {
+interface State {
   open: boolean;
+  workflow: WorkflowModel;
 }
 
-class Workflow extends React.PureComponent<Props> {
+class Workflow extends React.Component<Props, State> {
   state = {
     open: false,
-    workflow: null
+    workflow: {} as WorkflowModel
   };
 
   async componentDidMount() {
     try {
       const workflow = await fetch("5c5056c466a577184fb85e71")
-      this.setState({ workflow })
+      this.setState({ workflow: workflow as WorkflowModel })
     } catch(e) {
       console.log(e);
     }
@@ -30,6 +32,7 @@ class Workflow extends React.PureComponent<Props> {
   handleCloseDialog = () => this.setState({ open: false });
 
   render(): React.ReactNode {
+    const { open,  workflow} = this.state;
     const { classes } = this.props;
 
     return (
@@ -37,12 +40,17 @@ class Workflow extends React.PureComponent<Props> {
         <OptionMenu></OptionMenu>
         <main className={classes.main}>
           <EventDialog
-            open={this.state.open}
+            open={open}
             onClose={this.handleCloseDialog}
           />
-          <Button className={classes.eventPlaceHolder} onClick={this.handleOpenDialog}>Add an Event</Button>
-          <Action>action 1</Action>
-          <Action>action 1</Action>
+          {
+            !(workflow && workflow.event)
+            ? <Button className={classes.eventPlaceHolder} onClick={this.handleOpenDialog}>Add an Event</Button>
+            : <Event>action 1</Event>
+          }
+          {workflow && workflow.children && workflow.children.map((item, index) => (
+            <Action key={index}>{item.type}</Action>
+          ))}
         </main>
       </div>
     );

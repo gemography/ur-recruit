@@ -8,7 +8,7 @@ import EventItem from './EventItem'
 import Command, {CommandTypeEnum} from '../../modules/Command'
 import EventCommand from '../../modules/EventCommand'
 
-export interface Props extends WithStyles<typeof styles> {
+interface Props extends WithStyles<typeof styles> {
   open: boolean;
   onClose: () => void;
 }

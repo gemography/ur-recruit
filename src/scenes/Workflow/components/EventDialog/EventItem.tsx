@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 
-export interface Props extends WithStyles<typeof styles> {
-  onEventSelect : () => void;
+interface Props extends WithStyles<typeof styles> {
+  onEventSelect : (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 class EventItem extends React.Component<Props> {

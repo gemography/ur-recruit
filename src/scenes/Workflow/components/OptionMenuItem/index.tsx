@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ListItem, ListItemText, ListItemIcon, createStyles, WithStyles, withStyles } from '@material-ui/core';
 import OpenWithIcon from '@material-ui/icons/OpenWith';
 
-export interface Props extends WithStyles<typeof styles> {
+interface Props extends WithStyles<typeof styles> {
   text: string,
   onOptionSelect : () => void;
 }

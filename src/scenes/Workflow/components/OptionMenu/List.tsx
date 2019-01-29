@@ -3,7 +3,7 @@ import { List, createStyles, WithStyles, withStyles, Theme } from '@material-ui/
 import OptionMenuItem from '../OptionMenuItem'
 import Command from '../../modules/Command'
 
-export interface Props extends WithStyles<typeof styles> {
+interface Props extends WithStyles<typeof styles> {
   subheader: React.ReactElement<any>,
   items: Array<any>,
   onOptionSelect : (command: Command) => () => void

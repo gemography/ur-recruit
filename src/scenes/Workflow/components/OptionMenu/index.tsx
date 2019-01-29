@@ -5,7 +5,7 @@ import ConditionCommand from '../../modules/ConditionCommand'
 import Command, {CommandTypeEnum} from '../../modules/Command'
 import List from './List'
 
-export interface Props extends WithStyles<typeof styles> {}
+interface Props extends WithStyles<typeof styles> {}
 
 class Options extends React.PureComponent<Props> {
   handleOptionSelect = (command: Command) => () => {

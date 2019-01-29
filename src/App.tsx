@@ -4,9 +4,9 @@ import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import Workflow from './scenes/Workflow';
 import withRoot from './withRoot'
 
-export interface Props extends WithStyles<typeof styles> {}
+interface Props extends WithStyles<typeof styles> {}
 
-class App extends React.PureComponent {
+class App extends React.Component<Props> {
   render(): React.ReactNode {
     return (
       <Workflow>
