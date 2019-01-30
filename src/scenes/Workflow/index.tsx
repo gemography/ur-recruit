@@ -2,7 +2,7 @@ import * as React from 'react';
 import OptionMenu from './components/OptionMenu'
 import { Button, createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 import EventDialog from './components/EventDialog';
-import { Action, Event } from './components/OptionFlowchart/index';
+import { Action, Event, EventPlaceholder } from './components/OptionFlowchart/index';
 import Api, { ApiModelEnum } from '../../services/Api';
 import { WorkflowModel} from './model'
 
@@ -48,7 +48,7 @@ class Workflow extends React.Component<Props, State> {
           />
           {
             !(workflow && workflow.event)
-            ? <Button className={classes.eventPlaceHolder} onClick={this.handleOpenDialog}>Add an Event</Button>
+            ? <EventPlaceholder onClick={this.handleOpenDialog}>Add an Event</EventPlaceholder>
             : <Event>action 1</Event>
           }
           {workflow && workflow.children && workflow.children.map((item, index) => (
