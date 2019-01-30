@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Drawer, Divider, createStyles, WithStyles, withStyles, ListSubheader, Theme } from '@material-ui/core';
-import ActionCommand from '../../modules/ActionCommand'
-import ConditionCommand from '../../modules/ConditionCommand'
-import Command, {CommandTypeEnum} from '../../modules/Command'
+import ActionCommand from '../../lib/commands/ActionCommand'
+import ConditionCommand from '../../lib/commands/ConditionCommand'
+import Command, {CommandTypeEnum} from '../../lib/Command'
 import List from './List'
 
-import OptionMenuItemModel from '../OptionMenuItem/OptionMenuItemModel'
+import { OptionMenuItemModel } from '../../model'
 
 interface Props extends WithStyles<typeof styles> {}
 

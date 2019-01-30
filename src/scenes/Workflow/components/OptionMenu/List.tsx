@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { List, createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 import OptionMenuItem from '../OptionMenuItem'
-import Command from '../../modules/Command'
+import Command from '../../lib/Command'
 
-import OptionMenuItemModel from '../OptionMenuItem/OptionMenuItemModel'
+import { OptionMenuItemModel } from '../../model'
 
 interface Props extends WithStyles<typeof styles> {
   subheader: React.ReactElement<any>,

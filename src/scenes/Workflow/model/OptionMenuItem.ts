@@ -1,4 +1,4 @@
-import Command from '../../modules/Command'
+import Command from '../lib/Command'
 
 export default interface OptionMenuItemModel {
   text: string;

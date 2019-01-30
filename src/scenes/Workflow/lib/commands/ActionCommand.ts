@@ -1,4 +1,4 @@
-import Command, { CommandTypeEnum } from './Command'
+import Command, { CommandTypeEnum } from '../Command'
 
 class ActionCommand extends Command {
   execute(): void {

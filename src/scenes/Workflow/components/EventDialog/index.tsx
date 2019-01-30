@@ -5,8 +5,8 @@ import InputIcon from '@material-ui/icons/Input';
 import BuildIcon from '@material-ui/icons/Build';
 
 import EventItem from './EventItem'
-import Command, {CommandTypeEnum} from '../../modules/Command'
-import EventCommand from '../../modules/EventCommand'
+import Command, {CommandTypeEnum} from '../../lib/Command'
+import EventCommand from '../../lib/commands/EventCommand'
 
 interface Props extends WithStyles<typeof styles> {
   open: boolean;

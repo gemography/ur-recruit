@@ -3,7 +3,7 @@ import OptionMenu from './components/OptionMenu'
 import { Button, createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 import EventDialog from './components/EventDialog';
 import { Action, Event } from './components/OptionFlowchart/index';
-import { fetch } from './services/api';
+import Api, { ApiModelEnum } from '../../services/Api';
 import { WorkflowModel} from './model'
 
 interface Props extends WithStyles<typeof styles> {}
@@ -11,18 +11,21 @@ interface Props extends WithStyles<typeof styles> {}
 interface State {
   open: boolean;
   workflow: WorkflowModel;
+  WorkflowApi: Api;
 }
 
 class Workflow extends React.Component<Props, State> {
   state = {
     open: false,
-    workflow: {} as WorkflowModel
+    workflow: {} as WorkflowModel,
+    WorkflowApi: new Api(ApiModelEnum.workflow)
   };
 
   async componentDidMount() {
+    const {WorkflowApi} = this.state;
     try {
-      const workflow = await fetch("5c5056c466a577184fb85e71")
-      this.setState({ workflow: workflow as WorkflowModel })
+      const workflow = await WorkflowApi.fetch("5c5056c466a577184fb85e71");
+      this.setState({ workflow: workflow as WorkflowModel });
     } catch(e) {
       console.log(e);
     }
