@@ -1,12 +1,14 @@
 const Option = require('../../models/Option');
 
 const create = (req, res) => {
-  const newOption = new Option({ ...req.body });
+  const { type, parentId } = req.body;
 
-  newOption
+  new Option({ type })
     .save()
-    .then((savedOption) => {
-      res.status(201).json({ savedOption, msg: 'Successfully created' });
+    .then(savedOption => {
+      Option.update({ _id: parentId }, { $push: { children: savedOption._id }}, () => {
+        res.status(201).json({ savedOption, msg: 'Successfully created' });
+      });
     })
     .catch((err) => {
       res
