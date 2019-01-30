@@ -1,6 +1,6 @@
 import * as React from 'react';
 import OptionMenu from './components/OptionMenu'
-import { Button, createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
+import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 import EventDialog from './components/EventDialog';
 import { Action, Event, EventPlaceholder } from './components/OptionFlowchart/index';
 import Api, { ApiModelEnum } from '../../services/Api';

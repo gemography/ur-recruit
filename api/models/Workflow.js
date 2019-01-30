@@ -8,14 +8,7 @@ const WorkflowSchema = new Schema({
   event: {
     type: ObjectId,
     ref: 'Option'
-  },
-  children: [{
-    type: ObjectId,
-    ref: 'Option',
-    required: function() {
-      return this.event;
-    }
-  }]
+  }
 });
 
 module.exports = mongoose.model('Workflow', WorkflowSchema);
