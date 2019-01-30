@@ -18,9 +18,9 @@ const show = (req, res) => {
       }
     }
   ]).
-  exec(function (err, workflow) {
+  exec(function (err, workflows) {
     if (err) return handleError(err);
-    res.status(200).json({ workflow });
+    res.status(200).json({ workflow: workflows[0] });
   });
 };
 

@@ -1,18 +1,14 @@
 import * as React from 'react';
 import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 
-import Line from './Line';
-import { DefaultProps } from './index'
-
-interface Props extends WithStyles<typeof styles>, DefaultProps {}
+interface Props extends WithStyles<typeof styles> {}
 
 class Action extends React.Component<Props> {
   render() {
-    const { children, classes, isEnd } = this.props;
+    const { children, classes } = this.props;
     return (
       <>
         <div className={classes.root}>{ children }</div>
-        { !isEnd && <Line/> }
       </>
     );
   }

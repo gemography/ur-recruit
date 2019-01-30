@@ -1,5 +1,5 @@
 export default interface OptionModel {
-  _id: number;
+  _id: string;
   type: string;
-  children: Array<OptionModel>;
+  children: Array<string>;
 }

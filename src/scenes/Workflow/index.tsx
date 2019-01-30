@@ -2,7 +2,7 @@ import * as React from 'react';
 import OptionMenu from './components/OptionMenu'
 import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 import EventDialog from './components/EventDialog';
-import { Action, Event, EventPlaceholder } from './components/OptionFlowchart/index';
+import { Option, Event, EventPlaceholder } from './components/OptionFlowchart/index';
 import Api, { ApiModelEnum } from '../../services/Api';
 import { WorkflowModel} from './model'
 
@@ -37,6 +37,9 @@ class Workflow extends React.Component<Props, State> {
   render(): React.ReactNode {
     const { open,  workflow} = this.state;
     const { classes } = this.props;
+    const event = (workflow.children)?
+      workflow.children.filter(item=> item._id === workflow.event)[0]:
+      null;
 
     return (
       <div>
@@ -47,13 +50,16 @@ class Workflow extends React.Component<Props, State> {
             onClose={this.handleCloseDialog}
           />
           {
-            !(workflow && workflow.event)
-            ? <EventPlaceholder onClick={this.handleOpenDialog}>Add an Event</EventPlaceholder>
-            : <Event>action 1</Event>
+            !event?
+              <EventPlaceholder onClick={this.handleOpenDialog}>Add an Event</EventPlaceholder>:
+              <>
+                <Event>{event.type}</Event>
+                <Option
+                  id={event.children[0]}
+                  children={workflow.children}
+                />
+              </>
           }
-          {workflow && workflow.children && workflow.children.map((item, index) => (
-            <Action key={index}>{item.type}</Action>
-          ))}
         </main>
       </div>
     );
@@ -63,7 +69,7 @@ class Workflow extends React.Component<Props, State> {
 
 const styles = (theme: Theme) => createStyles({
   main: {
-    width: 320,
+    width: 345,
     margin: "32px auto",
     textAlign: "center"
   },

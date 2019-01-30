@@ -1,9 +1,6 @@
 import Action from './Action'
 import Event from './Event'
 import EventPlaceholder from './EventPlaceholder'
+import Option from './Option'
 
-export interface DefaultProps {
-  isEnd?: boolean
-}
-
-export { Action, Event, EventPlaceholder }
+export { Action, Event, EventPlaceholder, Option }

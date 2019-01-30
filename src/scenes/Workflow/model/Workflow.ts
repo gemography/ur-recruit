@@ -3,6 +3,6 @@ import OptionModel from './Option'
 export default interface WorkflowModel {
   _id: string;
   name: string;
-  event: OptionModel
+  event: string
   children: Array<OptionModel>;
 }
