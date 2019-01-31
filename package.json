@@ -15,6 +15,7 @@
     "classnames": "^2.2.6",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "immutability-helper": "^3.0.0",
     "mongoose": "^5.4.6",
     "react": "^16.7.0",
     "react-dnd": "^7.0.2",

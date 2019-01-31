@@ -15,44 +15,55 @@ interface State {
 
 
 class Option extends React.Component<Props, State> {
-  state = {
-    item: {} as OptionModel
+  constructor(props: Props) {
+    super(props);
+    const { id, children = []} = this.props;
+    this.state = { item: children.filter(item=> item._id === id)[0] };
   }
 
-  componentDidMount() {
+  componentDidUpdate(prevProps: Props) {
     const { id, children = []} = this.props;
-    const item = children.filter(item=> item._id === id)[0]
-    this.setState({ item })
+    if (children.length !== prevProps.children.length) {
+      this.setState({ item: children.filter(item=> item._id === id)[0] });
+    }
   }
 
   render() {
     const { item } = this.state;
     const { children } = this.props;
-    const childrenSize = (item.children)? item.children.length : 0;
+    const childrenSize = (item && item.children)? item.children.length : 0;
 
     return (
       <>
-        <Item type={item.type} text={item._id} />
-        <Grid container spacing={40} justify="center">
-          {
-            <>
-              { childrenSize > 1 && <Curve/> }
-              { item.children && item.children.map((child, index) =>
-                  <Grid key={index} item>
-                    { childrenSize <= 1 && <Line/> }
-                    <Placeholder parent={item._id} />
-                    <Line/>
-                    <Option
-                      key={index}
-                      id={child}
-                      children={children}
-                    ></Option>
-                  </Grid>
-                )
+      {
+        item &&
+          <>
+            <Item type={item.type} text={item._id} />
+            <Grid container spacing={40} justify="center">
+              {
+                <>
+                  { childrenSize > 1 && <Curve/> }
+                  { childrenSize > 0?
+                    item.children.map((child, index) =>
+                      <Grid key={index} item>
+                        <Line/>
+                        <Option
+                          key={index}
+                          id={child}
+                          children={children}
+                        ></Option>
+                      </Grid>
+                    ):
+                    <Grid item>
+                      <Line/>
+                      <Placeholder parent={item._id} />
+                    </Grid>
+                  }
+                </>
               }
-            </>
-          }
-        </Grid>
+            </Grid>
+          </>
+      }
       </>
     );
   }

@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export enum ApiModelEnum {
   workflow,
+  option
 }
 
 class Api {
@@ -12,6 +13,11 @@ class Api {
 
   async fetch(id: string): Promise<any> {
     const { data } = await axios.get(`${this.baseUrl}/${ApiModelEnum[this.model]}s/${id || ""}`);
+    return data[ApiModelEnum[this.model]];
+  }
+
+  async create(payload: any): Promise<any> {
+    const { data } = await axios.post(`${this.baseUrl}/${ApiModelEnum[this.model]}s/`, payload);
     return data[ApiModelEnum[this.model]];
   }
 }

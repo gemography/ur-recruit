@@ -1,4 +1,5 @@
 import Command, { CommandTypeEnum } from '../Command'
+import Api, { ApiModelEnum } from '../../../../services/Api';
 
 export enum ConditionMethodEnum {
   WAIT = "WAIT",
@@ -24,8 +25,13 @@ class ConditionCommand extends Command {
     this._method = method;
   }
 
-  execute(parent: string): void {
-    console.log("Execute " + ConditionMethodEnum[this.method] +" of type " + CommandTypeEnum[this.type] + " on position " + parent);
+  async execute(parent: string): Promise<any> {
+    const option = await new Api(ApiModelEnum.option).create({
+      parent,
+      method: ConditionMethodEnum[this.method],
+      type: CommandTypeEnum[this.type]
+    })
+    return option;
   }
 }
 

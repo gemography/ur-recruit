@@ -21,7 +21,7 @@ abstract class Command {
     this._type = type;
   }
 
-  abstract execute(parent: string): void;
+  abstract async execute(parent: string): Promise<any>
 }
 
 export default Command;

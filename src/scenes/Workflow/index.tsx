@@ -1,11 +1,13 @@
 import * as React from 'react';
 import OptionMenu from './components/OptionMenu'
 import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
+import update from 'immutability-helper';
 
 import EventDialog from './components/EventDialog';
 import Option, { EventPlaceholder } from './components/OptionFlowchart/index';
 import Api, { ApiModelEnum } from '../../services/Api';
-import { WorkflowModel} from './model'
+import { WorkflowModel, OptionModel } from './model'
+import { string } from 'prop-types';
 
 interface Props extends WithStyles<typeof styles> {}
 
@@ -13,20 +15,31 @@ interface State {
   open: boolean;
   workflow: WorkflowModel;
   WorkflowApi: Api;
+  event: string;
+  children: Array<OptionModel>;
 }
 
 class Workflow extends React.Component<Props, State> {
   state = {
     open: false,
     workflow: {} as WorkflowModel,
-    WorkflowApi: new Api(ApiModelEnum.workflow)
+    WorkflowApi: new Api(ApiModelEnum.workflow),
+    event: "",
+    children: [] as Array<OptionModel>
   };
 
   async componentDidMount() {
-    const {WorkflowApi} = this.state;
+    this.handleWorkflowChange()
+  }
+
+  handleWorkflowChange = async () => {
+    const { WorkflowApi } = this.state;
     try {
-      const workflow = await WorkflowApi.fetch("5c5056c466a577184fb85e71");
-      this.setState({ workflow: workflow as WorkflowModel });
+      const workflow = await WorkflowApi.fetch("5c5056c466a577184fb85e71") as WorkflowModel;
+      this.setState({
+        event: workflow.event,
+        children: workflow.children
+      });
     } catch(e) {
       console.log(e);
     }
@@ -36,15 +49,12 @@ class Workflow extends React.Component<Props, State> {
   handleCloseDialog = () => this.setState({ open: false });
 
   render(): React.ReactNode {
-    const { open,  workflow} = this.state;
+    const { open,  event, children} = this.state;
     const { classes } = this.props;
-    const event = (workflow.children)?
-      workflow.children.filter(item=> item._id === workflow.event)[0]:
-      null;
 
     return (
       <div className={classes.root}>
-        <OptionMenu></OptionMenu>
+        <OptionMenu onWorkflowChange={this.handleWorkflowChange}></OptionMenu>
         <main className={classes.main}>
           <EventDialog
             open={open}
@@ -54,8 +64,8 @@ class Workflow extends React.Component<Props, State> {
             !event?
               <EventPlaceholder onClick={this.handleOpenDialog}>Add an Event</EventPlaceholder>:
               <Option
-                id={workflow.event}
-                children={workflow.children}
+                id={event}
+                children={children}
               />
           }
         </main>

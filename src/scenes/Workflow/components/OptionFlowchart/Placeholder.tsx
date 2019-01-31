@@ -46,9 +46,9 @@ const styles = (theme: Theme) => createStyles({
     padding: theme.spacing.unit + "px " + theme.spacing.unit * 1.5 + "px ",
     fontSize: theme.spacing.unit * 2,
     borderRadius: theme.spacing.unit,
-    width: "fit-content",
     margin: "0 auto",
-    cursor: "default"
+    cursor: "default",
+    width: 256,
   },
   active: {
     border: "2px solid " + theme.palette.primary.light

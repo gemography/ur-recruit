@@ -7,11 +7,15 @@ import OptionMenuList from './OptionMenuList'
 
 import { OptionMenuItemModel } from '../../model'
 
-interface Props extends WithStyles<typeof styles> {}
+interface Props extends WithStyles<typeof styles> {
+  onWorkflowChange: () => void
+}
 
-class Options extends React.PureComponent<Props> {
-  handleOptionSelect = (command: Command) => (parent: string) => {
-    command.execute(parent)
+class OptionMenu extends React.PureComponent<Props> {
+  handleOptionSelect = (command: Command) => async (parent: string) => {
+    const { onWorkflowChange } = this.props
+    await command.execute(parent)
+    onWorkflowChange()
   };
 
   render(): React.ReactNode {
@@ -44,8 +48,8 @@ class Options extends React.PureComponent<Props> {
 const styles = (theme: Theme) => createStyles({
   root : {
     paddingLeft: theme.spacing.unit * 5,
-    paddingTop: theme.spacing.unit * 3
+    paddingTop: theme.spacing.unit * 16
   }
 });
 
-export default withStyles(styles)(Options);
+export default withStyles(styles)(OptionMenu);
