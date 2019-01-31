@@ -1,32 +1,57 @@
 import * as React from 'react';
-import { List, createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
+import { createStyles, WithStyles, withStyles, Theme, Typography } from '@material-ui/core';
 import OptionMenuItem from './OptionMenuItem'
 import Command from '../../lib/Command'
+import { CommandTypeEnum } from '../../lib/Command'
 
 import { OptionMenuItemModel } from '../../model'
 
 interface Props extends WithStyles<typeof styles> {
+  type: CommandTypeEnum,
   items: Array<OptionMenuItemModel>,
   onOptionSelect : (command: Command) => (parent: string) => void
 }
 
+interface OptionMenuHeaders {
+  [key:string]: string;
+}
+
 class OptionMenuList extends React.PureComponent<Props> {
+
+  getHeaderTitle() {
+    const types: OptionMenuHeaders = {
+      EVENT: "Events",
+      CONDITION: "Conditions",
+      ACTION: "Actions"
+    };
+    return types;
+  }
+
   render(): React.ReactNode {
-    const { items, onOptionSelect} = this.props;
+    const { classes, items, type, onOptionSelect} = this.props;
     return (
-      <>
+      <div className={classes.root}>
+        <Typography className={classes.text} color="primary" variant="h5">{this.getHeaderTitle()[CommandTypeEnum[type]]}</Typography>
         {items.map((item, index) => (
           <OptionMenuItem
             key={index}
             text={item.text}
+            type={type}
             onOptionSelect={onOptionSelect(item.command)}>
           </OptionMenuItem>
         ))}
-      </>
+      </div>
     );
   }
 }
 
-const styles = (theme: Theme) => createStyles({});
+const styles = (theme: Theme) => createStyles({
+  root: {
+    padding: theme.spacing.unit * 2
+  },
+  text: {
+    marginBottom: theme.spacing.unit
+  }
+});
 
 export default withStyles(styles)(OptionMenuList);

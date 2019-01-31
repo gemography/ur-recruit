@@ -1,9 +1,9 @@
 import Command, { CommandTypeEnum } from '../Command'
 
 export enum EventMethodEnum {
-  TAG,
-  STAGE,
-  WEBHOOK
+  TAG = "TAG",
+  STAGE = "STAGE",
+  WEBHOOK = "WEBHOOK"
 }
 
 class EventCommand extends Command {

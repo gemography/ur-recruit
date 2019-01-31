@@ -43,7 +43,7 @@ class Workflow extends React.Component<Props, State> {
       null;
 
     return (
-      <>
+      <div className={classes.root}>
         <OptionMenu></OptionMenu>
         <main className={classes.main}>
           <EventDialog
@@ -59,16 +59,19 @@ class Workflow extends React.Component<Props, State> {
               />
           }
         </main>
-      </>
+      </div>
     );
   }
 }
 
 
 const styles = (theme: Theme) => createStyles({
+  root: {
+    display: "flex"
+  },
   main: {
     width: 600,
-    margin: "32px auto",
+    margin: theme.spacing.unit * 10,
     textAlign: "center"
   }
 });

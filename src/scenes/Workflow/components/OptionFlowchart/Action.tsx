@@ -18,6 +18,7 @@ class Action extends React.Component<Props> {
 
 const styles = (theme: Theme) => createStyles({
   root: {
+    backgroundColor: theme.palette.common.white,
     border: "2px solid " + theme.palette.primary.light,
     color: theme.palette.primary.main,
     padding: theme.spacing.unit * 1.5 + "px " + theme.spacing.unit * 3 + "px ",

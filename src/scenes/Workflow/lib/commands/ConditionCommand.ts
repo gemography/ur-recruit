@@ -1,8 +1,8 @@
 import Command, { CommandTypeEnum } from '../Command'
 
 export enum ConditionMethodEnum {
-  WAIT,
-  IF_ELSE
+  WAIT = "WAIT",
+  IF_ELSE = "IF_ELSE"
 }
 
 class ConditionCommand extends Command {

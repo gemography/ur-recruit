@@ -1,10 +1,10 @@
 import Command, { CommandTypeEnum } from '../Command'
 
 export enum ActionMethodEnum {
-  EMAIL,
-  TAG,
-  STAGE,
-  DISQUALIFY
+  EMAIL = "EMAIL",
+  TAG = "TAG",
+  STAGE = "STAGE",
+  DISQUALIFY = "DISQUALIFY"
 }
 
 class ActionCommand extends Command {

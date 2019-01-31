@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Grid } from '@material-ui/core';
 
-import { OptionModel} from '../../model'
+import { OptionModel } from '../../model'
 import {Placeholder, Line, Curve, Item} from './index';
 
 interface Props {
@@ -32,7 +32,7 @@ class Option extends React.Component<Props, State> {
 
     return (
       <>
-        <Item item={item} />
+        <Item type={item.type} text={item._id} />
         <Grid container spacing={40} justify="center">
           {
             <>

@@ -1,7 +1,7 @@
 export enum CommandTypeEnum {
-  EVENT,
-  ACTION,
-  CONDITION
+  EVENT = "EVENT",
+  ACTION = "ACTION",
+  CONDITION = "CONDITION"
 }
 
 abstract class Command {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Drawer, Divider, createStyles, WithStyles, withStyles, ListSubheader, Theme } from '@material-ui/core';
+import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 import ActionCommand, { ActionMethodEnum } from '../../lib/commands/ActionCommand'
 import ConditionCommand, { ConditionMethodEnum } from '../../lib/commands/ConditionCommand'
 import Command, { CommandTypeEnum } from '../../lib/Command'
@@ -15,50 +15,36 @@ class Options extends React.PureComponent<Props> {
   };
 
   render(): React.ReactNode {
-    const { classes } = this.props;
+    const {classes} = this.props
+
     return (
-      // <Drawer
-      //   className={classes.drawer}
-      //   variant="permanent"
-      //   classes={{ paper: classes.drawerPaper }}
-      //   open={false}
-      //   anchor="right"
-      // >
-      //   <OptionMenuList
-      //     subheader={<ListSubheader component="div">Conditions</ListSubheader>}
-      //     items={[
-      //       {text: 'if/else', command: new ConditionCommand("0", CommandTypeEnum.CONDITION, ConditionMethodEnum.IF_ELSE)},
-      //       {text: 'wait', command: new ConditionCommand("0", CommandTypeEnum.CONDITION, ConditionMethodEnum.WAIT)}
-      //     ] as Array<OptionMenuItemModel>}
-      //     onOptionSelect={this.handleOptionSelect}
-      //   />
-      //   <Divider />
-      //   <OptionMenuList
-      //     subheader={<ListSubheader component="div">Actions</ListSubheader>}
-      //     items={[{text: 'Send E-mail', command: new ActionCommand("0", CommandTypeEnum.ACTION, ActionMethodEnum.EMAIL)},
-      //       {text: 'Add tag', command: new ActionCommand("0", CommandTypeEnum.ACTION, ActionMethodEnum.TAG)},
-      //       {text: 'Move to', command: new ActionCommand("0", CommandTypeEnum.ACTION, ActionMethodEnum.STAGE)},
-      //       {text: 'Disqualify', command: new ActionCommand("0", CommandTypeEnum.ACTION, ActionMethodEnum.DISQUALIFY)}
-      //     ] as Array<OptionMenuItemModel>}
-      //     onOptionSelect={this.handleOptionSelect}
-      //   />
-      // </Drawer>
-      <OptionMenuList
-        items={[{text: 'Send E-mail', command: new ActionCommand(CommandTypeEnum.ACTION, ActionMethodEnum.EMAIL)}] as Array<OptionMenuItemModel>}
-        onOptionSelect={this.handleOptionSelect}
-      />
+      <div className={classes.root}>
+        <OptionMenuList
+          type={ CommandTypeEnum.CONDITION }
+          items={[
+            {text: 'if/else', command: new ConditionCommand(CommandTypeEnum.CONDITION, ConditionMethodEnum.IF_ELSE)},
+            {text: 'wait', command: new ConditionCommand(CommandTypeEnum.CONDITION, ConditionMethodEnum.WAIT)}
+          ] as Array<OptionMenuItemModel>}
+          onOptionSelect={this.handleOptionSelect}
+        />
+        <OptionMenuList
+          type={ CommandTypeEnum.ACTION }
+          items={[{text: 'Send E-mail', command: new ActionCommand(CommandTypeEnum.ACTION, ActionMethodEnum.EMAIL)},
+            {text: 'Add tag', command: new ActionCommand(CommandTypeEnum.ACTION, ActionMethodEnum.TAG)},
+            {text: 'Move to', command: new ActionCommand(CommandTypeEnum.ACTION, ActionMethodEnum.STAGE)},
+            {text: 'Disqualify', command: new ActionCommand(CommandTypeEnum.ACTION, ActionMethodEnum.DISQUALIFY)}
+          ] as Array<OptionMenuItemModel>}
+          onOptionSelect={this.handleOptionSelect}
+        />
+      </div>
     );
   }
 }
 
-const drawerWidth = 240;
 const styles = (theme: Theme) => createStyles({
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
+  root : {
+    paddingLeft: theme.spacing.unit * 5,
+    paddingTop: theme.spacing.unit * 3
   }
 });
 

@@ -6,10 +6,13 @@ import {
 	DragSourceConnector,
 	DragSourceMonitor,
 } from 'react-dnd';
+import {Item} from '../OptionFlowchart';
+import { CommandTypeEnum } from '../../lib/Command'
 
 interface Props extends WithStyles<typeof styles> {
   text: string,
-  onOptionSelect : () => void;
+  onOptionSelect : () => void,
+  type: CommandTypeEnum
 }
 
 interface OptionItemCollectedProps {
@@ -27,10 +30,11 @@ const optionMenuItemSource = {
 
 class OptionMenuItem extends React.Component<Props & OptionItemCollectedProps> {
   render() {
-    const { classes, connectDragSource } = this.props;
+    const { classes, connectDragSource, text, type } = this.props;
+
     return connectDragSource(
       <div className={classes.listItem}>
-        text
+        <Item type={type} text={text}/>
       </div>
     );
   }
@@ -38,11 +42,8 @@ class OptionMenuItem extends React.Component<Props & OptionItemCollectedProps> {
 
 const styles = (theme: Theme) => createStyles({
   listItem: {
-    padding: 8,
-    border: "1px solid #000",
-    width: "fit-content",
     cursor: 'move',
-    backgroundColor: theme.palette.background.default
+    marginBottom: theme.spacing.unit
   }
 });
 
