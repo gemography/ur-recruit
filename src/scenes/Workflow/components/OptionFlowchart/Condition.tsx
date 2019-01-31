@@ -1,17 +1,15 @@
 import * as React from 'react';
 import { createStyles, WithStyles, withStyles, Theme, Typography } from '@material-ui/core';
 
-import Line from './Line'
-
 interface Props extends WithStyles<typeof styles> {}
 
-class Event extends React.Component<Props> {
+class Condition extends React.Component<Props> {
   render() {
     const { children, classes } = this.props;
     return (
       <>
         <div className={classes.root}>
-          <Typography variant="subtitle1" color="secondary">{ children }</Typography>
+          <Typography variant="subtitle2" color="primary">{ children }</Typography>
         </div>
       </>
     );
@@ -20,7 +18,7 @@ class Event extends React.Component<Props> {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.light,
     padding: theme.spacing.unit * 1.5 + "px " + theme.spacing.unit * 3 + "px ",
     fontSize: theme.spacing.unit * 2,
     borderRadius: theme.spacing.unit,
@@ -30,4 +28,4 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
-export default withStyles(styles)(Event);
+export default withStyles(styles)(Condition);

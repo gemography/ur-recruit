@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { CommandTypeEnum } from '../../lib/Command'
 
-import { Action, Event} from './index';
-import { OptionModel} from '../../model'
+import { Action, Event, Condition} from './index';
+import { OptionModel} from '../../model';
 
 interface Props {
   item: OptionModel
@@ -15,8 +14,9 @@ interface ItemTypes {
 class Item extends React.Component<Props> {
   getSpecificItem(item: OptionModel) {
     const types: ItemTypes = {
-      EVENT: <Event>{item._id}</Event>,
-      ACTION: <Action>{item._id}</Action>
+      EVENT: <Event>{item.method}</Event>,
+      ACTION: <Action>{item.method}</Action>,
+      CONDITION: <Condition>{item.method}</Condition>
     };
     return types;
   }
