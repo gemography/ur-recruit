@@ -16,7 +16,7 @@ interface Props extends WithStyles<typeof styles> {
 class EventDialog extends React.Component<Props> {
 
   handleEventSelect = (command: Command) => () => {
-    command.execute()
+    command.execute("null")
     this.props.onClose();
   };
 
@@ -27,7 +27,7 @@ class EventDialog extends React.Component<Props> {
         <DialogTitle>Select an event</DialogTitle>
         <div className={classes.eventItemsContainer}>
           <EventItem
-            onEventSelect={this.handleEventSelect(new EventCommand("0", CommandTypeEnum.EVENT, EventMethodEnum.TAG))}
+            onEventSelect={this.handleEventSelect(new EventCommand(CommandTypeEnum.EVENT, EventMethodEnum.TAG))}
           >
             <>
               <BookmarkIcon className={classes.eventIcon}/>
@@ -35,7 +35,7 @@ class EventDialog extends React.Component<Props> {
             </>
           </EventItem>
           <EventItem
-            onEventSelect={this.handleEventSelect(new EventCommand("0", CommandTypeEnum.EVENT, EventMethodEnum.TAG))}
+            onEventSelect={this.handleEventSelect(new EventCommand(CommandTypeEnum.EVENT, EventMethodEnum.TAG))}
           >
             <>
               <InputIcon className={classes.eventIcon}/>
@@ -43,7 +43,7 @@ class EventDialog extends React.Component<Props> {
             </>
           </EventItem>
           <EventItem
-            onEventSelect={this.handleEventSelect(new EventCommand("0", CommandTypeEnum.EVENT, EventMethodEnum.TAG))}
+            onEventSelect={this.handleEventSelect(new EventCommand(CommandTypeEnum.EVENT, EventMethodEnum.TAG))}
           >
             <>
               <BuildIcon className={classes.eventIcon}/>

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import OptionMenu from './components/OptionMenu'
 import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
+
 import EventDialog from './components/EventDialog';
 import Option, { EventPlaceholder } from './components/OptionFlowchart/index';
 import Api, { ApiModelEnum } from '../../services/Api';
@@ -42,7 +43,7 @@ class Workflow extends React.Component<Props, State> {
       null;
 
     return (
-      <div>
+      <>
         <OptionMenu></OptionMenu>
         <main className={classes.main}>
           <EventDialog
@@ -58,7 +59,7 @@ class Workflow extends React.Component<Props, State> {
               />
           }
         </main>
-      </div>
+      </>
     );
   }
 }

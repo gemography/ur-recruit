@@ -5,23 +5,12 @@ export enum CommandTypeEnum {
 }
 
 abstract class Command {
-  private _parent: string;
   private _type: CommandTypeEnum;
 
   protected constructor(
-    parent: string,
     type: CommandTypeEnum
   ) {
-    this._parent = parent;
     this._type = type;
-  }
-
-  get parent(): string {
-    return this._parent
-  }
-
-  set parent(parent: string) {
-    this._parent = parent;
   }
 
   get type(): CommandTypeEnum {
@@ -32,7 +21,7 @@ abstract class Command {
     this._type = type;
   }
 
-  abstract execute(): void;
+  abstract execute(parent: string): void;
 }
 
 export default Command;

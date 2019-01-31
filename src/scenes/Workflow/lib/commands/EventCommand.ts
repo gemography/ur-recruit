@@ -10,11 +10,10 @@ class EventCommand extends Command {
   private _method: EventMethodEnum;
 
   constructor(
-    parent: string,
     type: CommandTypeEnum,
     method: EventMethodEnum
   ) {
-    super(parent, type);
+    super(type);
     this._method = method;
   }
 
@@ -26,8 +25,8 @@ class EventCommand extends Command {
     this._method = method;
   }
 
-  execute(): void {
-    console.log("Execute " + EventMethodEnum[this.method] +" of type " + CommandTypeEnum[this.type] + " on position " + this.parent);
+  execute(parent: string): void {
+    console.log("Execute " + EventMethodEnum[this.method] +" of type " + CommandTypeEnum[this.type] + " on position " + parent);
   }
 }
 

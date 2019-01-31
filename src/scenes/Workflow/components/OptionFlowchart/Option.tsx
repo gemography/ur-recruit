@@ -40,7 +40,7 @@ class Option extends React.Component<Props, State> {
               { item.children && item.children.map((child, index) =>
                   <Grid key={index} item>
                     { childrenSize <= 1 && <Line/> }
-                    <Placeholder />
+                    <Placeholder parent={item._id} />
                     <Line/>
                     <Option
                       key={index}

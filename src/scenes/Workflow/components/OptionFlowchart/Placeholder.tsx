@@ -1,17 +1,37 @@
 import * as React from 'react';
 import { createStyles, WithStyles, withStyles, Theme, Typography } from '@material-ui/core';
+import {
+	DropTarget,
+	DropTargetConnector,
+	DropTargetMonitor,
+	ConnectDropTarget,
+} from 'react-dnd'
 
-interface Props extends WithStyles<typeof styles> {}
+interface Props {
+  parent: string
+}
 
-class Placeholder extends React.Component<Props> {
+interface DustbinCollectedProps extends WithStyles<typeof styles> {
+  canDrop: boolean
+  isOver: boolean
+  connectDropTarget: ConnectDropTarget
+}
+
+const placeholderTarget = {
+  drop(props: Props, monitor: DropTargetMonitor) {
+    const { onOptionSelect } = monitor.getItem();
+    const { parent } = props;
+    onOptionSelect(parent);
+  }
+};
+
+class Placeholder extends React.Component<Props & DustbinCollectedProps> {
   render() {
-    const { classes } = this.props;
-    return (
-      <>
-        <div className={classes.root}>
-          <Typography variant="subtitle2" color="primary">Drop an Option</Typography>
-        </div>
-      </>
+    const { classes, connectDropTarget } = this.props;
+    return connectDropTarget(
+      <div className={classes.root}>
+        <Typography variant="subtitle2" color="primary">Drop an Option</Typography>
+      </div>
     );
   }
 }
@@ -24,8 +44,17 @@ const styles = (theme: Theme) => createStyles({
     fontSize: theme.spacing.unit * 2,
     borderRadius: theme.spacing.unit,
     width: "fit-content",
-    margin: "0 auto"
+    margin: "0 auto",
+    cursor: "default"
   }
 });
 
-export default withStyles(styles)(Placeholder);
+export default DropTarget(
+	"OPTION",
+	placeholderTarget,
+	(connect: DropTargetConnector, monitor: DropTargetMonitor) => ({
+		connectDropTarget: connect.dropTarget(),
+		isOver: monitor.isOver(),
+		canDrop: monitor.canDrop(),
+	}),
+)(withStyles(styles)(Placeholder));

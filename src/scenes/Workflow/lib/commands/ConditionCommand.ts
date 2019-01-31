@@ -9,11 +9,10 @@ class ConditionCommand extends Command {
   private _method: ConditionMethodEnum;
 
   constructor(
-    parent: string,
     type: CommandTypeEnum,
     method: ConditionMethodEnum
   ) {
-    super(parent, type);
+    super(type);
     this._method = method;
   }
 
@@ -25,8 +24,8 @@ class ConditionCommand extends Command {
     this._method = method;
   }
 
-  execute(): void {
-    console.log("Execute " + ConditionMethodEnum[this.method] +" of type " + CommandTypeEnum[this.type] + " on position " + this.parent);
+  execute(parent: string): void {
+    console.log("Execute " + ConditionMethodEnum[this.method] +" of type " + CommandTypeEnum[this.type] + " on position " + parent);
   }
 }
 

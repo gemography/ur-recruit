@@ -11,11 +11,10 @@ class ActionCommand extends Command {
   private _method: ActionMethodEnum;
 
   constructor(
-    parent: string,
     type: CommandTypeEnum,
     method: ActionMethodEnum
   ) {
-    super(parent, type);
+    super(type);
     this._method = method;
   }
 
@@ -27,8 +26,8 @@ class ActionCommand extends Command {
     this._method = method;
   }
 
-  execute(): void {
-    console.log("Execute " + ActionMethodEnum[this.method] +" of type " + CommandTypeEnum[this.type] + " on position " + this.parent);
+  execute(parent: string): void {
+    console.log("Execute " + ActionMethodEnum[this.method] +" of type " + CommandTypeEnum[this.type] + " on position " + parent);
   }
 }
 
