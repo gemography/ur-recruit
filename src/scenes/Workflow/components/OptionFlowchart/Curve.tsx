@@ -9,7 +9,7 @@ class Curve extends React.Component<Props> {
     return (
       <div className={classes.root}>
         <svg height="50" width="600">
-          <path d="M205,50 Q300,-12 395,50" stroke="hsl(0, 0%, 69%)" strokeWidth="2" fill="none" />
+          <path d="M151,50 Q300,-12 449,50" stroke="hsl(0, 0%, 69%)" strokeWidth="2" fill="none" />
         </svg>
       </div>
     );

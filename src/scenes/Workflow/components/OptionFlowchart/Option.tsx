@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { Grid } from '@material-ui/core';
 
-import Line from './Line';
 import { OptionModel} from '../../model'
-import Curve from './Curve';
-import Item from './Item';
+import {Placeholder, Line, Curve, Item} from './index';
 
 interface Props {
   id: string,
@@ -42,6 +40,8 @@ class Option extends React.Component<Props, State> {
               { item.children && item.children.map((child, index) =>
                   <Grid key={index} item>
                     { childrenSize <= 1 && <Line/> }
+                    <Placeholder />
+                    <Line/>
                     <Option
                       key={index}
                       id={child}

@@ -1,17 +1,15 @@
 import * as React from 'react';
 import { createStyles, WithStyles, withStyles, Theme, Typography } from '@material-ui/core';
 
-import Line from './Line'
-
 interface Props extends WithStyles<typeof styles> {}
 
-class Event extends React.Component<Props> {
+class Placeholder extends React.Component<Props> {
   render() {
-    const { children, classes } = this.props;
+    const { classes } = this.props;
     return (
       <>
         <div className={classes.root}>
-          <Typography variant="subtitle1" color="secondary">{ children }</Typography>
+          <Typography variant="subtitle2" color="primary">Drop an Option</Typography>
         </div>
       </>
     );
@@ -20,13 +18,14 @@ class Event extends React.Component<Props> {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    backgroundColor: theme.palette.primary.main,
-    padding: theme.spacing.unit * 1.5 + "px " + theme.spacing.unit * 3 + "px ",
+    border: "2px dashed " + theme.palette.primary.light,
+    color: theme.palette.primary.main,
+    padding: theme.spacing.unit + "px " + theme.spacing.unit * 1.5 + "px ",
     fontSize: theme.spacing.unit * 2,
     borderRadius: theme.spacing.unit,
-    width: 256,
+    width: "fit-content",
     margin: "0 auto"
   }
 });
 
-export default withStyles(styles)(Event);
+export default withStyles(styles)(Placeholder);

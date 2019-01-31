@@ -23,9 +23,8 @@ const styles = (theme: Theme) => createStyles({
     padding: theme.spacing.unit * 1.5 + "px " + theme.spacing.unit * 3 + "px ",
     fontSize: theme.spacing.unit * 2,
     borderRadius: theme.spacing.unit * 5,
-    width: "fit-content",
-    margin: "0 auto",
-    minWidth: theme.spacing.unit * 20
+    width: 256,
+    margin: "0 auto"
   }
 });
 
