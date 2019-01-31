@@ -7,15 +7,21 @@ const OptionSchema = new Schema({
   type: {
     type: String,
     enum: [
-      "TAG_EVENT",
-      "STAGE_EVENT",
-      "WEBHOOK_EVENT",
-      "EMAIL_ACTION",
-      "TAG_ACTION",
-      "STAGE_ACTION",
-      "DISQUALIFY_ACTION",
-      "WAIT_CONDITION",
-      "IF_ELSE_CONDITION"
+      "EVENT",
+      "ACTION",
+      "CONDITION"
+    ],
+  },
+  method: {
+    type: String,
+    enum: [
+      "TAG",
+      "STAGE",
+      "WEBHOOK",
+      "EMAIL",
+      "DISQUALIFY",
+      "WAIT",
+      "IF_ELSE"
     ],
   },
   children: [{

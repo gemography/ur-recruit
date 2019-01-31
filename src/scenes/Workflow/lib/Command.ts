@@ -1,30 +1,27 @@
 export enum CommandTypeEnum {
-  TAG_EVENT,
-  STAGE_EVENT,
-  WEBHOOK_EVENT,
-  EMAIL_ACTION,
-  TAG_ACTION,
-  STAGE_ACTION,
-  DISQUALIFY_ACTION,
-  WAIT_CONDITION,
-  IF_ELSE_CONDITION
+  EVENT,
+  ACTION,
+  CONDITION
 }
 
 abstract class Command {
-  private _position: number;
+  private _parent: string;
   private _type: CommandTypeEnum;
 
-  constructor(position: number, type: CommandTypeEnum) {
-    this._position = position;
+  protected constructor(
+    parent: string,
+    type: CommandTypeEnum
+  ) {
+    this._parent = parent;
     this._type = type;
   }
 
-  get position(): number {
-    return this._position
+  get parent(): string {
+    return this._parent
   }
 
-  set position(position: number) {
-    this._position = position;
+  set parent(parent: string) {
+    this._parent = parent;
   }
 
   get type(): CommandTypeEnum {

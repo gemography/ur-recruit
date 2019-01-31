@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
+import { createStyles, WithStyles, withStyles, Theme, Typography } from '@material-ui/core';
 
 interface Props extends WithStyles<typeof styles> {}
 
@@ -8,7 +8,9 @@ class Action extends React.Component<Props> {
     const { children, classes } = this.props;
     return (
       <>
-        <div className={classes.root}>{ children }</div>
+        <div className={classes.root}>
+          <Typography variant="subtitle2" color="primary">{ children }</Typography>
+        </div>
       </>
     );
   }
@@ -22,7 +24,8 @@ const styles = (theme: Theme) => createStyles({
     fontSize: theme.spacing.unit * 2,
     borderRadius: theme.spacing.unit * 5,
     width: "fit-content",
-    margin: "0 auto"
+    margin: "0 auto",
+    minWidth: theme.spacing.unit * 20
   }
 });
 

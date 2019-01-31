@@ -2,7 +2,7 @@ import * as React from 'react';
 import OptionMenu from './components/OptionMenu'
 import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 import EventDialog from './components/EventDialog';
-import { Option, Event, EventPlaceholder } from './components/OptionFlowchart/index';
+import Option, { EventPlaceholder } from './components/OptionFlowchart/index';
 import Api, { ApiModelEnum } from '../../services/Api';
 import { WorkflowModel} from './model'
 
@@ -52,13 +52,10 @@ class Workflow extends React.Component<Props, State> {
           {
             !event?
               <EventPlaceholder onClick={this.handleOpenDialog}>Add an Event</EventPlaceholder>:
-              <>
-                <Event>{event.type}</Event>
-                <Option
-                  id={event.children[0]}
-                  children={workflow.children}
-                />
-              </>
+              <Option
+                id={workflow.event}
+                children={workflow.children}
+              />
           }
         </main>
       </div>
@@ -69,16 +66,9 @@ class Workflow extends React.Component<Props, State> {
 
 const styles = (theme: Theme) => createStyles({
   main: {
-    width: 345,
+    width: 600,
     margin: "32px auto",
     textAlign: "center"
-  },
-  eventPlaceHolder: {
-    border: "2px dashed " + theme.palette.primary.light,
-    color: theme.palette.primary.main,
-    padding: theme.spacing.unit * 1.5 + "px " + theme.spacing.unit * 3 + "px ",
-    fontSize: theme.spacing.unit * 2,
-    borderRadius: theme.spacing.unit * 5
   }
 });
 

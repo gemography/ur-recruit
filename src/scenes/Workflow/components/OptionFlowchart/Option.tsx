@@ -2,8 +2,9 @@ import * as React from 'react';
 import { Grid } from '@material-ui/core';
 
 import Line from './Line';
-import Action from './Action';
 import { OptionModel} from '../../model'
+import Curve from './Curve';
+import Item from './Item';
 
 interface Props {
   id: string,
@@ -29,21 +30,27 @@ class Option extends React.Component<Props, State> {
   render() {
     const { item } = this.state;
     const { children } = this.props;
+    const childrenSize = (item.children)? item.children.length : 0;
+
     return (
       <>
-        <Action>{item.type}</Action>
-        <Line/>
-        <Grid container spacing={40}>
+        <Item item={item} />
+        <Grid container spacing={40} justify="center">
           {
-            item.children && item.children.map((child, index) =>
-              <Grid key={index} item>
-                <Option
-                  key={index}
-                  id={child}
-                  children={children}
-                ></Option>
-              </Grid>
-            )
+            <>
+              { childrenSize > 1 && <Curve/> }
+              { item.children && item.children.map((child, index) =>
+                  <Grid key={index} item>
+                    { childrenSize <= 1 && <Line/> }
+                    <Option
+                      key={index}
+                      id={child}
+                      children={children}
+                    ></Option>
+                  </Grid>
+                )
+              }
+            </>
           }
         </Grid>
       </>

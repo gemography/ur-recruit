@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Drawer, Divider, createStyles, WithStyles, withStyles, ListSubheader, Theme } from '@material-ui/core';
-import ActionCommand from '../../lib/commands/ActionCommand'
-import ConditionCommand from '../../lib/commands/ConditionCommand'
-import Command, {CommandTypeEnum} from '../../lib/Command'
+import ActionCommand, { ActionMethodEnum } from '../../lib/commands/ActionCommand'
+import ConditionCommand, { ConditionMethodEnum } from '../../lib/commands/ConditionCommand'
+import Command, { CommandTypeEnum } from '../../lib/Command'
 import List from './List'
 
 import { OptionMenuItemModel } from '../../model'
@@ -27,18 +27,18 @@ class Options extends React.PureComponent<Props> {
         <List
           subheader={<ListSubheader component="div">Conditions</ListSubheader>}
           items={[
-            {text: 'if/else', command: new ConditionCommand(0, CommandTypeEnum.IF_ELSE_CONDITION)},
-            {text: 'wait', command: new ConditionCommand(0, CommandTypeEnum.WAIT_CONDITION)}
+            {text: 'if/else', command: new ConditionCommand("0", CommandTypeEnum.CONDITION, ConditionMethodEnum.IF_ELSE)},
+            {text: 'wait', command: new ConditionCommand("0", CommandTypeEnum.CONDITION, ConditionMethodEnum.WAIT)}
           ] as Array<OptionMenuItemModel>}
           onOptionSelect={this.handleOptionSelect}
         />
         <Divider />
         <List
           subheader={<ListSubheader component="div">Actions</ListSubheader>}
-          items={[{text: 'Send E-mail', command: new ActionCommand(0, CommandTypeEnum.EMAIL_ACTION)},
-            {text: 'Add tag', command: new ActionCommand(0, CommandTypeEnum.TAG_ACTION)},
-            {text: 'Move to', command: new ActionCommand(0, CommandTypeEnum.STAGE_ACTION)},
-            {text: 'Disqualify', command: new ActionCommand(0, CommandTypeEnum.DISQUALIFY_ACTION)}
+          items={[{text: 'Send E-mail', command: new ActionCommand("0", CommandTypeEnum.ACTION, ActionMethodEnum.EMAIL)},
+            {text: 'Add tag', command: new ActionCommand("0", CommandTypeEnum.ACTION, ActionMethodEnum.TAG)},
+            {text: 'Move to', command: new ActionCommand("0", CommandTypeEnum.ACTION, ActionMethodEnum.STAGE)},
+            {text: 'Disqualify', command: new ActionCommand("0", CommandTypeEnum.ACTION, ActionMethodEnum.DISQUALIFY)}
           ] as Array<OptionMenuItemModel>}
           onOptionSelect={this.handleOptionSelect}
         />

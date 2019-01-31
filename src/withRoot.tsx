@@ -9,11 +9,15 @@ const theme = createMuiTheme({
     primary: {
       light: "hsl(0, 0%, 69%)",
       main: "hsl(0, 0%, 32%)",
-      dark: "hsl(0, 0%, 13%)"
+      dark: "hsl(0, 0%, 13%)",
+      contrastText: '#fff'
+    },
+    secondary: {
+      main: '#fff'
     }
   },
   typography: {
-    useNextVariants: true,
+    useNextVariants: true
   },
   props: {
     MuiButtonBase: {

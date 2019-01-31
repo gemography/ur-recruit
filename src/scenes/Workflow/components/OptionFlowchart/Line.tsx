@@ -3,7 +3,7 @@ import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 
 interface Props extends WithStyles<typeof styles> {}
 
-class Event extends React.Component<Props> {
+class Line extends React.Component<Props> {
   render() {
     const { classes } = this.props;
     return (
@@ -14,11 +14,11 @@ class Event extends React.Component<Props> {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    borderLeft: "1px solid " + theme.palette.primary.light,
-    height: theme.spacing.unit * 2,
+    borderLeft: "2px solid " + theme.palette.primary.light,
+    height: theme.spacing.unit * 3,
     width: 1,
-    margin: theme.spacing.unit / 2 + "px auto"
+    margin: "0px auto"
   }
 });
 
-export default withStyles(styles)(Event);
+export default withStyles(styles)(Line);
