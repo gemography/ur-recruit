@@ -30,11 +30,11 @@ const optionMenuItemSource = {
 
 class OptionMenuItem extends React.Component<Props & OptionItemCollectedProps> {
   render() {
-    const { classes, connectDragSource, text, type } = this.props;
+    const { classes, connectDragSource, isDragging, text, type } = this.props;
 
     return connectDragSource(
       <div className={classes.listItem}>
-        <Item type={type} text={text}/>
+        <Item type={type} text={text} isDragging={isDragging}/>
       </div>
     );
   }

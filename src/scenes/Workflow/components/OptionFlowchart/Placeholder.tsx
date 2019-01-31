@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classnames from 'classnames'
 import { createStyles, WithStyles, withStyles, Theme, Typography } from '@material-ui/core';
 import {
 	DropTarget,
@@ -27,9 +28,11 @@ const placeholderTarget = {
 
 class Placeholder extends React.Component<Props & DustbinCollectedProps> {
   render() {
-    const { classes, connectDropTarget } = this.props;
+    const { classes, connectDropTarget, canDrop, isOver } = this.props;
+    const isActive = canDrop && isOver;
+
     return connectDropTarget(
-      <div className={classes.root}>
+      <div className={classnames({[classes.root]: true, [classes.active]: isActive})}>
         <Typography variant="subtitle2" color="primary">Drop an Option</Typography>
       </div>
     );
@@ -46,6 +49,9 @@ const styles = (theme: Theme) => createStyles({
     width: "fit-content",
     margin: "0 auto",
     cursor: "default"
+  },
+  active: {
+    border: "2px solid " + theme.palette.primary.light
   }
 });
 
