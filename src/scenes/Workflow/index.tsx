@@ -1,13 +1,12 @@
 import * as React from 'react';
 import OptionMenu from './components/OptionMenu'
 import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
-import update from 'immutability-helper';
 
 import EventDialog from './components/EventDialog';
-import Option, { EventPlaceholder } from './components/OptionFlowchart/index';
+import Option from './components/OptionFlowchart/index';
 import Api, { ApiModelEnum } from '../../services/Api';
 import { WorkflowModel, OptionModel } from './model'
-import { string } from 'prop-types';
+import {Placeholder} from './components/OptionFlowchart';
 
 interface Props extends WithStyles<typeof styles> {}
 
@@ -35,7 +34,7 @@ class Workflow extends React.Component<Props, State> {
   handleWorkflowChange = async () => {
     const { WorkflowApi } = this.state;
     try {
-      const { event, children} = await WorkflowApi.fetch("5c5056c466a577184fb85e71") as WorkflowModel;
+      const { event, children} = await WorkflowApi.fetch("5c505a1766a577184fb85e72") as WorkflowModel;
       this.setState({ event, children });
     } catch(e) {
       console.log(e);
@@ -51,7 +50,7 @@ class Workflow extends React.Component<Props, State> {
 
     return (
       <div className={classes.root}>
-        <OptionMenu onWorkflowChange={this.handleWorkflowChange}></OptionMenu>
+        <OptionMenu eventExists={!!event} onWorkflowChange={this.handleWorkflowChange}></OptionMenu>
         <main className={classes.main}>
           <EventDialog
             open={open}
@@ -59,7 +58,7 @@ class Workflow extends React.Component<Props, State> {
           />
           {
             !event?
-              <EventPlaceholder onClick={this.handleOpenDialog}>Add an Event</EventPlaceholder>:
+              <Placeholder parent="" />:
               <Option
                 onWorkflowChange={this.handleWorkflowChange}
                 item={children.filter(item=> item._id === event)[0]}

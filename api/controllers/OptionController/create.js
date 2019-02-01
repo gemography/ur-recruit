@@ -1,20 +1,21 @@
 const Option = require('../../models/Option');
+const Workflow = require('../../models/Workflow');
 
-const create = (req, res) => {
+const create = async (req, res) => {
   const { type, method, parent } = req.body;
 
-  new Option({ type, method })
-    .save()
-    .then(option => {
-      Option.update({ _id: parent }, { $push: { children: option._id }}, () => {
-        res.status(201).json({ option, msg: 'Successfully created' });
-      });
+  const option = new Option({ type, method });
+  const newOption = await option.save();
+
+  (type === "EVENT")?
+    await Workflow.updateOne({ _id: "5c505a1766a577184fb85e72" }, {
+      $set: { event: newOption._id }
+    }):
+    await Option.updateOne({ _id: parent }, {
+      $push: { children: option._id }
     })
-    .catch((err) => {
-      res
-        .status(500)
-        .json({ err, msg: 'There was an error saving the option in the database.' });
-    });
+
+  res.status(201).json({ option: newOption, msg: 'Successfully created' });
 };
 
 module.exports = { create };
