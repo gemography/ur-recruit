@@ -3,34 +3,24 @@ import { Grid } from '@material-ui/core';
 
 import { OptionModel } from '../../model'
 import {Placeholder, Line, Curve, Item} from './index';
+import Api, { ApiModelEnum } from '../../../../services/Api';
 
 interface Props {
-  id: string,
+  item: OptionModel,
+  onWorkflowChange: () => void
   children: Array<OptionModel>
 }
 
-interface State {
-  item: OptionModel
-}
+class Option extends React.Component<Props> {
 
-
-class Option extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    const { id, children = []} = this.props;
-    this.state = { item: children.filter(item=> item._id === id)[0] };
-  }
-
-  componentDidUpdate(prevProps: Props) {
-    const { id, children = []} = this.props;
-    if (children.length !== prevProps.children.length) {
-      this.setState({ item: children.filter(item=> item._id === id)[0] });
-    }
+   handleOptionDestroy = async () => {
+    const { onWorkflowChange, item } = this.props;
+    await new Api(ApiModelEnum.option).destroy(item._id)
+    onWorkflowChange()
   }
 
   render() {
-    const { item } = this.state;
-    const { children } = this.props;
+    const { children = [] as Array<OptionModel>, onWorkflowChange, item } = this.props;
     const childrenSize = (item && item.children)? item.children.length : 0;
 
     return (
@@ -38,7 +28,7 @@ class Option extends React.Component<Props, State> {
       {
         item &&
           <>
-            <Item type={item.type} text={item._id} />
+            <Item type={item.type} text={item._id} onDestroy={this.handleOptionDestroy} />
             <Grid container spacing={40} justify="center">
               {
                 <>
@@ -49,8 +39,9 @@ class Option extends React.Component<Props, State> {
                         <Line/>
                         <Option
                           key={index}
-                          id={child}
+                          item={children.filter(item => item._id === child)[0]}
                           children={children}
+                          onWorkflowChange={onWorkflowChange}
                         ></Option>
                       </Grid>
                     ):

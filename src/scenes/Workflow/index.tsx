@@ -35,11 +35,8 @@ class Workflow extends React.Component<Props, State> {
   handleWorkflowChange = async () => {
     const { WorkflowApi } = this.state;
     try {
-      const workflow = await WorkflowApi.fetch("5c5056c466a577184fb85e71") as WorkflowModel;
-      this.setState({
-        event: workflow.event,
-        children: workflow.children
-      });
+      const { event, children} = await WorkflowApi.fetch("5c5056c466a577184fb85e71") as WorkflowModel;
+      this.setState({ event, children });
     } catch(e) {
       console.log(e);
     }
@@ -64,7 +61,8 @@ class Workflow extends React.Component<Props, State> {
             !event?
               <EventPlaceholder onClick={this.handleOpenDialog}>Add an Event</EventPlaceholder>:
               <Option
-                id={event}
+                onWorkflowChange={this.handleWorkflowChange}
+                item={children.filter(item=> item._id === event)[0]}
                 children={children}
               />
           }
