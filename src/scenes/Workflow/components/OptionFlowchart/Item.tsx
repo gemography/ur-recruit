@@ -4,7 +4,7 @@ import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 
 import { Action, Event, Condition} from './index';
 import { CommandTypeEnum } from '../../lib/Command'
-import CancelIcon from '@material-ui/icons/Cancel';
+import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 
 interface Props extends WithStyles<typeof styles> {
   type: CommandTypeEnum
@@ -32,7 +32,7 @@ class Item extends React.Component<Props> {
 
     return (
       <div className={classes.root}>
-        {onDestroy && <CancelIcon onClick={onDestroy} className={classes.cancel}></CancelIcon>}
+        {onDestroy && <CancelOutlinedIcon onClick={onDestroy} className={classes.cancel}></CancelOutlinedIcon>}
         <div className={classnames({[classes.dragging]: isDragging})}>
           { this.getSpecificItem(text)[type] }
         </div>

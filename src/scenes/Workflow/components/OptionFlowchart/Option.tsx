@@ -5,6 +5,8 @@ import { OptionModel } from '../../model'
 import {Placeholder, Line, Curve, Item} from './index';
 import Api, { ApiModelEnum } from '../../../../services/Api';
 import { ConditionMethodEnum } from '../../lib/commands/ConditionCommand'
+import CancelIcon from '@material-ui/icons/Cancel';
+import CheckCirclelIcon from '@material-ui/icons/CheckCircle';
 
 interface Props {
   item: OptionModel,
@@ -23,7 +25,8 @@ class Option extends React.Component<Props> {
   render() {
     const { children = [] as Array<OptionModel>, onWorkflowChange, item } = this.props;
     const childrenSize = (item && item.children)? item.children.length : 0;
-    let idx = 0;
+    const isIfElseMethod = ConditionMethodEnum[item.method as ConditionMethodEnum] === ConditionMethodEnum.IF_ELSE;
+
     return (
       <>
       {
@@ -34,14 +37,15 @@ class Option extends React.Component<Props> {
               {
                 childrenSize > 0?
                 <>
-                  { ConditionMethodEnum[item.method as ConditionMethodEnum] === ConditionMethodEnum.IF_ELSE  && <Curve/> }
+                  { isIfElseMethod  && <Curve/> }
                   {
                     item.children.map((child, index) =>
                     <>
-                      <Grid key={`${item._id} - ${child} - ${index}`} item>
+                      <Grid key={index} item>
+                        {isIfElseMethod && index < 1 && <CheckCirclelIcon></CheckCirclelIcon>}
+                        {isIfElseMethod && index >= 1 && <CancelIcon></CancelIcon>}
                         <Line/>
                         <Option
-                          key={`${item._id} - ${child} - ${index}`}
                           item={children.filter(item => item._id === child)[0]}
                           children={children}
                           onWorkflowChange={onWorkflowChange}
@@ -50,8 +54,9 @@ class Option extends React.Component<Props> {
                     </>
                     )
                   }
-                  { ConditionMethodEnum[item.method as ConditionMethodEnum] === ConditionMethodEnum.IF_ELSE && childrenSize < 2 &&
+                  { isIfElseMethod && childrenSize < 2 &&
                     <Grid item>
+                      <CancelIcon></CancelIcon>
                       <Line/>
                       <Placeholder parent={item._id} />
                     </Grid>
