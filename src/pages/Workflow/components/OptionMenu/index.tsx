@@ -8,16 +8,20 @@ import OptionMenuList from './OptionMenuList'
 
 import { OptionMenuItemModel } from '../../model'
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionFetchWorkflow } from '../../actions'
+
 interface Props extends WithStyles<typeof styles> {
-  eventExists: boolean
-  onWorkflowChange: () => void
+  eventExists: boolean;
+  actionFetchWorkflow: any;
 }
 
 class OptionMenu extends React.PureComponent<Props> {
   handleOptionSelect = (command: Command) => async (parent: string) => {
-    const { onWorkflowChange, eventExists } = this.props
-    await command.execute(parent)
-    onWorkflowChange()
+    const { actionFetchWorkflow } = this.props
+    await command.execute(parent);
+    actionFetchWorkflow()
   };
 
   render(): React.ReactNode {
@@ -68,4 +72,10 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
-export default withStyles(styles)(OptionMenu);
+function mapDispatchToProps(dispatch: any) {
+  return {
+    actionFetchWorkflow: bindActionCreators(actionFetchWorkflow, dispatch)
+  };
+}
+
+export default withStyles(styles)(connect(undefined, mapDispatchToProps)(OptionMenu));

@@ -1,9 +1,16 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import ReduxRoot from './ReduxRoot';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const rootEl = document.getElementById('root');
+ReactDOM.render(<ReduxRoot />, rootEl);
+
+const NextApp = require('./ReduxRoot').default;
+ReactDOM.render(
+    <NextApp />,
+    rootEl
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

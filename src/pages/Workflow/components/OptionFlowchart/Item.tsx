@@ -1,16 +1,23 @@
 import * as React from 'react';
 import classnames from 'classnames'
 import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
+import Api, { ApiModelEnum } from '../../../../services/Api';
 
 import { Action, Event, Condition} from './index';
 import { CommandTypeEnum } from '../../lib/Command'
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionFetchWorkflow } from '../../actions'
+
 interface Props extends WithStyles<typeof styles> {
+  id?: string
   type: CommandTypeEnum
   text: string
   isDragging?: boolean
-  onDestroy?: (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => void
+  actionFetchWorkflow: any;
+  isDestroy?: boolean
 }
 
 interface ItemTypes {
@@ -18,6 +25,13 @@ interface ItemTypes {
 }
 
 class Item extends React.Component<Props> {
+
+  handleDestroy = async () => {
+    const { id ="", actionFetchWorkflow } = this.props;
+    await new Api(ApiModelEnum.option).destroy(id)
+    actionFetchWorkflow()
+  }
+
   getSpecificItem(text: string) {
     const types: ItemTypes = {
       EVENT: <Event>{text}</Event>,
@@ -28,11 +42,11 @@ class Item extends React.Component<Props> {
   }
 
   render() {
-    const { type, text, isDragging, onDestroy, classes } = this.props;
+    const { type, text, isDragging, isDestroy, classes } = this.props;
 
     return (
       <div className={classes.root}>
-        {onDestroy && <CancelOutlinedIcon onClick={onDestroy} className={classes.cancel}></CancelOutlinedIcon>}
+        {isDestroy && <CancelOutlinedIcon onClick={this.handleDestroy} className={classes.cancel}></CancelOutlinedIcon>}
         <div className={classnames({[classes.dragging]: isDragging})}>
           { this.getSpecificItem(text)[type] }
         </div>
@@ -64,4 +78,10 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
-export default withStyles(styles)(Item);
+function mapDispatchToProps(dispatch: any) {
+  return {
+    actionFetchWorkflow: bindActionCreators(actionFetchWorkflow, dispatch)
+  };
+}
+
+export default withStyles(styles)(connect(undefined, mapDispatchToProps)(Item));

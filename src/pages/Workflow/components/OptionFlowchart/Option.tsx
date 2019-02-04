@@ -3,27 +3,19 @@ import { Grid } from '@material-ui/core';
 
 import { OptionModel } from '../../model'
 import {Placeholder, Line, Curve, Item} from './index';
-import Api, { ApiModelEnum } from '../../../../services/Api';
 import { ConditionMethodEnum } from '../../lib/commands/ConditionCommand'
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCirclelIcon from '@material-ui/icons/CheckCircle';
 
 interface Props {
-  item: OptionModel,
-  onWorkflowChange: () => void
-  children: Array<OptionModel>
+  item: OptionModel;
+  children: Array<OptionModel>;
 }
 
 class Option extends React.Component<Props> {
 
-   handleOptionDestroy = async () => {
-    const { onWorkflowChange, item } = this.props;
-    await new Api(ApiModelEnum.option).destroy(item._id)
-    onWorkflowChange()
-  }
-
   render() {
-    const { children = [] as Array<OptionModel>, onWorkflowChange, item } = this.props;
+    const { children = [] as Array<OptionModel>, item } = this.props;
     const childrenSize = (item && item.children)? item.children.length : 0;
     const isIfElseMethod = ConditionMethodEnum[item.method as ConditionMethodEnum] === ConditionMethodEnum.IF_ELSE;
 
@@ -32,7 +24,7 @@ class Option extends React.Component<Props> {
       {
         item &&
           <>
-            <Item type={item.type} text={item._id} onDestroy={this.handleOptionDestroy} />
+            <Item type={item.type} text={item._id} id={item._id} isDestroy />
             <Grid container spacing={40} justify="center">
               {
                 childrenSize > 0?
@@ -48,7 +40,6 @@ class Option extends React.Component<Props> {
                         <Option
                           item={children.filter(item => item._id === child)[0]}
                           children={children}
-                          onWorkflowChange={onWorkflowChange}
                         ></Option>
                       </Grid>
                     </>

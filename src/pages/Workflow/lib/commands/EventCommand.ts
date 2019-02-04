@@ -7,6 +7,9 @@ export enum EventMethodEnum {
   WEBHOOK = "WEBHOOK"
 }
 
+
+import { actionFetchWorkflow } from '../../actions'
+
 class EventCommand extends Command {
   private _method: EventMethodEnum;
 
@@ -32,6 +35,7 @@ class EventCommand extends Command {
       method: EventMethodEnum[this.method],
       type: CommandTypeEnum[this.type]
     })
+    actionFetchWorkflow()
     return option;
   }
 }
