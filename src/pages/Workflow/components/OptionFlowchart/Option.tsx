@@ -24,7 +24,7 @@ class Option extends React.Component<Props> {
       {
         item &&
           <>
-            <Item type={item.type} text={item._id} id={item._id} isDestroy />
+            <Item type={item.type} text={item.method} id={item._id} isDestroy />
             <Grid container spacing={40} justify="center">
               {
                 childrenSize > 0?
