@@ -1,14 +1,15 @@
 const Candidate = require('../models/Candidate.js');
 
 module.exports = function(agenda) {
-  agenda.define('CONDITION_WAIT', async (job, done) => {
+  agenda.define('CONDITION_IF_ELSE', async (job, done) => {
     const { userId } = job.attrs.data
 
     try {
-      const {step: {children, value}} = await Candidate.findById(userId).populate('step')
+      const {status, lastMailed, step: {children, value}} = await Candidate.findById(userId).populate('step')
+      const child = eval(value)? children[0] : children[1]
 
       await Candidate.findByIdAndUpdate(
-        userId, { $set: { step: children[0] }}
+        userId, { $set: { step: child }}
       )
 
       const { step } = await Candidate.findById(userId).populate('step');

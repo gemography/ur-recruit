@@ -13,6 +13,7 @@ const jobTypes = [
   'event-webhook',
   'event-stage',
   'event-tag',
+  'condition-if-else'
 ];
 
 jobTypes.forEach(type => {
