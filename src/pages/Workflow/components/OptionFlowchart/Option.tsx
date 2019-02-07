@@ -32,7 +32,6 @@ class Option extends React.Component<Props> {
                   { isIfElseMethod  && <Curve/> }
                   {
                     item.children.map((child, index) =>
-                    <>
                       <Grid key={index} item>
                         {isIfElseMethod && index < 1 && <CheckCirclelIcon></CheckCirclelIcon>}
                         {isIfElseMethod && index >= 1 && <CancelIcon></CancelIcon>}
@@ -42,7 +41,6 @@ class Option extends React.Component<Props> {
                           children={children}
                         ></Option>
                       </Grid>
-                    </>
                     )
                   }
                   { isIfElseMethod && childrenSize < 2 &&

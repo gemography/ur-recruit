@@ -4,6 +4,6 @@ const {
 } = require('../controllers/OptionController');
 
 module.exports = (server) => {
-  server.route('/api/options').post(create);
-  server.route('/api/options/:id').delete(destroy);
+  server.route('/api/workflows/:workflow_id/options').post(create);
+  server.route('/api/workflows/:workflow_id/options/:id').delete(destroy);
 };

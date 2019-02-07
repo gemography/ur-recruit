@@ -1,14 +1,12 @@
 import Command, { CommandTypeEnum } from '../Command'
-import Api, { ApiModelEnum } from '../../../../services/Api';
+import Api from '../../../../services/Api';
+import axios from 'axios';
 
 export enum EventMethodEnum {
   TAG = "TAG",
   STAGE = "STAGE",
   WEBHOOK = "WEBHOOK"
 }
-
-
-import { actionFetchWorkflow } from '../../actions'
 
 class EventCommand extends Command {
   private _method: EventMethodEnum;
@@ -30,12 +28,11 @@ class EventCommand extends Command {
   }
 
   async execute(parent: string): Promise<any> {
-    const option = await new Api(ApiModelEnum.option).create({
+    const { data: {option} } = await axios.post(`${Api.baseUrl}/workflows/${Api.testWorkflow}/options`, {
       parent,
       method: EventMethodEnum[this.method],
       type: CommandTypeEnum[this.type]
     })
-    actionFetchWorkflow()
     return option;
   }
 }

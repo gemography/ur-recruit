@@ -1,8 +1,7 @@
-import { WorkflowModel, CreateOptionApiBody } from '../model'
+import axios from 'axios';
+import { WorkflowModel } from '../model'
 import { Action, Dispatch } from 'redux';
-import Api, { ApiModelEnum } from '../../../services/Api';
-
-const WorkflowApi = new Api(ApiModelEnum.workflow);
+import Api from '../../../services/Api';
 
 export enum WorkflowActionType {
   ACTION_WORKFLOW_FETCH = "ACTION_WORKFLOW_FETCH",
@@ -49,8 +48,8 @@ function dispatchFetchWorkflowError(e: Error): IActionWorkflowFetchError {
 export const actionFetchWorkflow = () => {
   return (dispatch: Dispatch) => {
     dispatch(dispatchFetchWorkflowProgress());
-    WorkflowApi.fetch("5c5056c466a577184fb85e71")
-      .then((workflow) => {
+    axios.get(`${Api.baseUrl}/workflows/${Api.testWorkflow}`)
+      .then(({data: { workflow }}) => {
         return dispatch(dispatchFetchWorkflowSuccess(workflow));
       })
       .catch((e: Error) => {

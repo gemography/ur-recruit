@@ -1,7 +1,8 @@
 import * as React from 'react';
+import axios from 'axios';
 import classnames from 'classnames'
 import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
-import Api, { ApiModelEnum } from '../../../../services/Api';
+import Api from '../../../../services/Api';
 
 import { Action, Event, Condition} from './index';
 import { CommandTypeEnum } from '../../lib/Command'
@@ -28,7 +29,7 @@ class Item extends React.Component<Props> {
 
   handleDestroy = async () => {
     const { id ="", actionFetchWorkflow } = this.props;
-    await new Api(ApiModelEnum.option).destroy(id)
+    await axios.delete(`${Api.baseUrl}/workflows/${Api.testWorkflow}/options/${id}`);
     actionFetchWorkflow()
   }
 

@@ -2,7 +2,7 @@ const Option = require('../../models/Option');
 const Workflow = require('../../models/Workflow');
 
 const destroy = async (req, res) => {
-  const { id } = req.params;
+  const { id, workflow_id } = req.params;
 
   try{
     option = await Option.findById(id);
@@ -18,7 +18,7 @@ const destroy = async (req, res) => {
         $push: { children: { $each: option.children }}
       })
     } else {
-      await Workflow.updateOne({ _id: "5c505a1766a577184fb85e72" }, {
+      await Workflow.updateOne({ _id: workflow_id }, {
         $set: { event: null }
       })
     }

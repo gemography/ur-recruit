@@ -3,13 +3,14 @@ const Workflow = require('../../models/Workflow');
 
 const create = async (req, res) => {
   const { type, method, parent } = req.body;
+  const { workflow_id } = req.params;
 
   try {
     const option = new Option({ type, method });
     const newOption = await option.save();
 
     (type === "EVENT")?
-      await Workflow.updateOne({ _id: "5c505a1766a577184fb85e72" }, {
+      await Workflow.updateOne({ _id: workflow_id }, {
         $set: { event: newOption._id }
       }):
       await Option.updateOne({ _id: parent }, {

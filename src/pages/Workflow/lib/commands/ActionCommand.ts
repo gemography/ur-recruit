@@ -1,5 +1,6 @@
 import Command, { CommandTypeEnum } from '../Command'
-import Api, { ApiModelEnum } from '../../../../services/Api';
+import axios from 'axios';
+import Api from '../../../../services/Api';
 
 export enum ActionMethodEnum {
   EMAIL = "EMAIL",
@@ -28,7 +29,7 @@ class ActionCommand extends Command {
   }
 
   async execute(parent: string): Promise<any> {
-    const option = await new Api(ApiModelEnum.option).create({
+    const { data: {option} } = await axios.post(`${Api.baseUrl}/workflows/${Api.testWorkflow}/options`, {
       parent,
       method: ActionMethodEnum[this.method],
       type: CommandTypeEnum[this.type]

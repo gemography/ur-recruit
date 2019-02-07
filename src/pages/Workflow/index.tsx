@@ -10,7 +10,6 @@ import { bindActionCreators } from 'redux';
 import { actionFetchWorkflow } from './actions'
 
 import Option from './components/OptionFlowchart/index';
-import Api, { ApiModelEnum } from '../../services/Api';
 import { WorkflowModel } from './model'
 import {Placeholder} from './components/OptionFlowchart';
 
@@ -19,17 +18,9 @@ interface Props extends WithStyles<typeof styles> {
   actionFetchWorkflow: any;
 }
 
-interface State {
-  WorkflowApi: Api;
-}
-
-class Workflow extends React.Component<Props, State> {
+class Workflow extends React.Component<Props> {
   static defaultProps = {
     workflow: {} as WorkflowModel,
-  };
-
-  state = {
-    WorkflowApi: new Api(ApiModelEnum.workflow)
   };
 
   componentDidMount() {

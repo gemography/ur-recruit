@@ -1,5 +1,6 @@
 import Command, { CommandTypeEnum } from '../Command'
-import Api, { ApiModelEnum } from '../../../../services/Api';
+import Api from '../../../../services/Api';
+import axios from 'axios';
 
 export enum ConditionMethodEnum {
   WAIT = "WAIT",
@@ -26,7 +27,7 @@ class ConditionCommand extends Command {
   }
 
   async execute(parent: string): Promise<any> {
-    const option = await new Api(ApiModelEnum.option).create({
+    const { data: {option} } = await axios.post(`${Api.baseUrl}/workflows/${Api.testWorkflow}/options`, {
       parent,
       method: ConditionMethodEnum[this.method],
       type: CommandTypeEnum[this.type]
