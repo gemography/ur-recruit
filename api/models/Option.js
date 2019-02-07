@@ -27,7 +27,8 @@ const OptionSchema = new Schema({
   children: [{
     type: ObjectId,
     ref: 'Option'
-  }]
+  }],
+  value: String
 });
 
 module.exports = mongoose.model('Option', OptionSchema);

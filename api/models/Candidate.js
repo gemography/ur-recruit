@@ -28,10 +28,6 @@ const CandidateSchema = new Schema({
     ],
   },
   lastMailed: Date,
-  workflow: {
-    type: ObjectId,
-    ref: 'Workflow'
-  },
   step: {
     type: ObjectId,
     ref: 'Option'
