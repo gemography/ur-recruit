@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createStyles, WithStyles, withStyles, Theme, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 interface Props { }
 
