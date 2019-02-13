@@ -11,11 +11,8 @@ export enum EventMethodEnum {
 class EventCommand extends Command {
   private _method: EventMethodEnum;
 
-  constructor(
-    type: CommandTypeEnum,
-    method: EventMethodEnum
-  ) {
-    super(type);
+  constructor( method: EventMethodEnum ) {
+    super(CommandTypeEnum.EVENT);
     this._method = method;
   }
 

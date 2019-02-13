@@ -10,11 +10,8 @@ export enum ConditionMethodEnum {
 class ConditionCommand extends Command {
   private _method: ConditionMethodEnum;
 
-  constructor(
-    type: CommandTypeEnum,
-    method: ConditionMethodEnum
-  ) {
-    super(type);
+  constructor( method: ConditionMethodEnum ) {
+    super(CommandTypeEnum.CONDITION);
     this._method = method;
   }
 

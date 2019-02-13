@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const Agendash = require('agendash');
+const agenda = require('./api/agenda');
 
 const { mongoURI: db, clientURI } = require('./config/keys');
 
@@ -16,6 +18,7 @@ const server = express();
 
 server.use(express.json());
 server.use(cors(corsOptions));
+server.use('/dash', Agendash(agenda));
 
 mongoose.connect(db).connection
 

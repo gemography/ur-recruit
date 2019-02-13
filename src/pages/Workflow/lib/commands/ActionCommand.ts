@@ -12,11 +12,8 @@ export enum ActionMethodEnum {
 class ActionCommand extends Command {
   private _method: ActionMethodEnum;
 
-  constructor(
-    type: CommandTypeEnum,
-    method: ActionMethodEnum
-  ) {
-    super(type);
+  constructor( method: ActionMethodEnum) {
+    super(CommandTypeEnum.ACTION);
     this._method = method;
   }
 

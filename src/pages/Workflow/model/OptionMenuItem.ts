@@ -1,6 +1,7 @@
-import Command, {CommandTypeEnum} from '../lib/Command'
+import Command from '../lib/Command'
+import OptionModel from './Option'
 
 export default interface OptionMenuItemModel {
-  text: string;
+  option: OptionModel;
   command: Command;
 }

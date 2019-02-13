@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Grid } from '@material-ui/core';
 
-import { OptionModel } from '../../model'
+import { OptionModel } from '../../model';
 import {Placeholder, Line, Curve, Item} from './index';
 import { ConditionMethodEnum } from '../../lib/commands/ConditionCommand'
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -24,7 +24,7 @@ class Option extends React.Component<Props> {
       {
         item &&
           <>
-            <Item type={item.type} text={item.method} id={item._id} isDestroy />
+            <Item item={item} isDestroy />
             <Grid container spacing={40} justify="center">
               {
                 childrenSize > 0?

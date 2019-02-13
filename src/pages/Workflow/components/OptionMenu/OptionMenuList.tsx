@@ -3,11 +3,9 @@ import { createStyles, WithStyles, withStyles, Theme, Typography } from '@materi
 import OptionMenuItem from './OptionMenuItem'
 import Command from '../../lib/Command'
 import { CommandTypeEnum } from '../../lib/Command'
-
 import { OptionMenuItemModel } from '../../model'
 
 interface Props extends WithStyles<typeof styles> {
-  type: CommandTypeEnum,
   items: Array<OptionMenuItemModel>,
   onOptionSelect : (command: Command) => (parent: string) => void
 }
@@ -28,15 +26,14 @@ class OptionMenuList extends React.PureComponent<Props> {
   }
 
   render(): React.ReactNode {
-    const { classes, items, type, onOptionSelect} = this.props;
+    const { classes, items, onOptionSelect} = this.props;
     return (
       <div className={classes.root}>
-        <Typography className={classes.text} color="primary" variant="h5">{this.getHeaderTitle()[CommandTypeEnum[type]]}</Typography>
+        <Typography className={classes.text} color="primary" variant="h5">{this.getHeaderTitle()[CommandTypeEnum[items[0].option.type]]}</Typography>
         {items.map((item, index) => (
           <OptionMenuItem
             key={index}
-            text={item.text}
-            type={type}
+            item={item.option}
             onOptionSelect={onOptionSelect(item.command)}>
           </OptionMenuItem>
         ))}

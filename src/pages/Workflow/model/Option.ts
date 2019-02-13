@@ -7,5 +7,6 @@ export default interface OptionModel {
   _id: string;
   type: CommandTypeEnum;
   method: ActionMethodEnum | ConditionMethodEnum | EventMethodEnum;
+  value: string;
   children: Array<string>;
 }

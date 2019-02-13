@@ -6,13 +6,13 @@ import {
 	DragSourceConnector,
 	DragSourceMonitor,
 } from 'react-dnd';
-import {Item} from '../OptionFlowchart';
+import { Item } from '../OptionFlowchart';
 import { CommandTypeEnum } from '../../lib/Command'
+import { OptionModel } from '../../model/'
 
 interface Props extends WithStyles<typeof styles> {
-  text: string,
-  onOptionSelect : () => void,
-  type: CommandTypeEnum
+  item: OptionModel,
+  onOptionSelect : () => void
 }
 
 interface OptionItemCollectedProps {
@@ -30,11 +30,11 @@ const optionMenuItemSource = {
 
 class OptionMenuItem extends React.Component<Props & OptionItemCollectedProps> {
   render() {
-    const { classes, connectDragSource, isDragging, text, type } = this.props;
+    const { classes, connectDragSource, isDragging, item } = this.props;
 
     return connectDragSource(
       <div className={classes.listItem}>
-        <Item type={type} text={text} isDragging={isDragging}/>
+        <Item item={item} isDragging={isDragging}/>
       </div>
     );
   }

@@ -5,7 +5,8 @@ import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 import Api from '../../../../services/Api';
 
 import { Action, Event, Condition} from './index';
-import { CommandTypeEnum } from '../../lib/Command'
+import { OptionModel } from '../../model'
+
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 
 import { connect } from 'react-redux';
@@ -13,10 +14,8 @@ import { bindActionCreators } from 'redux';
 import { actionFetchWorkflow } from '../../actions'
 
 interface Props extends WithStyles<typeof styles> {
-  id?: string
-  type: CommandTypeEnum
-  text: string
-  isDragging?: boolean
+  item: OptionModel;
+  isDragging?: boolean;
   actionFetchWorkflow: any;
   isDestroy?: boolean
 }
@@ -28,28 +27,28 @@ interface ItemTypes {
 class Item extends React.Component<Props> {
 
   handleDestroy = async () => {
-    const { id ="", actionFetchWorkflow } = this.props;
-    await axios.delete(`${Api.baseUrl}/workflows/${Api.testWorkflow}/options/${id}`);
+    const { item, actionFetchWorkflow } = this.props;
+    await axios.delete(`${Api.baseUrl}/workflows/${Api.testWorkflow}/options/${item._id}`);
     actionFetchWorkflow()
   }
 
-  getSpecificItem(text: string) {
+  getSpecificItem(item: OptionModel) {
     const types: ItemTypes = {
-      EVENT: <Event>{text}</Event>,
-      ACTION: <Action>{text}</Action>,
-      CONDITION: <Condition>{text}</Condition>
+      EVENT: <Event item={item} />,
+      ACTION: <Action item={item} />,
+      CONDITION: <Condition item={item} />
     };
     return types;
   }
 
   render() {
-    const { type, text, isDragging, isDestroy, classes } = this.props;
+    const { item, isDragging, isDestroy, classes } = this.props;
 
     return (
       <div className={classes.root}>
         {isDestroy && <CancelOutlinedIcon onClick={this.handleDestroy} className={classes.cancel}></CancelOutlinedIcon>}
         <div className={classnames({[classes.dragging]: isDragging})}>
-          { this.getSpecificItem(text)[type] }
+          { this.getSpecificItem(item)[item.type] }
         </div>
       </div>
     );

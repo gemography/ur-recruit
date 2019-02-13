@@ -13,6 +13,7 @@
     "@types/react-dom": "^16.0.11",
     "@types/react-redux": "^7.0.1",
     "agenda": "^2.0.2",
+    "agendash": "^0.4.0",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "cors": "^2.8.5",
