@@ -17,7 +17,7 @@ const create = async (req, res) => {
         $push: { children: option._id }
       })
 
-    res.status(201).json({ option: newOption, msg: 'Successfully created' });
+    res.status(201).json({ msg: 'Successfully Created' });
   }catch (e){
     res.status(400).json({ error: e });
   }
