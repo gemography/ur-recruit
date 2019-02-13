@@ -9,7 +9,8 @@ import StageAction from './StageAction';
 import TagAction from './TagAction';
 
 interface Props extends WithStyles<typeof styles> {
-  item: OptionModel
+  item: OptionModel;
+  onUpdate: (value: string) => void
 }
 
 interface ItemTypes {
@@ -17,12 +18,14 @@ interface ItemTypes {
 }
 
 class Action extends React.Component<Props> {
-  getSpecificAction(value: string) {
+  getSpecificAction(item: OptionModel) {
+    const { onUpdate } = this.props;
+
     const types: ItemTypes = {
       EMAIL: <EmailAction />,
       DISQUALIFY: <DisqualifyAction />,
-      STAGE: <StageAction value={value} />,
-      TAG: <TagAction value={value} />,
+      STAGE: <StageAction item={item} />,
+      TAG: <TagAction onUpdate={onUpdate} item={item} />,
     };
     return types;
   }
@@ -31,7 +34,7 @@ class Action extends React.Component<Props> {
     const { item, classes } = this.props;
     return (
       <div className={classes.root}>
-        { this.getSpecificAction(item.value)[item.method] }
+        { this.getSpecificAction(item)[item.method] }
       </div>
     );
   }

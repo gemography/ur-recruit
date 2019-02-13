@@ -6,7 +6,8 @@ import IfElseCondition from './IfElseCondition'
 import WaitCondition from './WaitCondition'
 
 interface Props extends WithStyles<typeof styles> {
-  item: OptionModel
+  item: OptionModel;
+  onUpdate: (value: string) => void
 }
 
 interface ItemTypes {
@@ -14,10 +15,11 @@ interface ItemTypes {
 }
 
 class Condition extends React.Component<Props> {
-  getSpecificCondition(value: string) {
+  getSpecificCondition(item: OptionModel) {
+    const { onUpdate } = this.props
     const types: ItemTypes = {
-      WAIT: <WaitCondition value={value} />,
-      IF_ELSE: <IfElseCondition value={value} />
+      WAIT: <WaitCondition onUpdate={onUpdate} item={item} />,
+      IF_ELSE: <IfElseCondition item={item} />
     };
     return types;
   }
@@ -26,7 +28,7 @@ class Condition extends React.Component<Props> {
     const { classes, item } = this.props;
     return (
       <div className={classes.root}>
-        { this.getSpecificCondition(item.value)[item.method] }
+        { this.getSpecificCondition(item)[item.method] }
       </div>
     );
   }

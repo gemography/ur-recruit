@@ -12,14 +12,7 @@ const CandidateSchema = new Schema({
     type: String,
     required: true
   },
-  tag: {
-    type: String,
-    enum: [
-      "GOOD",
-      "BAD",
-      "UGLY"
-    ],
-  },
+  tag: String,
   status: {
     type: String,
     enum: [

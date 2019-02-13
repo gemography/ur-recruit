@@ -18,6 +18,7 @@ interface Props extends WithStyles<typeof styles> {
   isDragging?: boolean;
   actionFetchWorkflow: any;
   isDestroy?: boolean
+  isEdit?: boolean
 }
 
 interface ItemTypes {
@@ -29,14 +30,20 @@ class Item extends React.Component<Props> {
   handleDestroy = async () => {
     const { item, actionFetchWorkflow } = this.props;
     await axios.delete(`${Api.baseUrl}/workflows/${Api.testWorkflow}/options/${item._id}`);
-    actionFetchWorkflow()
+    actionFetchWorkflow();
+  }
+
+  handleUpdate = async (value: string) => {
+    const { item, actionFetchWorkflow } = this.props;
+    await axios.put(`${Api.baseUrl}/workflows/${Api.testWorkflow}/options/${item._id}`, { value });
+    actionFetchWorkflow();
   }
 
   getSpecificItem(item: OptionModel) {
     const types: ItemTypes = {
       EVENT: <Event item={item} />,
-      ACTION: <Action item={item} />,
-      CONDITION: <Condition item={item} />
+      ACTION: <Action onUpdate={this.handleUpdate} item={item} />,
+      CONDITION: <Condition onUpdate={this.handleUpdate} item={item} />
     };
     return types;
   }

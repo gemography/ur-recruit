@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { Typography } from '@material-ui/core';
+import { OptionModel } from '../../../model';
 
 interface Props {
-  value: string
+  item: OptionModel
 }
 
 class StageAction extends React.Component<Props> {
   render() {
-    const { value } = this.props;
+    const { item } = this.props;
     return (
-      <Typography variant="subtitle2" color="primary">{`Send the candidate to stage ${value || "..."}`}</Typography>
+      <Typography variant="subtitle2" color="primary">{`Send the candidate to stage ${item.value || "..."}`}</Typography>
     );
   }
 }
