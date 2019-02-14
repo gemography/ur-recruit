@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
+import { createStyles, WithStyles, withStyles, Theme, Typography } from '@material-ui/core';
 
 interface Props extends WithStyles<typeof styles> {
 }
@@ -10,7 +10,52 @@ class Workflow extends React.Component<Props> {
 
     return (
       <div className={classes.root}>
-        Stage
+        <div className={classes.board}>
+          <div className={classes.card}>
+            <Typography variant="subtitle1" color="primary">Full Name</Typography>
+            <Typography variant="subtitle2" color="primary">Email</Typography>
+          </div>
+          <div className={classes.card}>
+            <Typography variant="subtitle1" color="primary">Full Name</Typography>
+            <Typography variant="subtitle2" color="primary">Email</Typography>
+          </div>
+          <div className={classes.card}>
+            <Typography variant="subtitle1" color="primary">Full Name</Typography>
+            <Typography variant="subtitle2" color="primary">Email</Typography>
+          </div>
+        </div>
+        <div className={classes.board}>
+          <div className={classes.card}>
+            <Typography variant="subtitle1" color="primary">Full Name</Typography>
+            <Typography variant="subtitle2" color="primary">Email</Typography>
+          </div>
+          <div className={classes.card}>
+            <Typography variant="subtitle1" color="primary">Full Name</Typography>
+            <Typography variant="subtitle2" color="primary">Email</Typography>
+          </div>
+          <div className={classes.card}>
+            <Typography variant="subtitle1" color="primary">Full Name</Typography>
+            <Typography variant="subtitle2" color="primary">Email</Typography>
+          </div>
+          <div className={classes.card}>
+            <Typography variant="subtitle1" color="primary">Full Name</Typography>
+            <Typography variant="subtitle2" color="primary">Email</Typography>
+          </div>
+          <div className={classes.card}>
+            <Typography variant="subtitle1" color="primary">Full Name</Typography>
+            <Typography variant="subtitle2" color="primary">Email</Typography>
+          </div>
+          <div className={classes.card}>
+            <Typography variant="subtitle1" color="primary">Full Name</Typography>
+            <Typography variant="subtitle2" color="primary">Email</Typography>
+          </div>
+        </div>
+        <div className={classes.board}>
+          <div className={classes.card}>
+            <Typography variant="subtitle1" color="primary">Full Name</Typography>
+            <Typography variant="subtitle2" color="primary">Email</Typography>
+          </div>
+        </div>
       </div>
     );
   }
@@ -18,12 +63,21 @@ class Workflow extends React.Component<Props> {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    display: "flex"
+    display: "flex",
+    margin: theme.spacing.unit * 4
   },
-  main: {
-    width: 600,
-    margin: theme.spacing.unit * 10,
-    textAlign: "center"
+  board: {
+    width: 320,
+    margin: theme.spacing.unit * 2,
+    height: "fit-content",
+    backgroundColor: theme.palette.common.white,
+    border: `1px solid ${theme.palette.primary.light}`,
+    borderRadius: theme.spacing.unit / 4,
+  },
+  card: {
+    backgroundColor: theme.palette.common.white,
+    padding: theme.spacing.unit * 2,
+    borderBottom: `1px solid ${theme.palette.primary.light}`
   }
 });
 
