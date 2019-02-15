@@ -7,7 +7,7 @@ interface Props extends WithStyles<typeof styles> {
   stages: Array<StageModel>
 }
 
-class Workflow extends React.Component<Props> {
+class Stages extends React.Component<Props> {
   render(): React.ReactNode {
     const { classes, stages } = this.props;
 
@@ -32,4 +32,4 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
-export default withStyles(styles)(Workflow);
+export default withStyles(styles)(Stages);

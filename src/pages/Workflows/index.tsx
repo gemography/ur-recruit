@@ -7,7 +7,7 @@ interface Props extends WithStyles<typeof styles> {
   workflows: Array<WorkflowModel>;
 }
 
-class Workflow extends React.Component<Props> {
+class Workflows extends React.Component<Props> {
   render(): React.ReactNode {
     const { classes, workflows } = this.props;
 
@@ -47,4 +47,4 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
-export default withStyles(styles)(Workflow);
+export default withStyles(styles)(Workflows);

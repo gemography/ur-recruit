@@ -15,20 +15,14 @@ import {
   Typography,
   Hidden,
   Drawer,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  ListSubheader,
-  ListItemIcon,
 } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
 import Workflows from './pages/Workflows';
 import Show from './pages/Workflows/components/Show';
 import States from './pages/Stages';
+import Pipelines from './pages/Pipelines';
 import withRoot from './withRoot';
 
-import { PipelineModel } from './pages/Pipeline/models';
+import { PipelineModel } from './pages/Pipelines/models';
 
 interface Props extends WithStyles<typeof styles> {
 }
@@ -60,7 +54,7 @@ class App extends React.Component<Props> {
     this.setState({selectedPipeline})
   }
 
-  handleCreatePipeline = () => { }
+  handlePipelineCreate = () => { }
 
   render(): React.ReactNode {
     const { classes } = this.props;
@@ -98,37 +92,12 @@ class App extends React.Component<Props> {
                 variant="permanent"
                 open={open}
               >
-                <div>
-                  <div className={classes.toolbar}>
-                    <Typography variant="h6" color="inherit">
-                      Pipelines
-                    </Typography>
-                  </div>
-                  <Divider />
-                  <List
-                    subheader={<ListSubheader component="div">Pipelines</ListSubheader>}
-                  >
-                  {
-                    pipelines.map((pipeline, index) =>
-                      <ListItem button selected={selectedPipeline._id === pipeline._id} key={index} onClick={() => this.handlePipelineSelect(pipeline)}>
-                        <ListItemText primary={pipeline.name} />
-                      </ListItem>
-                    )
-                  }
-                  </List>
-                  <Divider />
-                  <List>
-                    <ListItem
-                      button
-                      onClick={this.handleCreatePipeline}
-                    >
-                      <ListItemIcon>
-                        <AddIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Create a pipeline" />
-                    </ListItem>
-                  </List>
-                </div>
+                <Pipelines
+                  pipelines={pipelines}
+                  selectedPipeline={selectedPipeline}
+                  onPipelineSelect={this.handlePipelineSelect}
+                  onPipelineCreate={this.handlePipelineCreate}
+                  />
               </Drawer>
             </Hidden>
           </nav>
@@ -162,7 +131,6 @@ const styles = (theme: Theme) => createStyles({
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
   },
-  toolbar: theme.mixins.toolbar,
   tabs: {
     width: "100%"
   }
