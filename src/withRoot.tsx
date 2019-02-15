@@ -18,11 +18,6 @@ const theme = createMuiTheme({
   },
   typography: {
     useNextVariants: true
-  },
-  props: {
-    MuiButtonBase: {
-      disableRipple: true,
-    },
   }
 });
 

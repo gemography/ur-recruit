@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { Route, RouteComponentProps, Router } from 'react-router'
+import { Route, Router } from 'react-router'
+import axios from 'axios';
+import Api from './services/Api';
 import { createBrowserHistory } from 'history';
 import {
   createStyles,
@@ -25,6 +27,8 @@ import Workflow from './pages/Workflow';
 import State from './pages/Stage';
 import withRoot from './withRoot';
 
+import { PipelineModel } from './pages/Pipeline/models';
+
 interface Props extends WithStyles<typeof styles> {
 }
 
@@ -33,7 +37,13 @@ class App extends React.Component<Props> {
 
   state = {
     value: history.location.pathname,
-    open: true
+    open: true,
+    pipeline: {} as PipelineModel
+  }
+
+  componentDidMount = async () => {
+    const {data: {pipeline}} = await axios.get(`${Api.baseUrl}/pipelines/${Api.testPipeline}`);
+    this.setState({pipeline})
   }
 
   handleCallToRouter = (event:any, value: string) => {
@@ -48,16 +58,9 @@ class App extends React.Component<Props> {
 
   handleCreatePipeline = () => { }
 
-  routes = (
-    <div>
-      <Route exact={true} path="/" component={State} />
-      <Route exact={true} path="/workflows" component={Workflow} />
-    </div>
-  );
-
   render(): React.ReactNode {
     const { classes } = this.props;
-    const { open } = this.state;
+    const { open, pipeline } = this.state;
 
     return (
       <Router history={history}>
@@ -128,7 +131,8 @@ class App extends React.Component<Props> {
             </Hidden>
           </nav>
           <main className={classes.content}>
-            {this.routes}
+            <Route exact={true} path="/" render={()=><State stages={pipeline.stages}/>} />
+            <Route exact={true} path="/workflows" component={Workflow} />
           </main>
         </div>
       </Router>

@@ -1,61 +1,24 @@
 import * as React from 'react';
 import { createStyles, WithStyles, withStyles, Theme, Typography } from '@material-ui/core';
+import Board from './components/Board'
+import { StageModel } from './model'
 
 interface Props extends WithStyles<typeof styles> {
+  stages: Array<StageModel>
 }
 
 class Workflow extends React.Component<Props> {
   render(): React.ReactNode {
-    const { classes } = this.props;
+    const { classes, stages } = this.props;
 
     return (
       <div className={classes.root}>
-        <div className={classes.board}>
-          <div className={classes.card}>
-            <Typography variant="subtitle1" color="primary">Full Name</Typography>
-            <Typography variant="subtitle2" color="primary">Email</Typography>
-          </div>
-          <div className={classes.card}>
-            <Typography variant="subtitle1" color="primary">Full Name</Typography>
-            <Typography variant="subtitle2" color="primary">Email</Typography>
-          </div>
-          <div className={classes.card}>
-            <Typography variant="subtitle1" color="primary">Full Name</Typography>
-            <Typography variant="subtitle2" color="primary">Email</Typography>
-          </div>
-        </div>
-        <div className={classes.board}>
-          <div className={classes.card}>
-            <Typography variant="subtitle1" color="primary">Full Name</Typography>
-            <Typography variant="subtitle2" color="primary">Email</Typography>
-          </div>
-          <div className={classes.card}>
-            <Typography variant="subtitle1" color="primary">Full Name</Typography>
-            <Typography variant="subtitle2" color="primary">Email</Typography>
-          </div>
-          <div className={classes.card}>
-            <Typography variant="subtitle1" color="primary">Full Name</Typography>
-            <Typography variant="subtitle2" color="primary">Email</Typography>
-          </div>
-          <div className={classes.card}>
-            <Typography variant="subtitle1" color="primary">Full Name</Typography>
-            <Typography variant="subtitle2" color="primary">Email</Typography>
-          </div>
-          <div className={classes.card}>
-            <Typography variant="subtitle1" color="primary">Full Name</Typography>
-            <Typography variant="subtitle2" color="primary">Email</Typography>
-          </div>
-          <div className={classes.card}>
-            <Typography variant="subtitle1" color="primary">Full Name</Typography>
-            <Typography variant="subtitle2" color="primary">Email</Typography>
-          </div>
-        </div>
-        <div className={classes.board}>
-          <div className={classes.card}>
-            <Typography variant="subtitle1" color="primary">Full Name</Typography>
-            <Typography variant="subtitle2" color="primary">Email</Typography>
-          </div>
-        </div>
+       { stages?
+          stages.map((stage, index) =>
+            <Board key={index} stage={stage}></Board>
+          ):
+          <div>No stages</div>
+        }
       </div>
     );
   }
@@ -66,19 +29,6 @@ const styles = (theme: Theme) => createStyles({
     display: "flex",
     margin: theme.spacing.unit * 4,
     marginTop: theme.spacing.unit * 8
-  },
-  board: {
-    width: 320,
-    margin: theme.spacing.unit * 2,
-    height: "fit-content",
-    backgroundColor: theme.palette.common.white,
-    border: `1px solid ${theme.palette.primary.light}`,
-    borderRadius: theme.spacing.unit / 4,
-  },
-  card: {
-    backgroundColor: theme.palette.common.white,
-    padding: theme.spacing.unit * 2,
-    borderBottom: `1px solid ${theme.palette.primary.light}`
   }
 });
 
