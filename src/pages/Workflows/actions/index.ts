@@ -45,10 +45,10 @@ function dispatchFetchWorkflowError(e: Error): IActionWorkflowFetchError {
   };
 }
 
-export const actionFetchWorkflow = () => {
+export const actionFetchWorkflow = (id: string) => {
   return (dispatch: Dispatch) => {
     dispatch(dispatchFetchWorkflowProgress());
-    axios.get(`${Api.baseUrl}/workflows/${Api.testWorkflow}`)
+    axios.get(`${Api.baseUrl}/workflows/${id}`)
       .then(({data: { workflow }}) => {
         return dispatch(dispatchFetchWorkflowSuccess(workflow));
       })

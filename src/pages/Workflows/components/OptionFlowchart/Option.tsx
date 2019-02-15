@@ -10,12 +10,13 @@ import CheckCirclelIcon from '@material-ui/icons/CheckCircle';
 interface Props {
   item: OptionModel;
   children: Array<OptionModel>;
+  workflowId: string;
 }
 
 class Option extends React.Component<Props> {
 
   render() {
-    const { children = [] as Array<OptionModel>, item } = this.props;
+    const { children = [] as Array<OptionModel>, item, workflowId } = this.props;
     const childrenSize = (item && item.children)? item.children.length : 0;
     const isIfElseMethod = ConditionMethodEnum[item.method as ConditionMethodEnum] === ConditionMethodEnum.IF_ELSE;
 
@@ -24,7 +25,7 @@ class Option extends React.Component<Props> {
       {
         item &&
           <>
-            <Item item={item} isDestroy />
+            <Item item={item} workflowId={workflowId} isDestroy />
             <Grid container spacing={40} justify="center">
               {
                 childrenSize > 0?
@@ -38,6 +39,7 @@ class Option extends React.Component<Props> {
                         <Line/>
                         <Option
                           item={children.filter(item => item._id === child)[0]}
+                          workflowId={workflowId}
                           children={children}
                         ></Option>
                       </Grid>

@@ -21,7 +21,7 @@ abstract class Command {
     this._type = type;
   }
 
-  abstract async execute(parent: string): Promise<any>
+  abstract async execute(workflowId: string, parent: string): Promise<any>
 }
 
 export default Command;

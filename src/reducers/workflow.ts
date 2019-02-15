@@ -3,9 +3,9 @@ import { Reducer } from 'redux'
 import {
   WorkflowActions,
   WorkflowActionType
-} from '../pages/Workflow/actions';
+} from '../pages/Workflows/actions';
 
-import { WorkflowModel } from '../pages/Workflow/model';
+import { WorkflowModel } from '../pages/Workflows/model';
 
 export interface WorkflowState {
   workflow: WorkflowModel,

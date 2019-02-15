@@ -15,13 +15,14 @@ import { OptionMenuItemModel, OptionModel } from '../../model'
 interface Props extends WithStyles<typeof styles> {
   eventExists: boolean;
   actionFetchWorkflow: any;
+  workflowId: string;
 }
 
 class OptionMenu extends React.PureComponent<Props> {
   handleOptionSelect = (command: Command) => async (parent: string) => {
-    const { actionFetchWorkflow } = this.props
-    await command.execute(parent);
-    actionFetchWorkflow()
+    const { actionFetchWorkflow, workflowId } = this.props
+    await command.execute(workflowId, parent);
+    actionFetchWorkflow(workflowId)
   };
 
   render(): React.ReactNode {

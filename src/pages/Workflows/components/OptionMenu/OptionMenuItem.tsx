@@ -7,8 +7,7 @@ import {
 	DragSourceMonitor,
 } from 'react-dnd';
 import { Item } from '../OptionFlowchart';
-import { CommandTypeEnum } from '../../lib/Command'
-import { OptionModel } from '../../model/'
+import { OptionModel } from '../../model/';
 
 interface Props extends WithStyles<typeof styles> {
   item: OptionModel,

@@ -1,5 +1,5 @@
-import { WorkflowModel } from '../../Workflow/model'
-import { StageModel } from '../../Stage/model'
+import { WorkflowModel } from '../../Workflows/model'
+import { StageModel } from '../../Stages/model'
 
 export default interface OptionModel {
   _id: string;

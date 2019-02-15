@@ -25,8 +25,8 @@ class ActionCommand extends Command {
     this._method = method;
   }
 
-  async execute(parent: string): Promise<any> {
-    const { data: {option} } = await axios.post(`${Api.baseUrl}/workflows/${Api.testWorkflow}/options`, {
+  async execute(workflowId: string, parent: string): Promise<any> {
+    const { data: {option} } = await axios.post(`${Api.baseUrl}/workflows/${workflowId}/options`, {
       parent,
       method: ActionMethodEnum[this.method],
       type: CommandTypeEnum[this.type]

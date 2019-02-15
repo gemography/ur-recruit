@@ -23,8 +23,9 @@ import {
   ListItemIcon,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import Workflow from './pages/Workflow';
-import State from './pages/Stage';
+import Workflows from './pages/Workflows';
+import Show from './pages/Workflows/components/Show';
+import States from './pages/Stages';
 import withRoot from './withRoot';
 
 import { PipelineModel } from './pages/Pipeline/models';
@@ -51,11 +52,6 @@ class App extends React.Component<Props> {
     this.setState({value})
   }
 
-  handleDrawerToggle = () => {
-    const { open } = this.state;
-    this.setState({open: !open});
-  }
-
   handleCreatePipeline = () => { }
 
   render(): React.ReactNode {
@@ -73,15 +69,15 @@ class App extends React.Component<Props> {
                 </Typography>
               </div>
               <Tabs
-                value={history.location.pathname}
+                value={history.location.pathname.split("/")[1]}
                 indicatorColor="secondary"
                 textColor="inherit"
                 centered
                 onChange={this.handleCallToRouter}
                 className={classes.tabs}
               >
-                <Tab label="Stages" value="/" />
-                <Tab label="Workflow" value="/workflows" />
+                <Tab label="Stages" value="" />
+                <Tab label="Workflows" value="workflows" />
               </Tabs>
             </Toolbar>
           </AppBar>
@@ -131,8 +127,9 @@ class App extends React.Component<Props> {
             </Hidden>
           </nav>
           <main className={classes.content}>
-            <Route exact={true} path="/" render={()=><State stages={pipeline.stages}/>} />
-            <Route exact={true} path="/workflows" component={Workflow} />
+            <Route exact={true} path="/" render={()=><States stages={pipeline.stages}/>} />
+            <Route exact={true} path="/workflows" render={()=><Workflows workflows={pipeline.workflows}/>} />
+            <Route exact={true} path="/workflows/:id" component={Show} />
           </main>
         </div>
       </Router>
