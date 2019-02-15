@@ -64,7 +64,8 @@ class Workflow extends React.Component<Props> {
 const styles = (theme: Theme) => createStyles({
   root: {
     display: "flex",
-    margin: theme.spacing.unit * 4
+    margin: theme.spacing.unit * 4,
+    marginTop: theme.spacing.unit * 8
   },
   board: {
     width: 320,
