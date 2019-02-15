@@ -16,8 +16,8 @@ class Workflow extends React.Component<Props> {
         </div>
         {candidates.map((candidate, index) =>
           <div className={classes.card} key={index}>
-            <Typography variant="subtitle1" color="primary">{candidate}</Typography>
-            <Typography variant="subtitle2" color="primary">{candidate}</Typography>
+            <Typography variant="subtitle1" color="primary">{candidate.name}</Typography>
+            <Typography variant="subtitle2" color="primary">{candidate.email}</Typography>
           </div>
         )}
       </div>

@@ -40,6 +40,7 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: theme.palette.primary.main,
     borderRadius: theme.spacing.unit,
     margin: theme.spacing.unit * 2,
+    boxShadow: `0 1px 3px ${theme.palette.primary.light}`
   },
   link: {
     textDecoration: "none"

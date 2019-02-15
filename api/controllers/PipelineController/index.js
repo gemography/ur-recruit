@@ -5,7 +5,13 @@ const index = (req, res) => {
 
   Pipeline.
     findById(id).
-    populate("stages").
+    populate({
+      path: "stages",
+      populate: {
+        path: "candidates",
+        model: "Candidate"
+      }
+    }).
     populate("workflows").
     exec(function (err, pipeline) {
       if (err) return handleError(err);
