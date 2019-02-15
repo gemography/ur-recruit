@@ -3,5 +3,5 @@ const {
 } = require('../controllers/PipelineController');
 
 module.exports = (server) => {
-  server.route('/api/pipelines/:id').get(index);
+  server.route('/api/pipelines').get(index);
 };

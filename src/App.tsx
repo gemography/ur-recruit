@@ -39,12 +39,16 @@ class App extends React.Component<Props> {
   state = {
     value: history.location.pathname,
     open: true,
-    pipeline: {} as PipelineModel
+    pipelines: [] as Array<PipelineModel>,
+    selectedPipeline: {} as PipelineModel
   }
 
   componentDidMount = async () => {
-    const {data: {pipeline}} = await axios.get(`${Api.baseUrl}/pipelines/${Api.testPipeline}`);
-    this.setState({pipeline})
+    const {data: {pipelines}} = await axios.get(`${Api.baseUrl}/pipelines`);
+    this.setState({
+      pipelines,
+      selectedPipeline: pipelines[0]
+    })
   }
 
   handleCallToRouter = (event:any, value: string) => {
@@ -52,11 +56,15 @@ class App extends React.Component<Props> {
     this.setState({value})
   }
 
+  handlePipelineSelect = (selectedPipeline: PipelineModel) => {
+    this.setState({selectedPipeline})
+  }
+
   handleCreatePipeline = () => { }
 
   render(): React.ReactNode {
     const { classes } = this.props;
-    const { open, pipeline } = this.state;
+    const { open, pipelines, selectedPipeline } = this.state;
 
     return (
       <Router history={history}>
@@ -100,15 +108,13 @@ class App extends React.Component<Props> {
                   <List
                     subheader={<ListSubheader component="div">Pipelines</ListSubheader>}
                   >
-                    <ListItem button selected key="front end web dev">
-                      <ListItemText primary="front end web dev" />
-                    </ListItem>
-                    <ListItem button key="back end web dev">
-                      <ListItemText primary="back end web dev" />
-                    </ListItem>
-                    <ListItem button key="Software Engeneer Intern">
-                      <ListItemText primary="Software Engeneer Intern" />
-                    </ListItem>
+                  {
+                    pipelines.map((pipeline, index) =>
+                      <ListItem button selected={selectedPipeline._id === pipeline._id} key={index} onClick={() => this.handlePipelineSelect(pipeline)}>
+                        <ListItemText primary={pipeline.name} />
+                      </ListItem>
+                    )
+                  }
                   </List>
                   <Divider />
                   <List>
@@ -127,8 +133,8 @@ class App extends React.Component<Props> {
             </Hidden>
           </nav>
           <main className={classes.content}>
-            <Route exact={true} path="/" render={()=><States stages={pipeline.stages}/>} />
-            <Route exact={true} path="/workflows" render={()=><Workflows workflows={pipeline.workflows}/>} />
+            <Route exact={true} path="/" render={()=><States stages={selectedPipeline.stages}/>} />
+            <Route exact={true} path="/workflows" render={()=><Workflows workflows={selectedPipeline.workflows}/>} />
             <Route exact={true} path="/workflows/:id" component={Show} />
           </main>
         </div>

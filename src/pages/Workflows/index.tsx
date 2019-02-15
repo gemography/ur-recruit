@@ -13,7 +13,7 @@ class Workflow extends React.Component<Props> {
 
     return (
       <div className={classes.root}>
-        { workflows?
+        { workflows && workflows.length > 0?
           workflows.map((workflow, index) =>
             <Link className={classes.link} to={`/workflows/${workflow._id}`} key={index}>
               <div className={classes.item}>

@@ -4,7 +4,7 @@ const index = (req, res) => {
   const { id } = req.params;
 
   Pipeline.
-    findById(id).
+    find().
     populate({
       path: "stages",
       populate: {
@@ -13,9 +13,9 @@ const index = (req, res) => {
       }
     }).
     populate("workflows").
-    exec(function (err, pipeline) {
+    exec(function (err, pipelines) {
       if (err) return handleError(err);
-      res.status(200).json({ pipeline: pipeline });
+      res.status(200).json({ pipelines });
     });
 };
 

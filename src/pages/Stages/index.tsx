@@ -13,7 +13,7 @@ class Workflow extends React.Component<Props> {
 
     return (
       <div className={classes.root}>
-       { stages?
+       { stages && stages.length > 0?
           stages.map((stage, index) =>
             <Board key={index} stage={stage}></Board>
           ):
