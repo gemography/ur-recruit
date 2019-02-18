@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom'
 import OptionMenu from '../components/OptionMenu'
-import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
+import { createStyles, WithStyles, withStyles, Theme, IconButton } from '@material-ui/core';
 
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
@@ -12,11 +13,12 @@ import { actionFetchWorkflow } from '../actions'
 import Option from '../components/OptionFlowchart/index';
 import { WorkflowModel } from '../model'
 import {Placeholder} from '../components/OptionFlowchart';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 interface Props extends WithStyles<typeof styles> {
   workflow: WorkflowModel;
+  workflowId: string;
   actionFetchWorkflow: any;
-  match: any
 }
 
 class Workflow extends React.Component<Props> {
@@ -24,40 +26,54 @@ class Workflow extends React.Component<Props> {
     workflow: {} as WorkflowModel
   };
 
+  fetchWorkflow(){
+    const { actionFetchWorkflow, workflowId} = this.props;
+    actionFetchWorkflow(workflowId);
+  }
+
   componentDidMount() {
-    const { actionFetchWorkflow, match: { params: { id }}} = this.props;
-    actionFetchWorkflow(id);
+    this.fetchWorkflow();
+  }
+
+  componentDidUpdate() {
+    const { workflow, workflowId} = this.props;
+    if (workflow._id && workflow._id !== workflowId) {
+      this.fetchWorkflow();
+    }
   }
 
   render(): React.ReactNode {
-    const { classes, workflow: {event, children}, match: { params: { id }} } = this.props;
+    const { classes, workflow: {name, event, children}, workflowId } = this.props;
 
     return (
       <div className={classes.root}>
-        <OptionMenu eventExists={!!event} workflowId={id}></OptionMenu>
-        <main className={classes.main}>
-          {
-            !event?
-              <Placeholder parent="" />:
-              <Option
-                workflowId={id}
-                item={children.filter(item=> item._id === event)[0]}
-                children={children}
-              />
-          }
-        </main>
+        <div className={classes.body}>
+          <OptionMenu eventExists={!!event} workflowId={workflowId}></OptionMenu>
+          <main className={classes.main}>
+            {
+              !event?
+                <Placeholder parent="" />:
+                <Option
+                  workflowId={workflowId}
+                  item={children.filter(item=> item._id === event)[0]}
+                  children={children}
+                />
+            }
+          </main>
+        </div>
       </div>
     );
   }
 }
 
 const styles = (theme: Theme) => createStyles({
-  root: {
-    display: "flex"
+  root: { },
+  body: {
+    display: "flex",
   },
   main: {
     width: 600,
-    margin: theme.spacing.unit * 10,
+    paddingTop: theme.spacing.unit * 5,
     textAlign: "center"
   }
 });

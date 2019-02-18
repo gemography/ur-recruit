@@ -94,7 +94,7 @@ class OptionMenu extends React.PureComponent<Props> {
 const styles = (theme: Theme) => createStyles({
   root : {
     paddingLeft: theme.spacing.unit * 5,
-    paddingTop: theme.spacing.unit * 16
+    paddingTop: theme.spacing.unit * 5
   }
 });
 

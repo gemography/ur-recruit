@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom'
 import {
   createStyles,
   WithStyles,
@@ -6,13 +7,13 @@ import {
   Theme,
   ListItem,
   ListItemText,
-  Typography,
-  Divider,
+  IconButton,
   List,
   ListSubheader,
 } from '@material-ui/core';
 import Create from './components/Create'
 import { PipelineModel } from './models'
+import AddIcon from '@material-ui/icons/Add';
 
 interface Props extends WithStyles<typeof styles> {
   pipelines: Array<PipelineModel>;
@@ -21,20 +22,36 @@ interface Props extends WithStyles<typeof styles> {
   onPipelineCreate: () => void;
 }
 
+interface CollapseState {
+  [key:string]: any
+}
+
 class Workflow extends React.Component<Props> {
+  state = {
+    collapseState: {} as CollapseState
+  };
+
+  handleClick = (id: string) => {
+    const {collapseState} = this.state;
+    collapseState[id] = !collapseState[id];
+    this.setState({ collapseState });
+  };
+
   render(): React.ReactNode {
     const { pipelines, selectedPipeline, onPipelineSelect, onPipelineCreate, classes } = this.props;
 
     return (
       <div>
-        <div className={classes.toolbar}>
-          <Typography variant="h6" color="inherit">
-            Pipelines
-          </Typography>
-        </div>
-        <Divider />
+        <div className={classes.toolbar}></div>
         <List
-          subheader={<ListSubheader component="div">Pipelines</ListSubheader>}
+          subheader={
+            <ListSubheader component="div">
+              Pipelines
+              <IconButton aria-label="AddPipeline" className={classes.addIcon}>
+                <AddIcon fontSize="small" />
+              </IconButton>
+            </ListSubheader>
+          }
         >
         {
           pipelines.map((pipeline, index) =>
@@ -44,15 +61,28 @@ class Workflow extends React.Component<Props> {
           )
         }
         </List>
-        <Divider />
-        <Create onPipelineCreate={onPipelineCreate}/>
       </div>
     );
   }
 }
 
 const styles = (theme: Theme) => createStyles({
-  toolbar: theme.mixins.toolbar,
+  toolbar: {
+    padding: theme.spacing.unit * 2,
+    paddingTop: theme.spacing.unit * 6
+  },
+  nested: {
+    paddingLeft: theme.spacing.unit * 4,
+  },
+  link: {
+    textDecoration: "none"
+  },
+  addIcon: {
+    position: "absolute",
+    right: 8,
+    top: 2,
+    cursor: "pointer"
+  }
 });
 
 export default withStyles(styles)(Workflow);

@@ -13,7 +13,6 @@ import {
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
-import { PipelineModel } from '../models'
 
 interface Props extends WithStyles<typeof styles> {
   onPipelineCreate: () => void;

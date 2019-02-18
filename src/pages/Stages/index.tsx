@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createStyles, WithStyles, withStyles, Theme, Typography } from '@material-ui/core';
+import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 import Board from './components/Board'
 import { StageModel } from './model'
 
@@ -28,7 +28,7 @@ const styles = (theme: Theme) => createStyles({
   root: {
     display: "flex",
     margin: theme.spacing.unit * 4,
-    marginTop: theme.spacing.unit * 8
+    marginTop: 0
   }
 });
 

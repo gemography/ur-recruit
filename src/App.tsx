@@ -15,9 +15,9 @@ import {
   Typography,
   Hidden,
   Drawer,
+  Grid,
 } from '@material-ui/core';
 import Workflows from './pages/Workflows';
-import Show from './pages/Workflows/components/Show';
 import States from './pages/Stages';
 import Pipelines from './pages/Pipelines';
 import withRoot from './withRoot';
@@ -31,7 +31,7 @@ const history = createBrowserHistory();
 class App extends React.Component<Props> {
 
   state = {
-    value: history.location.pathname,
+    value: "stages",
     open: true,
     pipelines: [] as Array<PipelineModel>,
     selectedPipeline: {} as PipelineModel
@@ -46,11 +46,14 @@ class App extends React.Component<Props> {
   }
 
   handleCallToRouter = (event:any, value: string) => {
-    history.push(value);
+    const { selectedPipeline } = this.state;
+    history.push(`/pipelines/${selectedPipeline._id}/${value}`);
     this.setState({value})
   }
 
   handlePipelineSelect = (selectedPipeline: PipelineModel) => {
+    const { value } = this.state;
+    history.push(`/pipelines/${selectedPipeline._id}/${value}`);
     this.setState({selectedPipeline})
   }
 
@@ -64,21 +67,18 @@ class App extends React.Component<Props> {
       <Router history={history}>
         <div className={classes.root}>
           <AppBar position="fixed" className={classes.appBar}>
-            <Toolbar>
-              <div>
-                <Typography variant="h6" color="inherit" noWrap>
-                  ATS MVP
-                </Typography>
-              </div>
+            <Toolbar className={classes.toolbar}>
+              <Typography color="inherit" variant="h6" className={classes.title}>
+                {selectedPipeline.name}
+              </Typography>
               <Tabs
-                value={history.location.pathname.split("/")[1]}
+                value={history.location.pathname.split("/")[3]}
                 indicatorColor="secondary"
                 textColor="inherit"
-                centered
                 onChange={this.handleCallToRouter}
                 className={classes.tabs}
               >
-                <Tab label="Stages" value="" />
+                <Tab label="Stages" value="stages" />
                 <Tab label="Workflows" value="workflows" />
               </Tabs>
             </Toolbar>
@@ -97,14 +97,13 @@ class App extends React.Component<Props> {
                   selectedPipeline={selectedPipeline}
                   onPipelineSelect={this.handlePipelineSelect}
                   onPipelineCreate={this.handlePipelineCreate}
-                  />
+                />
               </Drawer>
             </Hidden>
           </nav>
           <main className={classes.content}>
-            <Route exact={true} path="/" render={()=><States stages={selectedPipeline.stages}/>} />
-            <Route exact={true} path="/workflows" render={()=><Workflows workflows={selectedPipeline.workflows}/>} />
-            <Route exact={true} path="/workflows/:id" component={Show} />
+            <Route exact={true} path="/pipelines/:pipeline_id/stages" render={()=><States stages={selectedPipeline.stages}/>} />
+            <Route exact={true} path="/pipelines/:pipeline_id/workflows" render={()=><Workflows workflows={selectedPipeline.workflows}/>} />
           </main>
         </div>
       </Router>
@@ -112,13 +111,20 @@ class App extends React.Component<Props> {
   }
 }
 
-const drawerWidth = 240;
+const drawerWidth = 320;
 const styles = (theme: Theme) => createStyles({
   root: {
     display: 'flex',
   },
+  title: {
+    padding: 16
+  },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth
+  },
+  toolbar: {
+    display: "block",
   },
   drawer: {
     width: drawerWidth,
@@ -129,7 +135,11 @@ const styles = (theme: Theme) => createStyles({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+    backgroundColor: theme.palette.background.default,
+    marginTop: 112
+  },
+  tabContainer:{
+    backgroundColor: theme.palette.common.white
   },
   tabs: {
     width: "100%"
