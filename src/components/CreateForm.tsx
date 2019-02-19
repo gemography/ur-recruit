@@ -10,7 +10,7 @@ import {
   InputAdornment,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import SaveIcon from '@material-ui/icons/Save';
+import InputForm from '../components/InputForm';
 
 interface Props extends WithStyles<typeof styles> {
   onSave: (name: string) => void;
@@ -18,26 +18,20 @@ interface Props extends WithStyles<typeof styles> {
 
 class CreateForm extends React.Component<Props> {
   state = {
-    name: "",
-    anchorEl: null,
+    anchorEl: null
   }
 
   open = (event: any) => this.setState({anchorEl: event.currentTarget})
-  close = () => this.setState({anchorEl: null, name: ""})
+  close = () => this.setState({anchorEl: null})
 
-  save = () => {
+  handleSave = (name: string) => {
     const { onSave } = this.props;
-    const { name } = this.state;
     !!name && onSave(name)
-    this.setState({anchorEl: null, name: ""})
+    this.setState({anchorEl: null})
   };
 
-  handleChange = (event: any) => {
-    this.setState({name: event.target.value})
-  }
-
   render(): React.ReactNode {
-    const { anchorEl, name } = this.state;
+    const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
     const { classes } = this.props;
 
@@ -66,23 +60,7 @@ class CreateForm extends React.Component<Props> {
             horizontal: 'left',
           }}
         >
-        <TextField
-          id="outlined-adornment-save"
-          variant="outlined"
-          className={classes.textField}
-          label="What's the name?"
-          value={name}
-          onChange={this.handleChange}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton aria-label="Toggle password visibility" onClick={this.save}>
-                  <SaveIcon />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
+          <InputForm onSave={this.handleSave} />
         </Popover>
       </>
     );

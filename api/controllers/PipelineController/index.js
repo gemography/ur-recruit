@@ -1,4 +1,6 @@
 const { create } = require('./create');
+const { update } = require('./update');
+const { remove } = require('./remove');
 
 const Pipeline = require('../../models/Pipeline');
 
@@ -21,5 +23,7 @@ const index = (req, res) => {
 
 module.exports = {
   index,
-  create
+  create,
+  update,
+  remove
 };

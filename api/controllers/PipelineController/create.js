@@ -12,7 +12,7 @@ const create = (req, res) => {
     .catch((err) => {
       res
         .status(500)
-        .json({ err, msg: 'There was an error saving the workflow in the database.' });
+        .json({ err, msg: 'There was an error saving the pipeline in the database.' });
     });
 };
 

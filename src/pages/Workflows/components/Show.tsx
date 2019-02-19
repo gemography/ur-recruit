@@ -13,7 +13,6 @@ import { actionFetchWorkflow } from '../actions'
 import Option from '../components/OptionFlowchart/index';
 import { WorkflowModel } from '../models'
 import {Placeholder} from '../components/OptionFlowchart';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 interface Props extends WithStyles<typeof styles> {
   workflow: WorkflowModel;

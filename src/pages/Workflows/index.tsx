@@ -113,12 +113,6 @@ const styles = (theme: Theme) => createStyles({
     minWidth: 240,
     backgroundColor: theme.palette.common.white,
     borderRight: "1px solid rgba(0, 0, 0, 0.12)"
-  },
-  addIcon: {
-    position: "absolute",
-    right: 8,
-    top: 2,
-    cursor: "pointer"
   }
 });
 
