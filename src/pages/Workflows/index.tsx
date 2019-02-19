@@ -17,6 +17,7 @@ import {
 import Api from '../../services/Api';
 import { actionSelectPipeline } from '../Pipelines/actions'
 import { PipelineModel } from '../Pipelines/models'
+import { WorkflowModel } from '../Workflows/models'
 import CreateForm from '../../components/CreateForm';
 
 interface Props extends WithStyles<typeof styles> {
@@ -34,8 +35,16 @@ class Workflows extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps = (nextProps: Props) => {
-    const { selectedPipeline: {workflows} } = nextProps
-    if(workflows.length > 0)
+    const { selectedPipeline: {workflows} } = nextProps;
+    this.setWorkflowId(workflows);
+  }
+  componentDidMount = () => {
+    const { selectedPipeline: {workflows} } = this.props
+    this.setWorkflowId(workflows);
+  }
+
+  setWorkflowId = (workflows: Array<WorkflowModel>) => {
+    if(workflows && workflows.length > 0)
       this.setState({workflowId: workflows[0]._id})
   }
 
