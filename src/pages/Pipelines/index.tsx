@@ -39,9 +39,7 @@ class Pipelines extends React.Component<Props> {
 
   handlePipelineCreate = async (name: string) => {
     const { actionFetchPipelines } = this.props;
-    const {data: {pipeline} } = await axios.post(`${Api.baseUrl}/pipelines`, {
-      name
-    })
+    const {data: {pipeline} } = await axios.post(`${Api.baseUrl}/pipelines`, { name })
     actionFetchPipelines(pipeline._id);
   }
 
@@ -56,7 +54,7 @@ class Pipelines extends React.Component<Props> {
         <List
           subheader={
             <ListSubheader component="div">
-              Create a pipeline
+              Pipelines
               <CreateForm onSave={this.handlePipelineCreate}/>
             </ListSubheader>
           }

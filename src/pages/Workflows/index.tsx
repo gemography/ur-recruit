@@ -1,5 +1,7 @@
 import * as React from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Show from '../../pages/Workflows/components/Show';
 import {
   Theme,
@@ -10,14 +12,16 @@ import {
   List,
   ListItemText,
   ListSubheader,
-  IconButton,
   Grid,
 } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import { WorkflowModel } from './models'
+import Api from '../../services/Api';
+import { actionSelectPipeline } from '../Pipelines/actions'
+import { PipelineModel } from '../Pipelines/models'
+import CreateForm from '../../components/CreateForm';
 
 interface Props extends WithStyles<typeof styles> {
-  workflows: Array<WorkflowModel>;
+  selectedPipeline: PipelineModel;
+  actionSelectPipeline: any
 }
 
 interface State {
@@ -29,11 +33,28 @@ class Workflows extends React.Component<Props, State> {
     workflowId: ""
   }
 
+  componentWillReceiveProps = (nextProps: Props) => {
+    const { selectedPipeline: {workflows} } = nextProps
+    if(workflows.length > 0)
+      this.setState({workflowId: workflows[0]._id})
+  }
+
   handleWorkflowSelect = (workflowId: string) => this.setState({workflowId})
+  handleWorkflowCreate = async (name: string) => {
+    const {  selectedPipeline, actionSelectPipeline } = this.props;
+    const { data: {workflow} } = await axios.post(
+      `${Api.baseUrl}/pipelines/${selectedPipeline._id}/workflows`,
+      { name }
+    );
+    actionSelectPipeline({
+      ...selectedPipeline,
+      workflows: [...selectedPipeline.workflows, workflow] })
+    this.setState({workflowId: workflow._id})
+  }
 
   render(): React.ReactNode {
     const { workflowId } = this.state;
-    const { classes, workflows } = this.props;
+    const { classes, selectedPipeline: {workflows} } = this.props;
 
     return (
       <div className={classes.root}>
@@ -44,10 +65,8 @@ class Workflows extends React.Component<Props, State> {
                 component="nav"
                 subheader={
                   <ListSubheader component="div">
-                    Create a workflow
-                    <IconButton aria-label="AddWorkflow" className={classes.addIcon}>
-                      <AddIcon fontSize="small" />
-                    </IconButton>
+                    Workflows
+                    <CreateForm onSave={this.handleWorkflowCreate}/>
                   </ListSubheader>
                 }
                 className={classes.list}
@@ -95,11 +114,17 @@ const styles = (theme: Theme) => createStyles({
 });
 
 function mapStateToProps(state: any) {
-  const { selectedPipeline: {workflows} } = state.pipelineReducer
+  const { selectedPipeline } = state.pipelineReducer
 
   return {
-    workflows
+    selectedPipeline
   };
 }
 
-export default withStyles(styles)(connect(mapStateToProps)(Workflows));
+function mapDispatchToProps(dispatch: any) {
+  return {
+    actionSelectPipeline: bindActionCreators(actionSelectPipeline, dispatch)
+  };
+}
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Workflows));
