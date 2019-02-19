@@ -10,7 +10,7 @@ import Command, { CommandTypeEnum } from '../../lib/Command'
 
 import OptionMenuList from './OptionMenuList'
 import { actionFetchWorkflow } from '../../actions'
-import { OptionMenuItemModel, OptionModel } from '../../model'
+import { OptionMenuItemModel, OptionModel } from '../../models'
 
 interface Props extends WithStyles<typeof styles> {
   eventExists: boolean;

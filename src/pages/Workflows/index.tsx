@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import Show from '../../pages/Workflows/components/Show';
 import {
   Theme,
@@ -13,7 +14,7 @@ import {
   Grid,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { WorkflowModel } from './model'
+import { WorkflowModel } from './models'
 
 interface Props extends WithStyles<typeof styles> {
   workflows: Array<WorkflowModel>;
@@ -39,27 +40,27 @@ class Workflows extends React.Component<Props, State> {
         { workflows && workflows.length > 0?
           <Grid container>
             <Grid item>
-                <List
-                  component="nav"
-                  subheader={
-                    <ListSubheader component="div">
-                      Choose your workflow
-                      <IconButton aria-label="AddWorkflow" className={classes.addIcon}>
-                        <AddIcon fontSize="small" />
-                      </IconButton>
-                    </ListSubheader>
-                  }
-                  className={classes.list}
-                >
-                  {workflows.map(workflow =>
-                    <ListItem selected={workflow._id === workflowId} key={workflow._id} button onClick={() => this.handleWorkflowSelect(workflow._id)}>
-                      <ListItemText primary={workflow.name} />
-                    </ListItem>
-                  )}
-                </List>
+              <List
+                component="nav"
+                subheader={
+                  <ListSubheader component="div">
+                    Create a workflow
+                    <IconButton aria-label="AddWorkflow" className={classes.addIcon}>
+                      <AddIcon fontSize="small" />
+                    </IconButton>
+                  </ListSubheader>
+                }
+                className={classes.list}
+              >
+                {workflows.map(workflow =>
+                  <ListItem selected={workflow._id === workflowId} key={workflow._id} button onClick={() => this.handleWorkflowSelect(workflow._id)}>
+                    <ListItemText primary={workflow.name} />
+                  </ListItem>
+                )}
+              </List>
             </Grid>
             <Grid item>
-                {!!workflowId && <Show workflowId={workflowId}></Show> }
+              {!!workflowId && <Show workflowId={workflowId}></Show> }
             </Grid>
           </Grid>:
           <div>No workflows</div>
@@ -93,4 +94,12 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
-export default withStyles(styles)(Workflows);
+function mapStateToProps(state: any) {
+  const { selectedPipeline: {workflows} } = state.pipelineReducer
+
+  return {
+    workflows
+  };
+}
+
+export default withStyles(styles)(connect(mapStateToProps)(Workflows));

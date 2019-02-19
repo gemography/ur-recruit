@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Grid } from '@material-ui/core';
 
-import { OptionModel } from '../../model';
+import { OptionModel } from '../../models';
 import {Placeholder, Line, Curve, Item} from './index';
 import { ConditionMethodEnum } from '../../lib/commands/ConditionCommand'
 import CancelIcon from '@material-ui/icons/Cancel';

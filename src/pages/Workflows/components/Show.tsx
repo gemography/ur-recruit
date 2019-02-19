@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 import { actionFetchWorkflow } from '../actions'
 
 import Option from '../components/OptionFlowchart/index';
-import { WorkflowModel } from '../model'
+import { WorkflowModel } from '../models'
 import {Placeholder} from '../components/OptionFlowchart';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 

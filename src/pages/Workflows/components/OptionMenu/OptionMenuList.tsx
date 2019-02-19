@@ -3,7 +3,7 @@ import { createStyles, WithStyles, withStyles, Theme, Typography } from '@materi
 import OptionMenuItem from './OptionMenuItem'
 import Command from '../../lib/Command'
 import { CommandTypeEnum } from '../../lib/Command'
-import { OptionMenuItemModel } from '../../model'
+import { OptionMenuItemModel } from '../../models'
 
 interface Props extends WithStyles<typeof styles> {
   items: Array<OptionMenuItemModel>,

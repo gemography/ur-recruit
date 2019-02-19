@@ -7,7 +7,7 @@ import {
 	DragSourceMonitor,
 } from 'react-dnd';
 import { Item } from '../OptionFlowchart';
-import { OptionModel } from '../../model/';
+import { OptionModel } from '../../models/';
 
 interface Props extends WithStyles<typeof styles> {
   item: OptionModel,

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Typography, Button, TextField, InputAdornment } from '@material-ui/core';
-import { OptionModel } from '../../../model';
+import { OptionModel } from '../../../models';
 
 interface Props {
   item: OptionModel;

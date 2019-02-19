@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createStyles, WithStyles, withStyles, Theme, Typography } from '@material-ui/core';
-import { StageModel } from '../model'
+import { StageModel } from '../models'
 
 interface Props extends WithStyles<typeof styles> {
   stage: StageModel

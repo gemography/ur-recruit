@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createStyles, WithStyles, withStyles, Theme, Typography } from '@material-ui/core';
-import { OptionModel } from '../../../model';
+import { OptionModel } from '../../../models';
 
 import IfElseCondition from './IfElseCondition'
 import WaitCondition from './WaitCondition'

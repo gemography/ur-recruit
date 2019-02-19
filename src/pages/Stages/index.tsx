@@ -1,10 +1,18 @@
 import * as React from 'react';
-import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
+import { connect } from 'react-redux';
+import {
+  createStyles,
+  WithStyles,
+  withStyles,
+  Theme
+} from '@material-ui/core';
+
+import { StageModel } from './models'
+
 import Board from './components/Board'
-import { StageModel } from './model'
 
 interface Props extends WithStyles<typeof styles> {
-  stages: Array<StageModel>
+  stages: Array<StageModel>;
 }
 
 class Stages extends React.Component<Props> {
@@ -32,4 +40,12 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
-export default withStyles(styles)(Stages);
+function mapStateToProps(state: any) {
+  const { selectedPipeline: {stages} } = state.pipelineReducer
+
+  return {
+    stages
+  };
+}
+
+export default withStyles(styles)(connect(mapStateToProps)(Stages));

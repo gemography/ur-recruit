@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { WorkflowModel } from '../model'
+import { WorkflowModel } from '../models'
 import { Action, Dispatch } from 'redux';
 import Api from '../../../services/Api';
 

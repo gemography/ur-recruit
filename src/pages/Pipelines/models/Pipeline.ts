@@ -1,7 +1,7 @@
-import { WorkflowModel } from '../../Workflows/model'
-import { StageModel } from '../../Stages/model'
+import { WorkflowModel } from '../../Workflows/models'
+import { StageModel } from '../../Stages/models'
 
-export default interface OptionModel {
+export default interface PipelineModel {
   _id: string;
   name: string;
   stages: Array<StageModel>;

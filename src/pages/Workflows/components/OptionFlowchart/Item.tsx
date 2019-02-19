@@ -5,7 +5,7 @@ import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
 import Api from '../../../../services/Api';
 
 import { Action, Event, Condition} from './index';
-import { OptionModel } from '../../model'
+import { OptionModel } from '../../models'
 
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 

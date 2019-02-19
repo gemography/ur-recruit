@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   createStyles,
   WithStyles,
@@ -11,34 +12,31 @@ import {
   List,
   ListSubheader,
 } from '@material-ui/core';
-import Create from './components/Create'
+
+import { actionFetchPipelines, actionSelectPipeline } from './actions'
 import { PipelineModel } from './models'
 import AddIcon from '@material-ui/icons/Add';
 
 interface Props extends WithStyles<typeof styles> {
   pipelines: Array<PipelineModel>;
-  selectedPipeline: PipelineModel;
-  onPipelineSelect: (selectedPipeline: PipelineModel) => void;
-  onPipelineCreate: () => void;
+  pipelineId: string,
+  actionFetchPipelines: any,
+  actionSelectPipeline: any,
 }
 
-interface CollapseState {
-  [key:string]: any
-}
-
-class Workflow extends React.Component<Props> {
-  state = {
-    collapseState: {} as CollapseState
+class Pipelines extends React.Component<Props> {
+  componentDidMount() {
+    const { actionFetchPipelines, pipelineId } = this.props;
+    actionFetchPipelines(pipelineId);
   };
 
-  handleClick = (id: string) => {
-    const {collapseState} = this.state;
-    collapseState[id] = !collapseState[id];
-    this.setState({ collapseState });
-  };
+  handlePipelineSelect = (selectedPipeline: PipelineModel) => {
+    const { actionSelectPipeline } = this.props;
+    actionSelectPipeline(selectedPipeline);
+  }
 
   render(): React.ReactNode {
-    const { pipelines, selectedPipeline, onPipelineSelect, onPipelineCreate, classes } = this.props;
+    const { pipelines, classes, pipelineId } = this.props;
 
     return (
       <div>
@@ -46,7 +44,7 @@ class Workflow extends React.Component<Props> {
         <List
           subheader={
             <ListSubheader component="div">
-              Pipelines
+              Create a pipeline
               <IconButton aria-label="AddPipeline" className={classes.addIcon}>
                 <AddIcon fontSize="small" />
               </IconButton>
@@ -55,7 +53,7 @@ class Workflow extends React.Component<Props> {
         >
         {
           pipelines.map((pipeline, index) =>
-            <ListItem button selected={selectedPipeline._id === pipeline._id} key={index} onClick={() => onPipelineSelect(pipeline)}>
+            <ListItem button selected={pipeline._id === pipelineId} key={index} onClick={() => this.handlePipelineSelect(pipeline)}>
               <ListItemText primary={pipeline.name} />
             </ListItem>
           )
@@ -85,4 +83,19 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
-export default withStyles(styles)(Workflow);
+function mapStateToProps(state: any) {
+  const { pipelines } = state.pipelineReducer
+
+  return {
+    pipelines
+  };
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    actionFetchPipelines: bindActionCreators(actionFetchPipelines, dispatch),
+    actionSelectPipeline: bindActionCreators(actionSelectPipeline, dispatch)
+  };
+}
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Pipelines));

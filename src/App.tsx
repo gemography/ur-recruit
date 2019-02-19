@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Route, Router } from 'react-router'
 import axios from 'axios';
 import Api from './services/Api';
@@ -25,85 +26,67 @@ import withRoot from './withRoot';
 import { PipelineModel } from './pages/Pipelines/models';
 
 interface Props extends WithStyles<typeof styles> {
+  selectedPipeline: PipelineModel
 }
 
 const history = createBrowserHistory();
 class App extends React.Component<Props> {
 
   state = {
-    value: "stages",
-    open: true,
-    pipelines: [] as Array<PipelineModel>,
-    selectedPipeline: {} as PipelineModel
+    value: history.location.pathname.split("/")[3] || "stages",
+    open: true
   }
 
-  componentDidMount = async () => {
-    const {data: {pipelines}} = await axios.get(`${Api.baseUrl}/pipelines`);
-    this.setState({
-      pipelines,
-      selectedPipeline: pipelines[0]
-    })
+  componentWillReceiveProps = (nextProps: Props) => {
+    const { value } = this.state;
+    const { selectedPipeline } = nextProps;
+
+    selectedPipeline && history.push(`/pipelines/${selectedPipeline._id}/${value}`);
   }
 
   handleCallToRouter = (event:any, value: string) => {
-    const { selectedPipeline } = this.state;
+    const { selectedPipeline } = this.props;
     history.push(`/pipelines/${selectedPipeline._id}/${value}`);
     this.setState({value})
   }
 
-  handlePipelineSelect = (selectedPipeline: PipelineModel) => {
-    const { value } = this.state;
-    history.push(`/pipelines/${selectedPipeline._id}/${value}`);
-    this.setState({selectedPipeline})
-  }
-
-  handlePipelineCreate = () => { }
-
   render(): React.ReactNode {
-    const { classes } = this.props;
-    const { open, pipelines, selectedPipeline } = this.state;
-
+    const { classes, selectedPipeline } = this.props;
+    const { open, value } = this.state;
     return (
       <Router history={history}>
         <div className={classes.root}>
-          <AppBar position="fixed" className={classes.appBar}>
-            <Toolbar className={classes.toolbar}>
-              <Typography color="inherit" variant="h6" className={classes.title}>
-                {selectedPipeline.name}
-              </Typography>
-              <Tabs
-                value={history.location.pathname.split("/")[3]}
-                indicatorColor="secondary"
-                textColor="inherit"
-                onChange={this.handleCallToRouter}
-                className={classes.tabs}
-              >
-                <Tab label="Stages" value="stages" />
-                <Tab label="Workflows" value="workflows" />
-              </Tabs>
-            </Toolbar>
-          </AppBar>
+          {selectedPipeline &&
+            <AppBar position="fixed" className={classes.appBar}>
+              <Toolbar className={classes.toolbar}>
+                <Typography color="inherit" variant="h6" className={classes.title}>
+                  {selectedPipeline.name}
+                </Typography>
+                <Tabs
+                  value={value}
+                  indicatorColor="secondary"
+                  textColor="inherit"
+                  onChange={this.handleCallToRouter}
+                  className={classes.tabs}
+                >
+                  <Tab label="Stages" value="stages" />
+                  <Tab label="Workflows" value="workflows" />
+                </Tabs>
+              </Toolbar>
+            </AppBar>
+          }
           <nav className={classes.drawer}>
-            <Hidden xsDown implementation="css">
-              <Drawer
-                classes={{
-                  paper: classes.drawerPaper,
-                }}
-                variant="permanent"
-                open={open}
-              >
-                <Pipelines
-                  pipelines={pipelines}
-                  selectedPipeline={selectedPipeline}
-                  onPipelineSelect={this.handlePipelineSelect}
-                  onPipelineCreate={this.handlePipelineCreate}
-                />
-              </Drawer>
-            </Hidden>
+            <Drawer
+              classes={{ paper: classes.drawerPaper }}
+              variant="permanent"
+              open={open}
+            >
+              <Pipelines pipelineId={history.location.pathname.split("/")[2]} />
+            </Drawer>
           </nav>
           <main className={classes.content}>
-            <Route exact={true} path="/pipelines/:pipeline_id/stages" render={()=><States stages={selectedPipeline.stages}/>} />
-            <Route exact={true} path="/pipelines/:pipeline_id/workflows" render={()=><Workflows workflows={selectedPipeline.workflows}/>} />
+            <Route exact={true} path="/pipelines/:pipeline_id/stages" component={States} />
+            <Route exact={true} path="/pipelines/:pipeline_id/workflows" component={Workflows} />
           </main>
         </div>
       </Router>
@@ -146,4 +129,12 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
-export default withRoot(withStyles(styles)(App));
+function mapStateToProps(state: any) {
+  const { selectedPipeline } = state.pipelineReducer
+
+  return {
+    selectedPipeline
+  };
+}
+
+export default withRoot(withStyles(styles)(connect(mapStateToProps)(App)));
