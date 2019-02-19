@@ -1,8 +1,8 @@
+const { create } = require('./create');
+
 const Pipeline = require('../../models/Pipeline');
 
 const index = (req, res) => {
-  const { id } = req.params;
-
   Pipeline.
     find().
     populate({
@@ -21,4 +21,5 @@ const index = (req, res) => {
 
 module.exports = {
   index,
+  create
 };

@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Route, Router } from 'react-router'
-import axios from 'axios';
-import Api from './services/Api';
 import { createBrowserHistory } from 'history';
 import {
   createStyles,
@@ -14,9 +12,7 @@ import {
   Toolbar,
   AppBar,
   Typography,
-  Hidden,
   Drawer,
-  Grid,
 } from '@material-ui/core';
 import Workflows from './pages/Workflows';
 import States from './pages/Stages';

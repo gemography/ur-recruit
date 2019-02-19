@@ -17,6 +17,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 interface Props extends WithStyles<typeof styles> {
   workflow: WorkflowModel;
+  loading: boolean;
   workflowId: string;
   actionFetchWorkflow: any;
 }
@@ -43,24 +44,28 @@ class Workflow extends React.Component<Props> {
   }
 
   render(): React.ReactNode {
-    const { classes, workflow: {name, event, children}, workflowId } = this.props;
+    const { classes, workflow: {event, children}, workflowId, loading } = this.props;
 
     return (
       <div className={classes.root}>
-        <div className={classes.body}>
-          <OptionMenu eventExists={!!event} workflowId={workflowId}></OptionMenu>
-          <main className={classes.main}>
-            {
-              !event?
-                <Placeholder parent="" />:
-                <Option
-                  workflowId={workflowId}
-                  item={children.filter(item=> item._id === event)[0]}
-                  children={children}
-                />
-            }
-          </main>
-        </div>
+        {
+          !loading?
+          <div className={classes.body}>
+            <OptionMenu eventExists={!!event} workflowId={workflowId}></OptionMenu>
+            <main className={classes.main}>
+              {
+                !event?
+                  <Placeholder parent="" />:
+                  <Option
+                    workflowId={workflowId}
+                    item={children.filter(item=> item._id === event)[0]}
+                    children={children}
+                  />
+              }
+            </main>
+          </div>:
+          <div>LOADING</div>
+        }
       </div>
     );
   }
@@ -80,10 +85,10 @@ const styles = (theme: Theme) => createStyles({
 
 
 function mapStateToProps(state: any) {
-  const { workflow } = state.workflowsReducer
-
+  const { workflow, loading } = state.workflowsReducer
   return {
-    workflow
+    workflow,
+    loading
   };
 }
 

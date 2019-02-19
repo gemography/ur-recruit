@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -8,14 +9,15 @@ import {
   Theme,
   ListItem,
   ListItemText,
-  IconButton,
   List,
   ListSubheader,
+  Typography,
 } from '@material-ui/core';
 
+import Api from '../../services/Api';
 import { actionFetchPipelines, actionSelectPipeline } from './actions'
 import { PipelineModel } from './models'
-import AddIcon from '@material-ui/icons/Add';
+import CreateForm from '../../components/CreateForm';
 
 interface Props extends WithStyles<typeof styles> {
   pipelines: Array<PipelineModel>;
@@ -35,19 +37,27 @@ class Pipelines extends React.Component<Props> {
     actionSelectPipeline(selectedPipeline);
   }
 
+  handlePipelineCreate = async (name: string) => {
+    const { actionFetchPipelines } = this.props;
+    const {data: {pipeline} } = await axios.post(`${Api.baseUrl}/pipelines`, {
+      name
+    })
+    actionFetchPipelines(pipeline._id);
+  }
+
   render(): React.ReactNode {
     const { pipelines, classes, pipelineId } = this.props;
 
     return (
       <div>
-        <div className={classes.toolbar}></div>
+        <div className={classes.appName}>
+          <Typography color="primary" variant="h5">ATS MVP</Typography>
+        </div>
         <List
           subheader={
             <ListSubheader component="div">
               Create a pipeline
-              <IconButton aria-label="AddPipeline" className={classes.addIcon}>
-                <AddIcon fontSize="small" />
-              </IconButton>
+              <CreateForm onSave={this.handlePipelineCreate}/>
             </ListSubheader>
           }
         >
@@ -65,21 +75,14 @@ class Pipelines extends React.Component<Props> {
 }
 
 const styles = (theme: Theme) => createStyles({
-  toolbar: {
+  appName: {
     padding: theme.spacing.unit * 2,
-    paddingTop: theme.spacing.unit * 6
   },
   nested: {
     paddingLeft: theme.spacing.unit * 4,
   },
   link: {
     textDecoration: "none"
-  },
-  addIcon: {
-    position: "absolute",
-    right: 8,
-    top: 2,
-    cursor: "pointer"
   }
 });
 
