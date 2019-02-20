@@ -5,11 +5,9 @@ import {
   withStyles,
   Theme,
   IconButton,
-  Popover,
   TextField,
   InputAdornment,
 } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
 
 interface Props extends WithStyles<typeof styles> {

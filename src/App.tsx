@@ -77,7 +77,7 @@ class App extends React.Component<Props> {
               variant="permanent"
               open={open}
             >
-              <Pipelines pipelineId={history.location.pathname.split("/")[2]} />
+              <Pipelines selectedId={history.location.pathname.split("/")[2]} />
             </Drawer>
           </nav>
           <main className={classes.content}>

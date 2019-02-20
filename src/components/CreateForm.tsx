@@ -5,12 +5,9 @@ import {
   withStyles,
   Theme,
   IconButton,
-  Popover,
-  TextField,
-  InputAdornment,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import InputForm from '../components/InputForm';
+import UpdatePopover from './UpdatePopover';
 
 interface Props extends WithStyles<typeof styles> {
   onSave: (name: string) => void;
@@ -46,22 +43,12 @@ class CreateForm extends React.Component<Props> {
         >
           <AddIcon fontSize="small" />
         </IconButton>
-        <Popover
-          id="create-form-popover"
-          anchorEl={anchorEl}
-          open={open}
+
+        <UpdatePopover
+          parentAnchorEl={anchorEl}
+          onSave={this.handleSave}
           onClose={this.close}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-        >
-          <InputForm onSave={this.handleSave} />
-        </Popover>
+        />
       </>
     );
   }
