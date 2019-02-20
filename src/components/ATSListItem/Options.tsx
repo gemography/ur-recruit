@@ -24,7 +24,6 @@ interface Props extends WithStyles<typeof styles> {
 
 class Options extends React.Component<Props> {
   state = {
-    anchorEl: null,
     updateAnchorEl: null,
     deleteAnchorEl: null
   }
@@ -43,7 +42,7 @@ class Options extends React.Component<Props> {
   handleSave = (name: string) => {
     const { onUpdate, data: {_id} } = this.props;
     !!name && onUpdate(_id, name)
-    this.setState({anchorEl: null})
+    this.setState({updateAnchorEl: null, deleteAnchorEl: null})
   };
 
   render(): React.ReactNode {

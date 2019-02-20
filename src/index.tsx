@@ -6,9 +6,9 @@ import ReduxRoot from './ReduxRoot';
 const rootEl = document.getElementById('root');
 ReactDOM.render(<ReduxRoot />, rootEl);
 
-const NextApp = require('./ReduxRoot').default;
+const ATSApp = require('./ReduxRoot').default;
 ReactDOM.render(
-    <NextApp />,
+    <ATSApp />,
     rootEl
 );
 

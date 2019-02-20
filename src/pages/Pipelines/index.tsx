@@ -36,6 +36,11 @@ class Pipelines extends React.Component<Props> {
     actionFetchPipelines(selectedId);
   }
 
+  handleSelect = (selectedPipeline: PipelineModel) => {
+    const { actionSelectPipeline } = this.props;
+    actionSelectPipeline(selectedPipeline);
+  };
+
   handleCreate = async (name: string) => {
     const {data: {pipeline: {_id}} } = await axios.post(`${Api.baseUrl}/pipelines`, { name });
     this.refresh(_id);
@@ -50,11 +55,6 @@ class Pipelines extends React.Component<Props> {
     const { pipelines } = this.props;
     await axios.delete(`${Api.baseUrl}/pipelines/${_id}`);
     this.refresh(pipelines.filter(pipeline=> pipeline._id !== _id)[0]._id);
-  };
-
-  handleSelect = (selectedPipeline: PipelineModel) => {
-    const { actionSelectPipeline } = this.props;
-    actionSelectPipeline(selectedPipeline);
   };
 
   render(): React.ReactNode {

@@ -5,12 +5,10 @@ import { bindActionCreators } from 'redux';
 import Show from '../../pages/Workflows/components/Show';
 import {
   Theme,
-  ListItem,
   WithStyles,
   withStyles,
   createStyles,
   List,
-  ListItemText,
   ListSubheader,
   Grid,
 } from '@material-ui/core';
@@ -19,6 +17,7 @@ import { actionSelectPipeline } from '../Pipelines/actions'
 import { PipelineModel } from '../Pipelines/models'
 import { WorkflowModel } from '../Workflows/models'
 import CreateForm from '../../components/CreateForm';
+import ATSListItem from '../../components/ATSListItem';
 
 interface Props extends WithStyles<typeof styles> {
   selectedPipeline: PipelineModel;
@@ -26,30 +25,32 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 interface State {
-  workflowId: string
+  selectedId: string
 }
 
 class Workflows extends React.Component<Props, State> {
   state = {
-    workflowId: ""
+    selectedId: ""
   }
 
   componentWillReceiveProps = (nextProps: Props) => {
     const { selectedPipeline: {workflows} } = nextProps;
-    this.setWorkflowId(workflows);
+    this.setSelectedId(workflows);
   }
+
   componentDidMount = () => {
     const { selectedPipeline: {workflows} } = this.props
-    this.setWorkflowId(workflows);
+    this.setSelectedId(workflows);
   }
 
-  setWorkflowId = (workflows: Array<WorkflowModel>) => {
+  setSelectedId = (workflows: Array<WorkflowModel>) => {
     if(workflows && workflows.length > 0)
-      this.setState({workflowId: workflows[0]._id})
+      this.setState({selectedId: workflows[0]._id})
   }
 
-  handleWorkflowSelect = (workflowId: string) => this.setState({workflowId})
-  handleWorkflowCreate = async (name: string) => {
+  handleSelect = (selectedId: string) => this.setState({selectedId});
+
+  handleCreate = async (name: string) => {
     const {  selectedPipeline, actionSelectPipeline } = this.props;
     const { data: {workflow} } = await axios.post(
       `${Api.baseUrl}/pipelines/${selectedPipeline._id}/workflows`,
@@ -57,12 +58,34 @@ class Workflows extends React.Component<Props, State> {
     );
     actionSelectPipeline({
       ...selectedPipeline,
-      workflows: [...selectedPipeline.workflows, workflow] })
-    this.setState({workflowId: workflow._id})
+      workflows: [...selectedPipeline.workflows, workflow] });
+    this.setState({selectedId: workflow._id})
   }
 
+  handleUpdate = async (_id: string, name: string) => {
+    const { selectedPipeline, actionSelectPipeline } = this.props;
+    await axios.put(
+      `${Api.baseUrl}/workflows/${_id}`, {
+      name
+    });
+    selectedPipeline.workflows.filter(workflow=> workflow._id === _id)[0].name = name
+    debugger
+    actionSelectPipeline({...selectedPipeline});
+  };
+
+  handleDelete = async (_id: string) => {
+    const {  selectedPipeline, actionSelectPipeline } = this.props;
+    await axios.delete(`${Api.baseUrl}/pipelines/${selectedPipeline._id}/workflows/${_id}`);
+    actionSelectPipeline({
+      ...selectedPipeline,
+      workflows: [
+        ...selectedPipeline.workflows.filter(workflow=> workflow._id !== _id)
+      ]
+    });
+  };
+
   render(): React.ReactNode {
-    const { workflowId } = this.state;
+    const { selectedId } = this.state;
     const { classes, selectedPipeline: {workflows} } = this.props;
 
     return (
@@ -75,20 +98,26 @@ class Workflows extends React.Component<Props, State> {
                 subheader={
                   <ListSubheader component="div">
                     Workflows
-                    <CreateForm onSave={this.handleWorkflowCreate}/>
+                    <CreateForm onSave={this.handleCreate}/>
                   </ListSubheader>
                 }
                 className={classes.list}
               >
-                {workflows.map(workflow =>
-                  <ListItem selected={workflow._id === workflowId} key={workflow._id} button onClick={() => this.handleWorkflowSelect(workflow._id)}>
-                    <ListItemText primary={workflow.name} />
-                  </ListItem>
+                {workflows.map((workflow, index) =>
+                  <ATSListItem
+                    key={index}
+                    data={workflow}
+                    isSelected={workflow._id === selectedId}
+                    onSelect={() => this.handleSelect(workflow._id)}
+                    onCreate={this.handleCreate}
+                    onUpdate={this.handleUpdate}
+                    onDelete={this.handleDelete}
+                  />
                 )}
               </List>
             </Grid>
             <Grid item>
-              {!!workflowId && <Show workflowId={workflowId}></Show> }
+              {!!selectedId && <Show workflowId={selectedId}></Show> }
             </Grid>
           </Grid>:
           <div>No workflows</div>
