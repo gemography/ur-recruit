@@ -50,6 +50,41 @@ const pipelineReducer: Reducer<PipelineState> = (state = initialState, action: P
       selectedPipeline: action.selectedPipeline
     };
   }
+  if (action.type === PipelineActionType.ACTION_CREATE_WORKFLOW) {
+    return {
+      ...state,
+      selectedPipeline: {
+        ...state.selectedPipeline,
+        workflows: [...state.selectedPipeline.workflows, action.workflow]
+      }
+    };
+  }
+  if (action.type === PipelineActionType.ACTION_UPDATE_WORKFLOW) {
+    return {
+      ...state,
+      selectedPipeline: {
+        ...state.selectedPipeline,
+        workflows: [
+          ...state.selectedPipeline.workflows.map(workflow => {
+            return (workflow._id === action.workflow._id)?
+              {...workflow, name: action.workflow.name}:
+              workflow
+          })
+        ]
+      }
+    };
+  }
+  if (action.type === PipelineActionType.ACTION_REMOVE_WORKFLOW) {
+    return {
+      ...state,
+      selectedPipeline: {
+        ...state.selectedPipeline,
+        workflows: [
+          ...state.selectedPipeline.workflows.filter(workflow=> workflow._id !== action._id)
+        ]
+      }
+    };
+  }
   return state;
 }
 

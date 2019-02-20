@@ -12,16 +12,23 @@ import {
   ListSubheader,
   Grid,
 } from '@material-ui/core';
-import Api from '../../services/Api';
-import { actionSelectPipeline } from '../Pipelines/actions'
-import { PipelineModel } from '../Pipelines/models'
-import { WorkflowModel } from '../Workflows/models'
+import {
+  actionSelectPipeline,
+  actionCreateWorkflow,
+  actionUpdateWorkflow,
+  actionRemoveWorkflow,
+} from '../Pipelines/actions';
+import { PipelineModel } from '../Pipelines/models';
+import { WorkflowModel } from '../Workflows/models';
 import CreateForm from '../../components/CreateForm';
 import ATSListItem from '../../components/ATSListItem';
 
 interface Props extends WithStyles<typeof styles> {
   selectedPipeline: PipelineModel;
-  actionSelectPipeline: any
+  actionSelectPipeline: any;
+  actionCreateWorkflow: any;
+  actionUpdateWorkflow: any;
+  actionRemoveWorkflow: any;
 }
 
 interface State {
@@ -51,37 +58,18 @@ class Workflows extends React.Component<Props, State> {
   handleSelect = (selectedId: string) => this.setState({selectedId});
 
   handleCreate = async (name: string) => {
-    const {  selectedPipeline, actionSelectPipeline } = this.props;
-    const { data: {workflow} } = await axios.post(
-      `${Api.baseUrl}/pipelines/${selectedPipeline._id}/workflows`,
-      { name }
-    );
-    actionSelectPipeline({
-      ...selectedPipeline,
-      workflows: [...selectedPipeline.workflows, workflow] });
-    this.setState({selectedId: workflow._id})
+    const { selectedPipeline: { _id }, actionCreateWorkflow} = this.props;
+    actionCreateWorkflow(_id, name)
   }
 
   handleUpdate = async (_id: string, name: string) => {
-    const { selectedPipeline, actionSelectPipeline } = this.props;
-    await axios.put(
-      `${Api.baseUrl}/workflows/${_id}`, {
-      name
-    });
-    selectedPipeline.workflows.filter(workflow=> workflow._id === _id)[0].name = name
-    debugger
-    actionSelectPipeline({...selectedPipeline});
+    const { actionUpdateWorkflow } = this.props;
+    actionUpdateWorkflow(_id, name);
   };
 
   handleDelete = async (_id: string) => {
-    const {  selectedPipeline, actionSelectPipeline } = this.props;
-    await axios.delete(`${Api.baseUrl}/pipelines/${selectedPipeline._id}/workflows/${_id}`);
-    actionSelectPipeline({
-      ...selectedPipeline,
-      workflows: [
-        ...selectedPipeline.workflows.filter(workflow=> workflow._id !== _id)
-      ]
-    });
+    const { selectedPipeline, actionRemoveWorkflow } = this.props;
+    actionRemoveWorkflow(selectedPipeline._id, _id);
   };
 
   render(): React.ReactNode {
@@ -155,7 +143,10 @@ function mapStateToProps(state: any) {
 
 function mapDispatchToProps(dispatch: any) {
   return {
-    actionSelectPipeline: bindActionCreators(actionSelectPipeline, dispatch)
+    actionSelectPipeline: bindActionCreators(actionSelectPipeline, dispatch),
+    actionCreateWorkflow: bindActionCreators(actionCreateWorkflow, dispatch),
+    actionUpdateWorkflow: bindActionCreators(actionUpdateWorkflow, dispatch),
+    actionRemoveWorkflow: bindActionCreators(actionRemoveWorkflow, dispatch),
   };
 }
 
