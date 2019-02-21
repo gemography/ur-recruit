@@ -28,6 +28,17 @@ class Stages extends React.Component<Props> {
     const { actionCreateStage, selectedPipeline: { _id } } = this.props;
     actionCreateStage(_id, name)
   }
+
+  handleUpdate = async (_id: string, name: string) => {
+    const { actionUpdateStage } = this.props;
+    actionUpdateStage(_id, name);
+  };
+
+  handleDelete = async (_id: string) => {
+    const { selectedPipeline, actionRemoveStage } = this.props;
+    actionRemoveStage(selectedPipeline._id, _id);
+  };
+
   render(): React.ReactNode {
     const { classes, selectedPipeline: { stages } } = this.props;
 
@@ -36,7 +47,12 @@ class Stages extends React.Component<Props> {
        { stages && stages.length > 0?
         <>
           {stages.map((stage, index) =>
-            <Board key={index} stage={stage}></Board>
+            <Board
+              key={index}
+              stage={stage}
+              onUpdate={this.handleUpdate}
+              onDelete={this.handleDelete}
+            />
           )}
           <Create onCreate={this.handleCreate} />
         </>:

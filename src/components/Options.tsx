@@ -11,8 +11,8 @@ import {
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import UpdatePopover from '../UpdatePopover';
-import DeletePopover from '../DeletePopover';
+import UpdatePopover from './UpdatePopover';
+import DeletePopover from './DeletePopover';
 
 interface Props extends WithStyles<typeof styles> {
   parentAnchorEl: any;
@@ -44,6 +44,12 @@ class Options extends React.Component<Props> {
     !!name && onUpdate(_id, name)
     this.setState({updateAnchorEl: null, deleteAnchorEl: null})
   };
+
+  handleDelete = () => {
+    const { onDelete, data: {_id} } = this.props;
+    onDelete(_id);
+    this.handleClose("deleteAnchorEl")
+  }
 
   render(): React.ReactNode {
     const { updateAnchorEl, deleteAnchorEl } = this.state;
@@ -88,7 +94,7 @@ class Options extends React.Component<Props> {
         />
         <DeletePopover
           parentAnchorEl={deleteAnchorEl}
-          onConfirm={()=> onDelete(_id)}
+          onConfirm={this.handleDelete}
           onCancel={() => this.handleClose("deleteAnchorEl")}
         />
       </>

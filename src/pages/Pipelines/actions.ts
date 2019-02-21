@@ -287,7 +287,6 @@ export const actionCreateStage = (pipeline_id: string, name: string) => {
         `${Api.baseUrl}/pipelines/${pipeline_id}/stages/`,
         { name }
       );
-      console.log(stage)
       dispatch(dispatchCreateStage(stage))
     } catch (e) {
       console.log(e)
@@ -306,10 +305,10 @@ export const actionUpdateStage = (_id: string, name: string) => {
   };
 }
 
-export const actionRemoveStage = (_id: string) => {
+export const actionRemoveStage = (pipeline_id: string, _id: string) => {
   return async (dispatch: Dispatch) => {
     try {
-      await axios.delete(`${Api.baseUrl}/stages/${_id}`);
+      await axios.delete(`${Api.baseUrl}/pipelines/${pipeline_id}/stages/${_id}`);
       dispatch(dispatchRemoveStage(_id))
     } catch (e) {
       console.log(e)
