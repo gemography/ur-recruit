@@ -1,30 +1,45 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   createStyles,
   WithStyles,
   withStyles,
   Theme
 } from '@material-ui/core';
-
-import { StageModel } from './models'
-
+import {
+  actionCreateStage,
+  actionUpdateStage,
+  actionRemoveStage,
+} from '../Pipelines/actions';
 import Board from './components/Board'
+import Create from './components/Create'
+import { PipelineModel } from '../Pipelines/models';
 
 interface Props extends WithStyles<typeof styles> {
-  stages: Array<StageModel>;
+  selectedPipeline: PipelineModel;
+  actionCreateStage: any;
+  actionUpdateStage: any;
+  actionRemoveStage: any;
 }
 
 class Stages extends React.Component<Props> {
+  handleCreate = async (name: string) => {
+    const { actionCreateStage, selectedPipeline: { _id } } = this.props;
+    actionCreateStage(_id, name)
+  }
   render(): React.ReactNode {
-    const { classes, stages } = this.props;
+    const { classes, selectedPipeline: { stages } } = this.props;
 
     return (
       <div className={classes.root}>
        { stages && stages.length > 0?
-          stages.map((stage, index) =>
+        <>
+          {stages.map((stage, index) =>
             <Board key={index} stage={stage}></Board>
-          ):
+          )}
+          <Create onCreate={this.handleCreate} />
+        </>:
           <div>No stages</div>
         }
       </div>
@@ -41,11 +56,19 @@ const styles = (theme: Theme) => createStyles({
 });
 
 function mapStateToProps(state: any) {
-  const { selectedPipeline: {stages} } = state.pipelineReducer
+  const { selectedPipeline } = state.pipelineReducer
 
   return {
-    stages
+    selectedPipeline
   };
 }
 
-export default withStyles(styles)(connect(mapStateToProps)(Stages));
+function mapDispatchToProps(dispatch: any) {
+  return {
+    actionCreateStage: bindActionCreators(actionCreateStage, dispatch),
+    actionUpdateStage: bindActionCreators(actionUpdateStage, dispatch),
+    actionRemoveStage: bindActionCreators(actionRemoveStage, dispatch),
+  };
+}
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Stages));

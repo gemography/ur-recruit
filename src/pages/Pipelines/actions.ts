@@ -3,6 +3,7 @@ import { PipelineModel } from './models'
 import { Action, Dispatch } from 'redux';
 import Api from '../../services/Api';
 import { WorkflowModel } from '../Workflows/models';
+import { StageModel } from '../Stages/models';
 
 export enum PipelineActionType {
   ACTION_PIPELINE_FETCH = "ACTION_PIPELINE_FETCH",
@@ -15,8 +16,10 @@ export enum PipelineActionType {
   ACTION_CREATE_PIPELINE = "ACTION_CREATE_PIPELINE",
   ACTION_UPDATE_PIPELINE = "ACTION_UPDATE_PIPELINE",
   ACTION_REMOVE_PIPELINE = "ACTION_REMOVE_PIPELINE",
+  ACTION_CREATE_STAGE = "ACTION_CREATE_STAGE",
+  ACTION_UPDATE_STAGE = "ACTION_UPDATE_STAGE",
+  ACTION_REMOVE_STAGE = "ACTION_REMOVE_STAGE",
 }
-
 
 export type PipelineActions = IActionPipelineFetch |
   IActionPipelineFetchSuccess |
@@ -27,7 +30,10 @@ export type PipelineActions = IActionPipelineFetch |
   IActioRemovePipeline |
   IActionCreateWorkflow |
   IActionUpdateWorkflow |
-  IActioRemoveWorkflow;
+  IActioRemoveWorkflow |
+  IActionCreateStage |
+  IActionUpdateStage |
+  IActionRemoveStage;
 
 interface IActionPipelineFetch extends Action {
   type: PipelineActionType.ACTION_PIPELINE_FETCH
@@ -75,6 +81,21 @@ interface IActionUpdateWorkflow extends Action {
 
 interface IActioRemoveWorkflow extends Action {
   type: PipelineActionType.ACTION_REMOVE_WORKFLOW,
+  _id: string
+}
+
+interface IActionCreateStage extends Action {
+  type: PipelineActionType.ACTION_CREATE_STAGE,
+  stage: StageModel
+}
+
+interface IActionUpdateStage extends Action {
+  type: PipelineActionType.ACTION_UPDATE_STAGE,
+  stage: StageModel
+}
+
+interface IActionRemoveStage extends Action {
+  type: PipelineActionType.ACTION_REMOVE_STAGE,
   _id: string
 }
 
@@ -144,6 +165,27 @@ function dispatchUpdateWorkflow(workflow: WorkflowModel): IActionUpdateWorkflow 
 function dispatchRemoveWorkflow(_id: string): IActioRemoveWorkflow {
   return {
     type: PipelineActionType.ACTION_REMOVE_WORKFLOW,
+    _id
+  };
+}
+
+function dispatchCreateStage(stage: StageModel): IActionCreateStage {
+  return {
+    type: PipelineActionType.ACTION_CREATE_STAGE,
+    stage
+  };
+}
+
+function dispatchUpdateStage(stage: StageModel): IActionUpdateStage {
+  return {
+    type: PipelineActionType.ACTION_UPDATE_STAGE,
+    stage
+  };
+}
+
+function dispatchRemoveStage(_id: string): IActionRemoveStage {
+  return {
+    type: PipelineActionType.ACTION_REMOVE_STAGE,
     _id
   };
 }
@@ -232,6 +274,43 @@ export const actionRemoveWorkflow = (pipeline_id: string, _id: string) => {
     try {
       await axios.delete(`${Api.baseUrl}/pipelines/${pipeline_id}/workflows/${_id}`);
       dispatch(dispatchRemoveWorkflow(_id))
+    } catch (e) {
+      console.log(e)
+    }
+  };
+}
+
+export const actionCreateStage = (pipeline_id: string, name: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const { data: {stage}} = await axios.post(
+        `${Api.baseUrl}/pipelines/${pipeline_id}/stages/`,
+        { name }
+      );
+      console.log(stage)
+      dispatch(dispatchCreateStage(stage))
+    } catch (e) {
+      console.log(e)
+    }
+  };
+}
+
+export const actionUpdateStage = (_id: string, name: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      axios.put(`${Api.baseUrl}/stages/${_id}`, { name });
+      dispatch(dispatchUpdateStage({_id, name} as StageModel))
+    } catch (e) {
+      console.log(e)
+    }
+  };
+}
+
+export const actionRemoveStage = (_id: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      await axios.delete(`${Api.baseUrl}/stages/${_id}`);
+      dispatch(dispatchRemoveStage(_id))
     } catch (e) {
       console.log(e)
     }

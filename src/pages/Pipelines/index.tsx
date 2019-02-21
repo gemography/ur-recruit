@@ -1,5 +1,4 @@
 import * as React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -19,7 +18,7 @@ import {
   actionCreatePipeline,
   actionUpdatePipeline,
   actionRemovePipeline,
-} from './actions'
+} from './actions';
 import { PipelineModel } from './models'
 import CreateForm from '../../components/CreateForm';
 import ATSListItem from '../../components/ATSListItem';

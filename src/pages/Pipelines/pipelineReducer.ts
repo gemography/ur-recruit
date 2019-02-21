@@ -6,7 +6,6 @@ import {
 } from './actions';
 
 import { PipelineModel } from './models';
-import { pipeline } from 'stream';
 
 export interface PipelineState {
   pipelines: Array<PipelineModel>,
@@ -15,7 +14,7 @@ export interface PipelineState {
   selectedPipeline: PipelineModel,
 }
 
-const initialState: PipelineState = {
+export const initialState: PipelineState = {
   pipelines: [] as Array<PipelineModel>,
   loading: false,
   errorMessage: "",
@@ -108,6 +107,41 @@ const pipelineReducer: Reducer<PipelineState> = (state = initialState, action: P
         ...state.selectedPipeline,
         workflows: [
           ...state.selectedPipeline.workflows.filter(workflow=> workflow._id !== action._id)
+        ]
+      }
+    };
+  }
+  if (action.type === PipelineActionType.ACTION_CREATE_STAGE) {
+    return {
+      ...state,
+      selectedPipeline: {
+        ...state.selectedPipeline,
+        stages: [...state.selectedPipeline.stages, action.stage]
+      }
+    };
+  }
+  if (action.type === PipelineActionType.ACTION_UPDATE_STAGE) {
+    return {
+      ...state,
+      selectedPipeline: {
+        ...state.selectedPipeline,
+        stages: [
+          ...state.selectedPipeline.stages.map(stage => {
+            return (stage._id === action.stage._id)?
+              {...stage, name: action.stage.name}:
+              stage
+          })
+        ]
+      }
+    };
+  }
+  if (action.type === PipelineActionType.ACTION_REMOVE_STAGE) {
+    return {
+      ...state,
+      selectedPipeline: {
+        ...state.selectedPipeline,
+        stages: [
+          ...state.selectedPipeline.stages.filter(stage=> stage._id !== action._id)
         ]
       }
     };
