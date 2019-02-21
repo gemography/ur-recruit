@@ -6,6 +6,7 @@ import {
 } from './actions';
 
 import { PipelineModel } from './models';
+import { pipeline } from 'stream';
 
 export interface PipelineState {
   pipelines: Array<PipelineModel>,
@@ -48,6 +49,32 @@ const pipelineReducer: Reducer<PipelineState> = (state = initialState, action: P
     return {
       ...state,
       selectedPipeline: action.selectedPipeline
+    };
+  }
+  if (action.type === PipelineActionType.ACTION_CREATE_PIPELINE) {
+    return {
+      ...state,
+      pipelines: [...state.pipelines, action.pipeline]
+    };
+  }
+  if (action.type === PipelineActionType.ACTION_UPDATE_PIPELINE) {
+    return {
+      ...state,
+      pipelines: [
+        ...state.pipelines.map(pipeline => {
+          return (pipeline._id === action.pipeline._id)?
+            {...pipeline, name: action.pipeline.name}:
+            pipeline
+        })
+      ]
+    };
+  }
+  if (action.type === PipelineActionType.ACTION_REMOVE_PIPELINE) {
+    return {
+      ...state,
+      pipelines: [
+        ...state.pipelines.filter(pipeline=> pipeline._id !== action._id)
+      ]
     };
   }
   if (action.type === PipelineActionType.ACTION_CREATE_WORKFLOW) {

@@ -12,6 +12,9 @@ export enum PipelineActionType {
   ACTION_CREATE_WORKFLOW = "ACTION_CREATE_WORKFLOW",
   ACTION_UPDATE_WORKFLOW = "ACTION_UPDATE_WORKFLOW",
   ACTION_REMOVE_WORKFLOW = "ACTION_REMOVE_WORKFLOW",
+  ACTION_CREATE_PIPELINE = "ACTION_CREATE_PIPELINE",
+  ACTION_UPDATE_PIPELINE = "ACTION_UPDATE_PIPELINE",
+  ACTION_REMOVE_PIPELINE = "ACTION_REMOVE_PIPELINE",
 }
 
 
@@ -19,6 +22,9 @@ export type PipelineActions = IActionPipelineFetch |
   IActionPipelineFetchSuccess |
   IActionPipelineFetchError |
   IActionSelectPipeline |
+  IActionCreatePipeline |
+  IActionUpdatePipeline |
+  IActioRemovePipeline |
   IActionCreateWorkflow |
   IActionUpdateWorkflow |
   IActioRemoveWorkflow;
@@ -40,6 +46,21 @@ interface IActionPipelineFetchError extends Action {
 interface IActionSelectPipeline extends Action {
   type: PipelineActionType.ACTION_SELECT_PIPELINE,
   selectedPipeline: PipelineModel
+}
+
+interface IActionCreatePipeline extends Action {
+  type: PipelineActionType.ACTION_CREATE_PIPELINE,
+  pipeline: PipelineModel
+}
+
+interface IActionUpdatePipeline extends Action {
+  type: PipelineActionType.ACTION_UPDATE_PIPELINE,
+  pipeline: PipelineModel
+}
+
+interface IActioRemovePipeline extends Action {
+  type: PipelineActionType.ACTION_REMOVE_PIPELINE,
+  _id: string
 }
 
 interface IActionCreateWorkflow extends Action {
@@ -84,6 +105,28 @@ function dispatchSelectPipeline(selectedPipeline: PipelineModel): IActionSelectP
   };
 }
 
+
+function dispatchCreatePipeline(pipeline: PipelineModel): IActionCreatePipeline {
+  return {
+    type: PipelineActionType.ACTION_CREATE_PIPELINE,
+    pipeline
+  };
+}
+
+function dispatchUpdatePipeline(pipeline: PipelineModel): IActionUpdatePipeline {
+  return {
+    type: PipelineActionType.ACTION_UPDATE_PIPELINE,
+    pipeline
+  };
+}
+
+function dispatchRemovePipeline(_id: string): IActioRemovePipeline {
+  return {
+    type: PipelineActionType.ACTION_REMOVE_PIPELINE,
+    _id
+  };
+}
+
 function dispatchCreateWorkflow(workflow: WorkflowModel): IActionCreateWorkflow {
   return {
     type: PipelineActionType.ACTION_CREATE_WORKFLOW,
@@ -123,6 +166,39 @@ export const actionFetchPipelines = (pipelineId: string) => {
       .catch((e: Error) => {
         return dispatch(dispatchFetchPipelineError(e));
       });
+  };
+}
+
+export const actionCreatePipeline = (name: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const {data: {pipeline} } = await axios.post(`${Api.baseUrl}/pipelines`, { name });
+      dispatch(dispatchCreatePipeline(pipeline))
+    } catch (e) {
+      console.log(e)
+    }
+  };
+}
+
+export const actionUpdatePipeline = (_id: string, name: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      await axios.put(`${Api.baseUrl}/pipelines/${_id}`, { name });
+      dispatch(dispatchUpdatePipeline({_id, name} as PipelineModel))
+    } catch (e) {
+      console.log(e)
+    }
+  };
+}
+
+export const actionRemovePipeline = (_id: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      await axios.delete(`${Api.baseUrl}/pipelines/${_id}`);
+      dispatch(dispatchRemovePipeline(_id))
+    } catch (e) {
+      console.log(e)
+    }
   };
 }
 

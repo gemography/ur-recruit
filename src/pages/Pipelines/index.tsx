@@ -13,7 +13,13 @@ import {
 } from '@material-ui/core';
 
 import Api from '../../services/Api';
-import { actionFetchPipelines, actionSelectPipeline } from './actions'
+import {
+  actionFetchPipelines,
+  actionSelectPipeline,
+  actionCreatePipeline,
+  actionUpdatePipeline,
+  actionRemovePipeline,
+} from './actions'
 import { PipelineModel } from './models'
 import CreateForm from '../../components/CreateForm';
 import ATSListItem from '../../components/ATSListItem';
@@ -23,18 +29,16 @@ interface Props extends WithStyles<typeof styles> {
   selectedId: string,
   actionFetchPipelines: any,
   actionSelectPipeline: any,
+  actionCreatePipeline: any,
+  actionUpdatePipeline: any,
+  actionRemovePipeline: any,
 }
 
 class Pipelines extends React.Component<Props> {
   componentDidMount() {
-    const { selectedId } = this.props;
-    this.refresh(selectedId)
-  };
-
-  refresh = (selectedId: string) => {
-    const { actionFetchPipelines } = this.props;
+    const { selectedId, actionFetchPipelines } = this.props;
     actionFetchPipelines(selectedId);
-  }
+  };
 
   handleSelect = (selectedPipeline: PipelineModel) => {
     const { actionSelectPipeline } = this.props;
@@ -42,19 +46,18 @@ class Pipelines extends React.Component<Props> {
   };
 
   handleCreate = async (name: string) => {
-    const {data: {pipeline: {_id}} } = await axios.post(`${Api.baseUrl}/pipelines`, { name });
-    this.refresh(_id);
+    const { actionCreatePipeline } = this.props;
+    actionCreatePipeline(name);
   };
 
   handleUpdate = async (_id: string, name: string) => {
-    await axios.put(`${Api.baseUrl}/pipelines/${_id}`, { name });
-    this.refresh(_id);
+    const { actionUpdatePipeline } = this.props;
+    actionUpdatePipeline(_id, name);
   };
 
   handleDelete = async (_id: string) => {
-    const { pipelines } = this.props;
-    await axios.delete(`${Api.baseUrl}/pipelines/${_id}`);
-    this.refresh(pipelines.filter(pipeline=> pipeline._id !== _id)[0]._id);
+    const { actionRemovePipeline } = this.props;
+    actionRemovePipeline(_id);
   };
 
   render(): React.ReactNode {
@@ -109,7 +112,10 @@ function mapStateToProps(state: any) {
 function mapDispatchToProps(dispatch: any) {
   return {
     actionFetchPipelines: bindActionCreators(actionFetchPipelines, dispatch),
-    actionSelectPipeline: bindActionCreators(actionSelectPipeline, dispatch)
+    actionSelectPipeline: bindActionCreators(actionSelectPipeline, dispatch),
+    actionCreatePipeline: bindActionCreators(actionCreatePipeline, dispatch),
+    actionUpdatePipeline: bindActionCreators(actionUpdatePipeline, dispatch),
+    actionRemovePipeline: bindActionCreators(actionRemovePipeline, dispatch),
   };
 }
 
