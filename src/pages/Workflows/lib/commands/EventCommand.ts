@@ -25,7 +25,8 @@ class EventCommand extends Command {
   }
 
   async execute(workflowId: string, parent: string): Promise<any> {
-    const { data: {option} } = await axios.post(`${Api.baseUrl}/workflows/${workflowId}/options`, {
+    const { data: {option} } = await axios.post(
+      `${Api.baseUrl}/workflows/${workflowId}/options/${this.method === "WEBHOOK" && "webhooks"}`, {
       parent,
       method: EventMethodEnum[this.method],
       type: CommandTypeEnum[this.type]

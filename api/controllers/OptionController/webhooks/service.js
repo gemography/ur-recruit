@@ -1,8 +1,8 @@
-const Candidate = require('../../models/Candidate');
-const agenda = require('../../agenda.js');
-const Option = require('../../models/Option.js');
+const Candidate = require('../../../models/Candidate');
+const agenda = require('../../../agenda.js');
+const Option = require('../../../models/Option.js');
 
-const webhook = async (req, res) => {
+const service = async (req, res) => {
   const { userId } = req.body;
   const { value } = req.params;
 
@@ -16,4 +16,4 @@ const webhook = async (req, res) => {
   res.status(200).json({ msg: 'agenda run' });
 };
 
-module.exports = { webhook };
+module.exports = { service };
