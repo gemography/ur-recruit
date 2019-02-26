@@ -17,7 +17,7 @@ interface Props extends WithStyles<typeof styles> {
   item: OptionModel;
   isDragging?: boolean;
   actionFetchWorkflow: any;
-  isDestroy?: boolean;
+  isForm?: boolean;
   workflowId?: string;
 }
 
@@ -40,37 +40,21 @@ class Item extends React.Component<Props> {
   }
 
   getSpecificItem(item: OptionModel) {
+    const { isForm } = this.props;
     const types: ItemTypes = {
-      EVENT: <Event item={item} />,
-      ACTION: <Action item={item} />,
-      CONDITION: <Condition item={item} />
+      EVENT: <Event item={item} isForm={isForm} onDestroy={this.handleDestroy} onUpdate={this.handleUpdate} />,
+      ACTION: <Action item={item} isForm={isForm} onDestroy={this.handleDestroy} onUpdate={this.handleUpdate} />,
+      CONDITION: <Condition item={item} isForm={isForm} onDestroy={this.handleDestroy} onUpdate={this.handleUpdate} />
     };
     return types;
   }
 
   render() {
-    const { item, isDragging, isDestroy, classes } = this.props;
-    const nonEditableOptions = ["WEBHOOK", "DISQUALIFY"];
+    const { item, isDragging, classes } = this.props;
 
     return (
-      <div className={classes.root}>
-        {isDestroy &&
-          <div className={classes.setting}>
-            {!nonEditableOptions.includes(item.method)?
-              <Setting
-                data={item}
-                onUpdate={this.handleUpdate}
-                onDelete={this.handleDestroy}
-              />:
-              <Setting
-                data={item}
-                onDelete={this.handleDestroy}
-              />}
-          </div>
-        }
-        <div className={classnames({[classes.dragging]: isDragging})}>
-          { this.getSpecificItem(item)[item.type] }
-        </div>
+      <div className={classnames({[classes.root]: true, [classes.dragging]: isDragging})}>
+        { this.getSpecificItem(item)[item.type] }
       </div>
     );
   }
@@ -86,16 +70,6 @@ const styles = (theme: Theme) => createStyles({
         visibility: 'inherit',
       },
     }
-  },
-  setting: {
-    position: "absolute",
-    right: -theme.spacing.unit,
-    top: -theme.spacing.unit,
-    backgroundColor: theme.palette.common.white,
-    boxShadow: `0 1px 3px ${theme.palette.primary.light}`,
-    borderRadius: 2 * theme.spacing.unit,
-    cursor: "pointer",
-    visibility: 'hidden'
   },
   dragging: {
     opacity: 0.4

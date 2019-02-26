@@ -14,6 +14,7 @@ interface Props extends WithStyles<typeof styles> {
   data: any;
   onUpdate?: (_id: string, name: string) => void;
   onDelete: (_id: string) => void;
+  updateForm?: any;
 }
 
 class Setting extends React.Component<Props> {
@@ -35,11 +36,12 @@ class Setting extends React.Component<Props> {
       data,
       onUpdate,
       onDelete,
-      classes
+      classes,
+      updateForm,
     } = this.props;
 
     return (
-      <>
+      <div className={classes.setting}>
         <IconButton
           id={data._id}
           className={classes.button}
@@ -55,15 +57,26 @@ class Setting extends React.Component<Props> {
           dataKey="value"
           parentAnchorEl={anchorEl}
           onUpdate={onUpdate}
+          updateForm={updateForm}
           onDelete={onDelete}
           onClose={this.handleClose}
         />
-      </>
+      </div>
     );
   }
 }
 
 const styles = (theme: Theme) => createStyles({
+  setting: {
+    position: "absolute",
+    right: -theme.spacing.unit,
+    top: -theme.spacing.unit,
+    backgroundColor: theme.palette.common.white,
+    boxShadow: `0 1px 3px ${theme.palette.primary.light}`,
+    borderRadius: 2 * theme.spacing.unit,
+    cursor: "pointer",
+    visibility: 'hidden'
+  },
   button: {
     padding: 0
   }

@@ -9,6 +9,9 @@ import WebhookEvent from './WebhookEvent'
 
 interface Props extends WithStyles<typeof styles> {
   item: OptionModel;
+  isForm?: boolean;
+  onUpdate: (_id: string, value: string) => void;
+  onDestroy: (_id: string) => void;
 }
 
 interface ItemTypes {

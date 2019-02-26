@@ -10,6 +10,9 @@ import TagAction from './TagAction';
 
 interface Props extends WithStyles<typeof styles> {
   item: OptionModel;
+  isForm?: boolean;
+  onUpdate: (_id: string, value: string) => void;
+  onDestroy: (_id: string) => void;
 }
 
 interface ItemTypes {
@@ -17,21 +20,22 @@ interface ItemTypes {
 }
 
 class Action extends React.Component<Props> {
-  getSpecificAction(value: string) {
+  getSpecificAction(item: OptionModel) {
+    const { isForm, onUpdate, onDestroy } = this.props;
     const types: ItemTypes = {
       EMAIL: <EmailAction />,
       DISQUALIFY: <DisqualifyAction />,
-      STAGE: <StageAction value={value} />,
-      TAG: <TagAction value={value} />,
+      STAGE: <StageAction item={item} isForm={isForm} onUpdate={onUpdate} onDestroy={onDestroy} />,
+      TAG: <TagAction value={item.value} />,
     };
     return types;
   }
 
   render() {
-    const { item: { value, method }, classes } = this.props;
+    const { item, classes } = this.props;
     return (
       <div className={classes.root}>
-        { this.getSpecificAction(value)[method] }
+        { this.getSpecificAction(item)[item.method] }
       </div>
     );
   }

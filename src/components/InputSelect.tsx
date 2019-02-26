@@ -1,21 +1,22 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import {
   createStyles,
   WithStyles,
   withStyles,
   Theme,
-  IconButton,
   TextField,
-  InputAdornment,
+  MenuItem,
 } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
 
 interface Props extends WithStyles<typeof styles> {
   onSave?: (value: string) => void;
+  options: Array<any>;
   value?: string;
+  valueLabel: string;
 }
 
-class CreateForm extends React.Component<Props> {
+class StageSelect extends React.Component<Props> {
   state = {
     value: this.props.value || ""
   }
@@ -27,37 +28,37 @@ class CreateForm extends React.Component<Props> {
   };
 
   handleChange = (event: any) => {
+    const { onSave } = this.props;
+    onSave && onSave(event.target.value)
     this.setState({value: event.target.value})
   }
 
   render(): React.ReactNode {
     const { value } = this.state;
-    const { classes } = this.props;
+    const { classes, options, valueLabel } = this.props;
 
     return (
       <TextField
-        id="outlined-adornment-save"
-        variant="outlined"
-        className={classes.textField}
-        label="What's new?"
+        id="outlined-select-currency"
+        select
+        label="OptionSelect"
         value={value}
         onChange={this.handleChange}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton aria-label="Toggle password visibility" onClick={this.save}>
-                <SaveIcon />
-              </IconButton>
-            </InputAdornment>
-          ),
+        SelectProps={{
+          MenuProps: {
+            className: classes.menu,
+          },
         }}
-        onKeyPress={(ev) => {
-          if (ev.key === 'Enter') {
-            this.save()
-            ev.preventDefault();
-          }
-        }}
-      />
+        helperText="Select the stage"
+        margin="normal"
+        variant="outlined"
+      >
+        {options.map(option => (
+          <MenuItem key={option._id} value={option._id}>
+            {option[valueLabel]}
+          </MenuItem>
+        ))}
+      </TextField>
     );
   }
 }
@@ -65,7 +66,10 @@ class CreateForm extends React.Component<Props> {
 const styles = (theme: Theme) => createStyles({
   textField: {
     margin: theme.spacing.unit
+  },
+  menu: {
+    margin: theme.spacing.unit
   }
 });
 
-export default withStyles(styles)(CreateForm);
+export default withStyles(styles)(StageSelect);

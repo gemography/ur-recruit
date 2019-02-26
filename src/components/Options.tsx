@@ -16,6 +16,7 @@ import DeletePopover from './DeletePopover';
 
 interface Props extends WithStyles<typeof styles> {
   parentAnchorEl: any;
+  updateForm?: any;
   data: any;
   dataKey: string;
   onUpdate?: (_id: string, name: string) => void;
@@ -54,7 +55,7 @@ class Options extends React.Component<Props> {
 
   render(): React.ReactNode {
     const { updateAnchorEl, deleteAnchorEl } = this.state;
-    const { data, dataKey, onUpdate, parentAnchorEl, onClose } = this.props;
+    const { data, dataKey, onUpdate, parentAnchorEl, onClose, updateForm } = this.props;
 
     return (
       <>
@@ -90,12 +91,13 @@ class Options extends React.Component<Props> {
             <ListItemText inset primary="Delete" />
           </MenuItem>
         </Menu>
-          <UpdatePopover
-            parentAnchorEl={updateAnchorEl}
-            value={data[dataKey]}
-            onSave={this.handleSave}
-            onClose={() => this.handleClose("updateAnchorEl")}
-          />
+        <UpdatePopover
+          parentAnchorEl={updateAnchorEl}
+          updateForm={updateForm}
+          value={data[dataKey]}
+          onSave={this.handleSave}
+          onClose={() => this.handleClose("updateAnchorEl")}
+        />
         <DeletePopover
           parentAnchorEl={deleteAnchorEl}
           onConfirm={this.handleDelete}
