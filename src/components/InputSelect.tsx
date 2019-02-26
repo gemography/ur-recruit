@@ -44,11 +44,7 @@ class StageSelect extends React.Component<Props> {
         label="OptionSelect"
         value={value}
         onChange={this.handleChange}
-        SelectProps={{
-          MenuProps: {
-            className: classes.menu,
-          },
-        }}
+        className={classes.menu}
         helperText="Select the stage"
         margin="normal"
         variant="outlined"
@@ -68,7 +64,8 @@ const styles = (theme: Theme) => createStyles({
     margin: theme.spacing.unit
   },
   menu: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
+    width: 240
   }
 });
 

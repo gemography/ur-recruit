@@ -23,8 +23,8 @@ class Action extends React.Component<Props> {
   getSpecificAction(item: OptionModel) {
     const { isForm, onUpdate, onDestroy } = this.props;
     const types: ItemTypes = {
-      EMAIL: <EmailAction />,
-      DISQUALIFY: <DisqualifyAction />,
+      EMAIL: <EmailAction item={item} isForm={isForm} onDestroy={onDestroy} onUpdate={onUpdate} />,
+      DISQUALIFY: <DisqualifyAction item={item} isForm={isForm} onDestroy={onDestroy} />,
       STAGE: <StageAction item={item} isForm={isForm} onUpdate={onUpdate} onDestroy={onDestroy} />,
       TAG: <TagAction value={item.value} />,
     };
