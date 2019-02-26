@@ -23,8 +23,8 @@ class Event extends React.Component<Props> {
   getSpecificEvent(item: OptionModel) {
     const { isForm, onUpdate, onDestroy } = this.props;
     const types: ItemTypes = {
-      STAGE: <StageEvent value={item.value} />,
-      TAG: <TagEvent value={item.value} />,
+      STAGE: <StageEvent item={item} isForm={isForm} onUpdate={onUpdate} onDestroy={onDestroy} />,
+      TAG: <TagEvent item={item} isForm={isForm} onUpdate={onUpdate} onDestroy={onDestroy} />,
       WEBHOOK: <WebhookEvent item={item} isForm={isForm} onDestroy={onDestroy} />
     };
     return types;

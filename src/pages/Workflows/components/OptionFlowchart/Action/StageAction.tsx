@@ -17,6 +17,7 @@ interface Props {
 class StageAction extends React.Component<Props> {
   render() {
     const { item, isForm, onUpdate, onDestroy, stages } = this.props;
+    const stage = stages.filter(stage=>stage._id === item.value)[0];
 
     return (
       <>
@@ -32,13 +33,12 @@ class StageAction extends React.Component<Props> {
         }
         <Typography variant="subtitle2" color="primary" align="center">Send the candidate to stage</Typography>
         <Typography variant="subtitle1" color="primary" align="center">{`
-          ${stages.filter(stage=> stage._id === item.value)[0] && stages.filter(stage=> stage._id === item.value)[0].name || "..."}
+          ${stage && stage.name || "..."}
         `}</Typography>
       </>
     );
   }
 }
-
 
 function mapStateToProps(state: any) {
   const { selectedPipeline: {stages} } = state.pipelineReducer
