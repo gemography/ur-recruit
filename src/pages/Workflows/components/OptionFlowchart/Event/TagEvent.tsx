@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Typography } from '@material-ui/core';
 import { OptionModel } from '../../../models';
-import { Setting } from '../index'
+import { Setting } from '../index';
 
 interface Props {
   item: OptionModel;

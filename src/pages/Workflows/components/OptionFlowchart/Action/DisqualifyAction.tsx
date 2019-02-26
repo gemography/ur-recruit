@@ -20,7 +20,7 @@ class DisqualifyAction extends React.Component<Props> {
             onDelete={onDestroy}
           />
         }
-        <Typography variant="subtitle2" color="primary">Disqualify the Candidate</Typography>
+        <Typography variant="subtitle2" color="primary" align="center">Disqualify the Candidate</Typography>
       </>
     );
   }

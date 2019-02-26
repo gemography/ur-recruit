@@ -30,7 +30,7 @@ class EmailAction extends React.Component<Props> {
             }
           />
         }
-        <Typography variant="subtitle2" color="primary">Email to the candidate</Typography>
+        <Typography variant="subtitle2" color="primary" align="center">Email to the candidate</Typography>
       </>
     );
   }

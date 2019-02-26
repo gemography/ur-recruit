@@ -26,7 +26,7 @@ class Action extends React.Component<Props> {
       EMAIL: <EmailAction item={item} isForm={isForm} onDestroy={onDestroy} onUpdate={onUpdate} />,
       DISQUALIFY: <DisqualifyAction item={item} isForm={isForm} onDestroy={onDestroy} />,
       STAGE: <StageAction item={item} isForm={isForm} onUpdate={onUpdate} onDestroy={onDestroy} />,
-      TAG: <TagAction value={item.value} />,
+      TAG: <TagAction item={item} isForm={isForm} onUpdate={onUpdate} onDestroy={onDestroy} />,
     };
     return types;
   }
