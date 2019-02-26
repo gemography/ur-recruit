@@ -49,6 +49,7 @@ class Setting extends React.Component<Props> {
         </IconButton>
         <Options
           data={data}
+          dataKey="name"
           parentAnchorEl={anchorEl}
           onUpdate={onUpdate}
           onDelete={onDelete}

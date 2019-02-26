@@ -17,6 +17,7 @@ import DeletePopover from './DeletePopover';
 interface Props extends WithStyles<typeof styles> {
   parentAnchorEl: any;
   data: any;
+  dataKey: string;
   onUpdate?: (_id: string, name: string) => void;
   onDelete: (_id: string) => void;
   onClose: () => void;
@@ -53,7 +54,7 @@ class Options extends React.Component<Props> {
 
   render(): React.ReactNode {
     const { updateAnchorEl, deleteAnchorEl } = this.state;
-    const { data: {name}, onUpdate, parentAnchorEl, onClose } = this.props;
+    const { data, dataKey, onUpdate, parentAnchorEl, onClose } = this.props;
 
     return (
       <>
@@ -91,7 +92,7 @@ class Options extends React.Component<Props> {
         </Menu>
           <UpdatePopover
             parentAnchorEl={updateAnchorEl}
-            name={name}
+            value={data[dataKey]}
             onSave={this.handleSave}
             onClose={() => this.handleClose("updateAnchorEl")}
           />

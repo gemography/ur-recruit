@@ -50,7 +50,7 @@ class Item extends React.Component<Props> {
 
   render() {
     const { item, isDragging, isDestroy, classes } = this.props;
-    const nonEditableOptions = ["WEBHOOK"];
+    const nonEditableOptions = ["WEBHOOK", "DISQUALIFY"];
 
     return (
       <div className={classes.root}>

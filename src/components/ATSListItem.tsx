@@ -71,6 +71,7 @@ class ATSListItem extends React.Component<Props> {
         </ListItem>
         <Options
           data={data}
+          dataKey="name"
           parentAnchorEl={anchorEl}
           onUpdate={onUpdate}
           onDelete={onDelete}

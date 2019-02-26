@@ -10,14 +10,14 @@ import InputForm from './InputForm';
 
 interface Props extends WithStyles<typeof styles> {
   parentAnchorEl: any;
-  name?: string;
-  onSave: (name: string) => void;
+  value?: string;
+  onSave: (value: string) => void;
   onClose: () => void;
 }
 
 class UpdatePopover extends React.Component<Props> {
   render(): React.ReactNode {
-    const { name , parentAnchorEl, onClose, onSave } = this.props;
+    const { value , parentAnchorEl, onClose, onSave } = this.props;
     const open = Boolean(parentAnchorEl);
 
     return (
@@ -35,7 +35,7 @@ class UpdatePopover extends React.Component<Props> {
           horizontal: 'left',
         }}
       >
-        <InputForm name={name} onSave={onSave} />
+        <InputForm value={value} onSave={onSave} />
       </Popover>
     );
   }

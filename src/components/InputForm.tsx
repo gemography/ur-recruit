@@ -11,27 +11,27 @@ import {
 import SaveIcon from '@material-ui/icons/Save';
 
 interface Props extends WithStyles<typeof styles> {
-  onSave: (name: string) => void;
-  name?: string;
+  onSave: (value: string) => void;
+  value?: string;
 }
 
 class CreateForm extends React.Component<Props> {
   state = {
-    name: this.props.name || ""
+    value: this.props.value || ""
   }
   save = () => {
     const { onSave } = this.props;
-    const { name } = this.state;
-    !!name && onSave(name)
-    this.setState({name: ""})
+    const { value } = this.state;
+    !!value && onSave(value)
+    this.setState({value: ""})
   };
 
   handleChange = (event: any) => {
-    this.setState({name: event.target.value})
+    this.setState({value: event.target.value})
   }
 
   render(): React.ReactNode {
-    const { name } = this.state;
+    const { value } = this.state;
     const { classes } = this.props;
 
     return (
@@ -39,8 +39,8 @@ class CreateForm extends React.Component<Props> {
         id="outlined-adornment-save"
         variant="outlined"
         className={classes.textField}
-        label="What's the name?"
-        value={name}
+        label="What's new?"
+        value={value}
         onChange={this.handleChange}
         InputProps={{
           endAdornment: (
