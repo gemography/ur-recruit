@@ -27,7 +27,14 @@ class StageAction extends React.Component<Props> {
             onUpdate={onUpdate}
             onDelete={onDestroy}
             updateForm={
-              <InputSelect value={item.value} options={stages} valueLabel="name" onSave={(value: string)=> onUpdate(item._id, value)} />
+              <InputSelect
+                label="Stages"
+                helperText="Select the stage"
+                value={item.value}
+                options={stages}
+                valueLabel="name"
+                onSave={(value: string)=> onUpdate(item._id, value)}
+              />
             }
           />
         }

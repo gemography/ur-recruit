@@ -17,19 +17,20 @@ interface ItemTypes {
 }
 
 class Condition extends React.Component<Props> {
-  getSpecificCondition(value: string) {
+  getSpecificCondition(item: OptionModel) {
+    const { isForm, onUpdate, onDestroy } = this.props;
     const types: ItemTypes = {
-      WAIT: <WaitCondition value={value} />,
-      IF_ELSE: <IfElseCondition value={value} />
+      WAIT: <WaitCondition item={item} isForm={isForm} onDestroy={onDestroy} onUpdate={onUpdate} />,
+      IF_ELSE: <IfElseCondition value={item.value} />
     };
     return types;
   }
 
   render() {
-    const { classes, item: { value, method } } = this.props;
+    const { classes, item } = this.props;
     return (
       <div className={classes.root}>
-        { this.getSpecificCondition(value)[method] }
+        { this.getSpecificCondition(item)[item.method] }
       </div>
     );
   }

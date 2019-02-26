@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import {
   createStyles,
   WithStyles,
@@ -14,6 +13,8 @@ interface Props extends WithStyles<typeof styles> {
   options: Array<any>;
   value?: string;
   valueLabel: string;
+  label: string;
+  helperText: string;
 }
 
 class StageSelect extends React.Component<Props> {
@@ -35,17 +36,17 @@ class StageSelect extends React.Component<Props> {
 
   render(): React.ReactNode {
     const { value } = this.state;
-    const { classes, options, valueLabel } = this.props;
+    const { classes, options, valueLabel, label, helperText } = this.props;
 
     return (
       <TextField
         id="outlined-select-currency"
         select
-        label="OptionSelect"
+        label={label}
         value={value}
         onChange={this.handleChange}
         className={classes.menu}
-        helperText="Select the stage"
+        helperText={helperText}
         margin="normal"
         variant="outlined"
       >
@@ -65,7 +66,7 @@ const styles = (theme: Theme) => createStyles({
   },
   menu: {
     margin: theme.spacing.unit,
-    width: 240
+    width: 128
   }
 });
 

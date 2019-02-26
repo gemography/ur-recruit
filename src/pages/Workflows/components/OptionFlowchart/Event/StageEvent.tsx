@@ -31,6 +31,8 @@ class StageEvent extends React.Component<Props> {
                 value={item.value}
                 options={stages}
                 valueLabel="name"
+                label="Stages"
+                helperText="Select the stage"
                 onSave={(value: string)=> onUpdate(item._id, value)}
             />
             }
