@@ -1,15 +1,32 @@
 import * as React from 'react';
 import { Typography } from '@material-ui/core';
+import { OptionModel } from '../../../models';
+import { Setting } from '../index'
 
 interface Props {
-  value: string
+  item: OptionModel;
+  isForm?: boolean;
+  onDestroy: (_id: string) => void;
 }
 
 class WebhookEvent extends React.Component<Props> {
   render() {
-    const { value } = this.props;
+    const { item, isForm, onDestroy } = this.props;
     return (
-      <Typography variant="subtitle1" color="secondary">{`When the webhook with the id ${value || "..."} is called`}</Typography>
+      <>
+        {isForm &&
+          <Setting
+            data={item}
+            onDelete={onDestroy}
+          />
+        }
+        <Typography variant="subtitle2" color="secondary" align="center">
+          When the webhook is called
+        </Typography>
+        <Typography variant="subtitle1" color="secondary" align="center">{`
+          ${item.value || "..."}
+        `}</Typography>
+      </>
     );
   }
 }

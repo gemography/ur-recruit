@@ -20,20 +20,21 @@ interface ItemTypes {
 
 class Event extends React.Component<Props> {
 
-  getSpecificEvent(value: string) {
+  getSpecificEvent(item: OptionModel) {
+    const { isForm, onUpdate, onDestroy } = this.props;
     const types: ItemTypes = {
-      STAGE: <StageEvent value={value} />,
-      TAG: <TagEvent value={value} />,
-      WEBHOOK: <WebhookEvent value={value} />
+      STAGE: <StageEvent value={item.value} />,
+      TAG: <TagEvent value={item.value} />,
+      WEBHOOK: <WebhookEvent item={item} isForm={isForm} onDestroy={onDestroy} />
     };
     return types;
   }
 
   render() {
-    const { classes, item: { value, method } } = this.props;
+    const { classes, item } = this.props;
     return (
       <div className={classes.root}>
-        { this.getSpecificEvent(value)[method] }
+        { this.getSpecificEvent(item)[item.method] }
       </div>
     );
   }
