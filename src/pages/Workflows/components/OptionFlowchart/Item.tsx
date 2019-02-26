@@ -50,16 +50,22 @@ class Item extends React.Component<Props> {
 
   render() {
     const { item, isDragging, isDestroy, classes } = this.props;
+    const nonEditableOptions = ["WEBHOOK"];
 
     return (
       <div className={classes.root}>
         {isDestroy &&
           <div className={classes.setting}>
-            <Setting
-              data={item}
-              onUpdate={this.handleUpdate}
-              onDelete={this.handleDestroy}
-            />
+            {!nonEditableOptions.includes(item.method)?
+              <Setting
+                data={item}
+                onUpdate={this.handleUpdate}
+                onDelete={this.handleDestroy}
+              />:
+              <Setting
+                data={item}
+                onDelete={this.handleDestroy}
+              />}
           </div>
         }
         <div className={classnames({[classes.dragging]: isDragging})}>

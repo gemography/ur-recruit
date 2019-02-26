@@ -17,7 +17,7 @@ import DeletePopover from './DeletePopover';
 interface Props extends WithStyles<typeof styles> {
   parentAnchorEl: any;
   data: any;
-  onUpdate: (_id: string, name: string) => void;
+  onUpdate?: (_id: string, name: string) => void;
   onDelete: (_id: string) => void;
   onClose: () => void;
 }
@@ -41,7 +41,7 @@ class Options extends React.Component<Props> {
 
   handleSave = (name: string) => {
     const { onUpdate, data: {_id} } = this.props;
-    !!name && onUpdate(_id, name)
+    !!name && onUpdate && onUpdate(_id, name)
     this.setState({updateAnchorEl: null, deleteAnchorEl: null})
   };
 
@@ -53,7 +53,7 @@ class Options extends React.Component<Props> {
 
   render(): React.ReactNode {
     const { updateAnchorEl, deleteAnchorEl } = this.state;
-    const { data: {name, _id}, onDelete, parentAnchorEl, onClose } = this.props;
+    const { data: {name}, onUpdate, parentAnchorEl, onClose } = this.props;
 
     return (
       <>
@@ -63,6 +63,8 @@ class Options extends React.Component<Props> {
           open={Boolean(parentAnchorEl)}
           onClose={onClose}
         >
+
+        { onUpdate &&
           <MenuItem
             aria-owns={open ? 'simple-popper' : undefined}
             aria-haspopup="true"
@@ -74,7 +76,8 @@ class Options extends React.Component<Props> {
             </ListItemIcon>
             <ListItemText inset primary="Edit" />
           </MenuItem>
-          <MenuItem
+        }
+        <MenuItem
             aria-owns={open ? 'simple-popper' : undefined}
             aria-haspopup="true"
             aria-label="delete"
@@ -86,12 +89,12 @@ class Options extends React.Component<Props> {
             <ListItemText inset primary="Delete" />
           </MenuItem>
         </Menu>
-        <UpdatePopover
-          parentAnchorEl={updateAnchorEl}
-          name={name}
-          onSave={this.handleSave}
-          onClose={() => this.handleClose("updateAnchorEl")}
-        />
+          <UpdatePopover
+            parentAnchorEl={updateAnchorEl}
+            name={name}
+            onSave={this.handleSave}
+            onClose={() => this.handleClose("updateAnchorEl")}
+          />
         <DeletePopover
           parentAnchorEl={deleteAnchorEl}
           onConfirm={this.handleDelete}

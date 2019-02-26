@@ -12,7 +12,7 @@ import Options from '../../../../components/Options';
 
 interface Props extends WithStyles<typeof styles> {
   data: any;
-  onUpdate: (_id: string, name: string) => void;
+  onUpdate?: (_id: string, name: string) => void;
   onDelete: (_id: string) => void;
 }
 
