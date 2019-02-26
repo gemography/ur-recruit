@@ -1,17 +1,17 @@
 import * as React from 'react';
 import axios from 'axios';
-import classnames from 'classnames'
+import classnames from 'classnames';
 import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core';
-import Api from '../../../../services/Api';
-
-import { Action, Event, Condition} from './index';
-import { OptionModel } from '../../models'
-
-import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionFetchWorkflow } from '../../actions'
+import { OptionModel } from '../../models';
+
+import Api from '../../../../services/Api';
+
+import { Action, Event, Condition, Setting } from './index';
+
 
 interface Props extends WithStyles<typeof styles> {
   item: OptionModel;
@@ -27,23 +27,23 @@ interface ItemTypes {
 
 class Item extends React.Component<Props> {
 
-  handleDestroy = async () => {
-    const { item, actionFetchWorkflow, workflowId } = this.props;
-    await axios.delete(`${Api.baseUrl}/workflows/${workflowId}/options/${item._id}`);
+  handleDestroy = async (_id: string) => {
+    const { actionFetchWorkflow, workflowId } = this.props;
+    await axios.delete(`${Api.baseUrl}/workflows/${workflowId}/options/${_id}`);
     actionFetchWorkflow(workflowId);
   }
 
-  handleUpdate = async (value: string) => {
-    const { item, actionFetchWorkflow, workflowId } = this.props;
-    await axios.put(`${Api.baseUrl}/workflows/${workflowId}/options/${item._id}`, { value });
+  handleUpdate = async (_id: string, value: string) => {
+    const { actionFetchWorkflow, workflowId } = this.props;
+    await axios.put(`${Api.baseUrl}/workflows/${workflowId}/options/${_id}`, { value });
     actionFetchWorkflow(workflowId);
   }
 
   getSpecificItem(item: OptionModel) {
     const types: ItemTypes = {
       EVENT: <Event item={item} />,
-      ACTION: <Action onUpdate={this.handleUpdate} item={item} />,
-      CONDITION: <Condition onUpdate={this.handleUpdate} item={item} />
+      ACTION: <Action item={item} />,
+      CONDITION: <Condition item={item} />
     };
     return types;
   }
@@ -53,7 +53,15 @@ class Item extends React.Component<Props> {
 
     return (
       <div className={classes.root}>
-        {isDestroy && <CancelOutlinedIcon onClick={this.handleDestroy} className={classes.cancel}></CancelOutlinedIcon>}
+        {isDestroy &&
+          <div className={classes.setting}>
+            <Setting
+              data={item}
+              onUpdate={this.handleUpdate}
+              onDelete={this.handleDestroy}
+            />
+          </div>
+        }
         <div className={classnames({[classes.dragging]: isDragging})}>
           { this.getSpecificItem(item)[item.type] }
         </div>
@@ -73,10 +81,13 @@ const styles = (theme: Theme) => createStyles({
       },
     }
   },
-  cancel: {
+  setting: {
     position: "absolute",
     right: -theme.spacing.unit,
     top: -theme.spacing.unit,
+    backgroundColor: theme.palette.common.white,
+    boxShadow: `0 1px 3px ${theme.palette.primary.light}`,
+    borderRadius: 2 * theme.spacing.unit,
     cursor: "pointer",
     visibility: 'hidden'
   },

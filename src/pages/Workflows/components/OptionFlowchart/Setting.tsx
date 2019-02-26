@@ -7,8 +7,8 @@ import {
   IconButton,
 } from '@material-ui/core';
 
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Options from '../../../components/Options';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import Options from '../../../../components/Options';
 
 interface Props extends WithStyles<typeof styles> {
   data: any;
@@ -35,17 +35,20 @@ class Setting extends React.Component<Props> {
       data,
       onUpdate,
       onDelete,
+      classes
     } = this.props;
 
     return (
       <>
         <IconButton
           id={data._id}
+          className={classes.button}
           aria-owns={open ? 'simple-menu' : undefined}
           aria-haspopup="true"
           aria-label="Menu"
-          onClick={event => this.handleOpen(event)}>
-          <MoreVertIcon />
+          onClick={event => this.handleOpen(event)}
+        >
+          <MoreHorizIcon />
         </IconButton>
         <Options
           data={data}
@@ -59,6 +62,10 @@ class Setting extends React.Component<Props> {
   }
 }
 
-const styles = (theme: Theme) => createStyles({});
+const styles = (theme: Theme) => createStyles({
+  button: {
+    padding: 0
+  }
+});
 
 export default withStyles(styles)(Setting);

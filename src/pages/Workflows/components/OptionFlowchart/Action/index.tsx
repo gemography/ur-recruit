@@ -10,7 +10,6 @@ import TagAction from './TagAction';
 
 interface Props extends WithStyles<typeof styles> {
   item: OptionModel;
-  onUpdate: (value: string) => void
 }
 
 interface ItemTypes {
@@ -18,23 +17,21 @@ interface ItemTypes {
 }
 
 class Action extends React.Component<Props> {
-  getSpecificAction(item: OptionModel) {
-    const { onUpdate } = this.props;
-
+  getSpecificAction(value: string) {
     const types: ItemTypes = {
       EMAIL: <EmailAction />,
       DISQUALIFY: <DisqualifyAction />,
-      STAGE: <StageAction item={item} />,
-      TAG: <TagAction onUpdate={onUpdate} item={item} />,
+      STAGE: <StageAction value={value} />,
+      TAG: <TagAction value={value} />,
     };
     return types;
   }
 
   render() {
-    const { item, classes } = this.props;
+    const { item: { value, method }, classes } = this.props;
     return (
       <div className={classes.root}>
-        { this.getSpecificAction(item)[item.method] }
+        { this.getSpecificAction(value)[method] }
       </div>
     );
   }
@@ -47,7 +44,7 @@ const styles = (theme: Theme) => createStyles({
     color: theme.palette.primary.main,
     padding: theme.spacing.unit * 1.5 + "px " + theme.spacing.unit * 3 + "px ",
     fontSize: theme.spacing.unit * 2,
-    borderRadius: theme.spacing.unit * 5,
+    borderRadius: theme.spacing.unit,
     width: 256,
     margin: "0 auto"
   }

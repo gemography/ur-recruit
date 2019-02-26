@@ -66,13 +66,13 @@ class Options extends React.Component<Props> {
           <MenuItem
             aria-owns={open ? 'simple-popper' : undefined}
             aria-haspopup="true"
-            aria-label="rename"
+            aria-label="edit"
             onClick={event=> this.handleOpen("updateAnchorEl", event)}
           >
             <ListItemIcon>
               <EditIcon />
             </ListItemIcon>
-            <ListItemText inset primary="Rename" />
+            <ListItemText inset primary="Edit" />
           </MenuItem>
           <MenuItem
             aria-owns={open ? 'simple-popper' : undefined}

@@ -8,7 +8,7 @@ import TagEvent from './TagEvent'
 import WebhookEvent from './WebhookEvent'
 
 interface Props extends WithStyles<typeof styles> {
-  item: OptionModel
+  item: OptionModel;
 }
 
 interface ItemTypes {
@@ -27,10 +27,10 @@ class Event extends React.Component<Props> {
   }
 
   render() {
-    const { classes, item } = this.props;
+    const { classes, item: { value, method } } = this.props;
     return (
       <div className={classes.root}>
-        { this.getSpecificEvent(item.value)[item.method] }
+        { this.getSpecificEvent(value)[method] }
       </div>
     );
   }

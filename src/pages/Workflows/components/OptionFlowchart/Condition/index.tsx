@@ -7,7 +7,6 @@ import WaitCondition from './WaitCondition'
 
 interface Props extends WithStyles<typeof styles> {
   item: OptionModel;
-  onUpdate: (value: string) => void
 }
 
 interface ItemTypes {
@@ -15,20 +14,19 @@ interface ItemTypes {
 }
 
 class Condition extends React.Component<Props> {
-  getSpecificCondition(item: OptionModel) {
-    const { onUpdate } = this.props
+  getSpecificCondition(value: string) {
     const types: ItemTypes = {
-      WAIT: <WaitCondition onUpdate={onUpdate} item={item} />,
-      IF_ELSE: <IfElseCondition item={item} />
+      WAIT: <WaitCondition value={value} />,
+      IF_ELSE: <IfElseCondition value={value} />
     };
     return types;
   }
 
   render() {
-    const { classes, item } = this.props;
+    const { classes, item: { value, method } } = this.props;
     return (
       <div className={classes.root}>
-        { this.getSpecificCondition(item)[item.method] }
+        { this.getSpecificCondition(value)[method] }
       </div>
     );
   }

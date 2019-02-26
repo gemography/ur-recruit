@@ -18,7 +18,7 @@ const theme = createMuiTheme({
   },
   typography: {
     useNextVariants: true
-  }
+  },
 });
 
 function withRoot(Component: React.ComponentType) {
