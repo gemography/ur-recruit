@@ -22,7 +22,8 @@ import withRoot from './withRoot';
 import { PipelineModel } from './pages/Pipelines/models';
 
 interface Props extends WithStyles<typeof styles> {
-  selectedPipeline: PipelineModel
+  pipelines: Array<PipelineModel>;
+  selectedPipeline: PipelineModel;
 }
 
 const history = createBrowserHistory();
@@ -33,16 +34,19 @@ class App extends React.Component<Props> {
     open: true
   }
 
+  setHistory (selectedPipeline_id: string, value: string) {
+    selectedPipeline_id && history.push(`/pipelines/${selectedPipeline_id}/${value}`);
+  }
+
   componentWillReceiveProps = (nextProps: Props) => {
     const { value } = this.state;
     const { selectedPipeline } = nextProps;
-
-    selectedPipeline && history.push(`/pipelines/${selectedPipeline._id}/${value}`);
+    selectedPipeline && this.setHistory(selectedPipeline._id, value)
   }
 
   handleCallToRouter = (event:any, value: string) => {
     const { selectedPipeline } = this.props;
-    history.push(`/pipelines/${selectedPipeline._id}/${value}`);
+    selectedPipeline && this.setHistory(selectedPipeline._id, value)
     this.setState({value})
   }
 
@@ -126,9 +130,10 @@ const styles = (theme: Theme) => createStyles({
 });
 
 function mapStateToProps(state: any) {
-  const { selectedPipeline } = state.pipelineReducer
+  const { selectedPipeline, pipelines } = state.pipelineReducer
 
   return {
+    pipelines,
     selectedPipeline
   };
 }

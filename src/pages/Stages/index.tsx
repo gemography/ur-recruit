@@ -40,13 +40,13 @@ class Stages extends React.Component<Props> {
   };
 
   render(): React.ReactNode {
-    const { classes, selectedPipeline: { stages } } = this.props;
+    const { classes, selectedPipeline } = this.props;
 
     return (
       <div className={classes.root}>
-       { stages && stages.length > 0?
+       { selectedPipeline && selectedPipeline.stages && selectedPipeline.stages.length > 0?
         <>
-          {stages.map((stage, index) =>
+          {selectedPipeline.stages.map((stage, index) =>
             <Board
               key={index}
               stage={stage}
