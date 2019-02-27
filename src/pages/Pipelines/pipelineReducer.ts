@@ -79,6 +79,16 @@ const pipelineReducer: Reducer<PipelineState> = (state = initialState, action: P
   if (action.type === PipelineActionType.ACTION_CREATE_WORKFLOW) {
     return {
       ...state,
+      pipelines: [
+        ...state.pipelines.map(pipeline => {
+          return (pipeline._id === state.selectedPipeline._id)?
+            {
+              ...pipeline,
+              workflows: [...state.selectedPipeline.workflows, action.workflow]
+            }:
+            pipeline
+        })
+      ],
       selectedPipeline: {
         ...state.selectedPipeline,
         workflows: [...state.selectedPipeline.workflows, action.workflow]
@@ -88,6 +98,22 @@ const pipelineReducer: Reducer<PipelineState> = (state = initialState, action: P
   if (action.type === PipelineActionType.ACTION_UPDATE_WORKFLOW) {
     return {
       ...state,
+      pipelines: [
+        ...state.pipelines.map(pipeline => {
+          return (pipeline._id === state.selectedPipeline._id)?
+            {
+              ...pipeline,
+              workflows: [
+                ...state.selectedPipeline.workflows.map(workflow => {
+                  return (workflow._id === action.workflow._id)?
+                    {...workflow, name: action.workflow.name}:
+                    workflow
+                })
+              ]
+            }:
+            pipeline
+        })
+      ],
       selectedPipeline: {
         ...state.selectedPipeline,
         workflows: [
@@ -103,6 +129,18 @@ const pipelineReducer: Reducer<PipelineState> = (state = initialState, action: P
   if (action.type === PipelineActionType.ACTION_REMOVE_WORKFLOW) {
     return {
       ...state,
+      pipelines: [
+        ...state.pipelines.map(pipeline => {
+          return (pipeline._id === state.selectedPipeline._id)?
+            {
+              ...pipeline,
+              workflows: [
+                ...state.selectedPipeline.workflows.filter(workflow=> workflow._id !== action._id)
+              ]
+            }:
+            pipeline
+        })
+      ],
       selectedPipeline: {
         ...state.selectedPipeline,
         workflows: [
@@ -114,6 +152,16 @@ const pipelineReducer: Reducer<PipelineState> = (state = initialState, action: P
   if (action.type === PipelineActionType.ACTION_CREATE_STAGE) {
     return {
       ...state,
+      pipelines: [
+        ...state.pipelines.map(pipeline => {
+          return (pipeline._id === state.selectedPipeline._id)?
+            {
+              ...pipeline,
+              stages: [...state.selectedPipeline.stages, action.stage]
+            }:
+            pipeline
+        })
+      ],
       selectedPipeline: {
         ...state.selectedPipeline,
         stages: [...state.selectedPipeline.stages, action.stage]
@@ -123,6 +171,22 @@ const pipelineReducer: Reducer<PipelineState> = (state = initialState, action: P
   if (action.type === PipelineActionType.ACTION_UPDATE_STAGE) {
     return {
       ...state,
+      pipelines: [
+        ...state.pipelines.map(pipeline => {
+          return (pipeline._id === state.selectedPipeline._id)?
+            {
+              ...pipeline,
+              stages: [
+                ...state.selectedPipeline.stages.map(stage => {
+                  return (stage._id === action.stage._id)?
+                    {...stage, name: action.stage.name}:
+                    stage
+                })
+              ]
+            }:
+            pipeline
+        })
+      ],
       selectedPipeline: {
         ...state.selectedPipeline,
         stages: [
@@ -138,6 +202,18 @@ const pipelineReducer: Reducer<PipelineState> = (state = initialState, action: P
   if (action.type === PipelineActionType.ACTION_REMOVE_STAGE) {
     return {
       ...state,
+      pipelines: [
+        ...state.pipelines.map(pipeline => {
+          return (pipeline._id === state.selectedPipeline._id)?
+            {
+              ...pipeline,
+              stages: [
+                ...state.selectedPipeline.stages.filter(stage=> stage._id !== action._id)
+              ]
+            }:
+            pipeline
+        })
+      ],
       selectedPipeline: {
         ...state.selectedPipeline,
         stages: [

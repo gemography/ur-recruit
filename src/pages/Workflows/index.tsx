@@ -40,13 +40,13 @@ class Workflows extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps = (nextProps: Props) => {
-    const { selectedPipeline: {workflows} } = nextProps;
-    this.setSelectedId(workflows);
+    const { selectedPipeline } = nextProps;
+    selectedPipeline && selectedPipeline.workflows && this.setSelectedId(selectedPipeline.workflows);
   }
 
   componentDidMount = () => {
-    const { selectedPipeline: {workflows} } = this.props
-    this.setSelectedId(workflows);
+    const { selectedPipeline } = this.props
+    selectedPipeline && selectedPipeline.workflows && this.setSelectedId(selectedPipeline.workflows);
   }
 
   setSelectedId = (workflows: Array<WorkflowModel>) => {
@@ -73,11 +73,11 @@ class Workflows extends React.Component<Props, State> {
 
   render(): React.ReactNode {
     const { selectedId } = this.state;
-    const { classes, selectedPipeline: {workflows} } = this.props;
+    const { classes, selectedPipeline } = this.props;
 
     return (
       <div className={classes.root}>
-        { workflows && workflows.length > 0?
+        { selectedPipeline && selectedPipeline.workflows && selectedPipeline.workflows.length > 0?
           <Grid container>
             <Grid item>
               <List
@@ -90,7 +90,7 @@ class Workflows extends React.Component<Props, State> {
                 }
                 className={classes.list}
               >
-                {workflows.map((workflow, index) =>
+                {selectedPipeline.workflows.map((workflow, index) =>
                   <ATSListItem
                     key={index}
                     data={workflow}

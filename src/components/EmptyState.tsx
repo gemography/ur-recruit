@@ -22,7 +22,7 @@ class EmptyState extends React.Component<Props> {
     const { classes, title, subTitle, ctaTitle, icon, onAction } = this.props;
 
     return (
-      <Grid container spacing={16}>
+      <Grid container spacing={40}>
         <Grid item>
           <Typography color="inherit" variant="h4" className={classes.title}>
             { title }

@@ -31,7 +31,7 @@ const history = createBrowserHistory();
 class App extends React.Component<Props> {
 
   state = {
-    value: history.location.pathname.split("/")[3] || "stages",
+    value: history.location.pathname.split("/")[2] || "stages",
     open: true
   }
 
@@ -82,7 +82,7 @@ class App extends React.Component<Props> {
               variant="permanent"
               open={open}
             >
-              <Pipelines selectedId={history.location.pathname.split("/")[2]} />
+              <Pipelines selectedId={history.location.pathname.split("/")[1]} />
             </Drawer>
           </nav>
           <main className={classes.content}>

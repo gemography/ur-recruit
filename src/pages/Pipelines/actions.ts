@@ -288,7 +288,7 @@ export const actionCreateStage = (pipeline_id: string, name: string) => {
         `${Api.baseUrl}/pipelines/${pipeline_id}/stages/`,
         { name }
       );
-      dispatch(dispatchCreateStage(stage))
+      dispatch(dispatchCreateStage(stage));
     } catch (e) {
       console.log(e)
     }

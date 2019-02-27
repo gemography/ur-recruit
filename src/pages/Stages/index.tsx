@@ -12,9 +12,12 @@ import {
   actionUpdateStage,
   actionRemoveStage,
 } from '../Pipelines/actions';
-import Board from './components/Board'
-import Create from './components/Create'
+import Board from './components/Board';
+import Create from './components/Create';
+import EmptyState from '../../components/EmptyState';
+import UpdatePopover from '../../components/UpdatePopover';
 import { PipelineModel } from '../Pipelines/models';
+import ViewWeekIcon from '@material-ui/icons/ViewWeek';
 
 interface Props extends WithStyles<typeof styles> {
   selectedPipeline: PipelineModel;
@@ -24,6 +27,13 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 class Stages extends React.Component<Props> {
+  state = {
+    anchorEl: null
+  }
+
+  open = (event: any) => this.setState({anchorEl: event.currentTarget});
+  close = () => this.setState({anchorEl: null});
+
   handleCreate = async (name: string) => {
     const { actionCreateStage, selectedPipeline: { _id } } = this.props;
     actionCreateStage(_id, name)
@@ -40,6 +50,7 @@ class Stages extends React.Component<Props> {
   };
 
   render(): React.ReactNode {
+    const { anchorEl }= this.state;
     const { classes, selectedPipeline } = this.props;
 
     return (
@@ -56,7 +67,20 @@ class Stages extends React.Component<Props> {
           )}
           <Create onCreate={this.handleCreate} />
         </>:
-          <div>No stages</div>
+          <div className={classes.emptyState}>
+            <EmptyState
+              title="Start a new stage"
+              subTitle="Add more stages for the candidates to go through"
+              ctaTitle="Create stage"
+              onAction={this.open}
+              icon={<ViewWeekIcon/>}
+            />
+            <UpdatePopover
+              parentAnchorEl={anchorEl}
+              onSave={this.handleCreate}
+              onClose={this.close}
+            />
+          </div>
         }
       </div>
     );
@@ -68,6 +92,9 @@ const styles = (theme: Theme) => createStyles({
     display: "flex",
     margin: theme.spacing.unit * 4,
     marginTop: 0
+  },
+  emptyState: {
+    padding: theme.spacing.unit * 5,
   }
 });
 
