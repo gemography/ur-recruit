@@ -31,8 +31,7 @@ const history = createBrowserHistory();
 class App extends React.Component<Props> {
 
   state = {
-    value: history.location.pathname.split("/")[2] || "stages",
-    open: true
+    value: history.location.pathname.split("/")[2] || "stages"
   }
 
   setHistory (selectedPipeline_id: string, value: string) {
@@ -41,8 +40,10 @@ class App extends React.Component<Props> {
 
   componentWillReceiveProps = (nextProps: Props) => {
     const { value } = this.state;
-    const { selectedPipeline } = nextProps;
-    selectedPipeline && this.setHistory(selectedPipeline._id, value)
+    const { selectedPipeline, pipelines } = nextProps;
+    if(pipelines.length <= 0) history.push(`/`);
+    selectedPipeline && this.setHistory(selectedPipeline._id, value);
+
   }
 
   handleCallToRouter = (event:any, value: string) => {
@@ -53,11 +54,11 @@ class App extends React.Component<Props> {
 
   render(): React.ReactNode {
     const { classes, selectedPipeline } = this.props;
-    const { open, value } = this.state;
+    const { value } = this.state;
     return (
       <Router history={history}>
         <div className={classes.root}>
-          {selectedPipeline &&
+          {selectedPipeline && selectedPipeline._id &&
             <AppBar position="fixed" className={classes.appBar}>
               <Toolbar className={classes.toolbar}>
                 <Typography color="inherit" variant="h6" className={classes.title}>
@@ -76,15 +77,7 @@ class App extends React.Component<Props> {
               </Toolbar>
             </AppBar>
           }
-          <nav className={classes.drawer}>
-            <Drawer
-              classes={{ paper: classes.drawerPaper }}
-              variant="permanent"
-              open={open}
-            >
-              <Pipelines selectedId={history.location.pathname.split("/")[1]} />
-            </Drawer>
-          </nav>
+          <Pipelines selectedId={history.location.pathname.split("/")[1]} />
           <main className={classes.content}>
             <Route exact={true} path="/:pipeline_id/stages" component={States} />
             <Route exact={true} path="/:pipeline_id/workflows" component={Workflows} />
@@ -110,13 +103,6 @@ const styles = (theme: Theme) => createStyles({
   },
   toolbar: {
     display: "block",
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
   },
   content: {
     flexGrow: 1,
