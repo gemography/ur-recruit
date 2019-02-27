@@ -17,6 +17,7 @@ import {
 import Workflows from './pages/Workflows';
 import States from './pages/Stages';
 import Pipelines from './pages/Pipelines';
+import Welcome from './pages/Welcome';
 import withRoot from './withRoot';
 
 import { PipelineModel } from './pages/Pipelines/models';
@@ -35,7 +36,7 @@ class App extends React.Component<Props> {
   }
 
   setHistory (selectedPipeline_id: string, value: string) {
-    selectedPipeline_id && history.push(`/pipelines/${selectedPipeline_id}/${value}`);
+    selectedPipeline_id && history.push(`/${selectedPipeline_id}/${value}`);
   }
 
   componentWillReceiveProps = (nextProps: Props) => {
@@ -85,8 +86,9 @@ class App extends React.Component<Props> {
             </Drawer>
           </nav>
           <main className={classes.content}>
-            <Route exact={true} path="/pipelines/:pipeline_id/stages" component={States} />
-            <Route exact={true} path="/pipelines/:pipeline_id/workflows" component={Workflows} />
+            <Route exact={true} path="/:pipeline_id/stages" component={States} />
+            <Route exact={true} path="/:pipeline_id/workflows" component={Workflows} />
+            <Route exact={true} path="/" component={Welcome} />
           </main>
         </div>
       </Router>
