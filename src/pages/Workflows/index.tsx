@@ -17,10 +17,13 @@ import {
   actionUpdateWorkflow,
   actionRemoveWorkflow,
 } from '../Pipelines/actions';
+import EmptyState from '../../components/EmptyState';
+import UpdatePopover from '../../components/UpdatePopover';
 import { PipelineModel } from '../Pipelines/models';
 import { WorkflowModel } from '../Workflows/models';
 import CreateForm from '../../components/CreateForm';
 import ATSListItem from '../../components/ATSListItem';
+import VerticalSplitIcon from '@material-ui/icons/VerticalSplit';
 
 interface Props extends WithStyles<typeof styles> {
   selectedPipeline: PipelineModel;
@@ -31,13 +34,18 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 interface State {
-  selectedId: string
+  selectedId: string,
+  anchorEl: any
 }
 
 class Workflows extends React.Component<Props, State> {
   state = {
-    selectedId: ""
+    selectedId: "",
+    anchorEl: null
   }
+
+  open = (event: any) => this.setState({anchorEl: event.currentTarget});
+  close = () => this.setState({anchorEl: null});
 
   componentWillReceiveProps = (nextProps: Props) => {
     const { selectedPipeline } = nextProps;
@@ -72,7 +80,7 @@ class Workflows extends React.Component<Props, State> {
   };
 
   render(): React.ReactNode {
-    const { selectedId } = this.state;
+    const { selectedId, anchorEl } = this.state;
     const { classes, selectedPipeline } = this.props;
 
     return (
@@ -107,7 +115,20 @@ class Workflows extends React.Component<Props, State> {
               {!!selectedId && <Show workflowId={selectedId}></Show> }
             </Grid>
           </Grid>:
-          <div>No workflows</div>
+          <div className={classes.emptyState}>
+            <EmptyState
+              title="Start a new workflow"
+              subTitle="Add more workflows to set the logic of your automation"
+              ctaTitle="Create workflow"
+              onAction={this.open}
+              icon={<VerticalSplitIcon/>}
+            />
+            <UpdatePopover
+              parentAnchorEl={anchorEl}
+              onSave={this.handleCreate}
+              onClose={this.close}
+            />
+          </div>
         }
       </div>
     );
@@ -129,6 +150,9 @@ const styles = (theme: Theme) => createStyles({
     minWidth: 240,
     backgroundColor: theme.palette.common.white,
     borderRight: "1px solid rgba(0, 0, 0, 0.12)"
+  },
+  emptyState: {
+    padding: theme.spacing.unit * 5,
   }
 });
 
