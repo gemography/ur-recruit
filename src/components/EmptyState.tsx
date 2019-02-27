@@ -14,7 +14,7 @@ interface Props extends WithStyles<typeof styles> {
   subTitle: string,
   ctaTitle: string,
   icon: any,
-  onAction: () => void,
+  onAction: (event: any) => void,
 }
 
 class EmptyState extends React.Component<Props> {

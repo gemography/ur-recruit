@@ -18,8 +18,8 @@ class CreateForm extends React.Component<Props> {
     anchorEl: null
   }
 
-  open = (event: any) => this.setState({anchorEl: event.currentTarget})
-  close = () => this.setState({anchorEl: null})
+  open = (event: any) => this.setState({anchorEl: event.currentTarget});
+  close = () => this.setState({anchorEl: null});
 
   handleSave = (name: string) => {
     const { onSave } = this.props;

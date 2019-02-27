@@ -56,7 +56,7 @@ interface IActionSelectPipeline extends Action {
 
 interface IActionCreatePipeline extends Action {
   type: PipelineActionType.ACTION_CREATE_PIPELINE,
-  pipeline: PipelineModel
+  pipeline: PipelineModel,
 }
 
 interface IActionUpdatePipeline extends Action {
@@ -216,6 +216,7 @@ export const actionCreatePipeline = (name: string) => {
     try {
       const {data: {pipeline} } = await axios.post(`${Api.baseUrl}/pipelines`, { name });
       dispatch(dispatchCreatePipeline(pipeline))
+      dispatch(dispatchSelectPipeline(pipeline));
     } catch (e) {
       console.log(e)
     }

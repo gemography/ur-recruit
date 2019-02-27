@@ -11,7 +11,6 @@ import {
   Typography,
 } from '@material-ui/core';
 
-import Api from '../../services/Api';
 import {
   actionFetchPipelines,
   actionSelectPipeline,
@@ -19,6 +18,7 @@ import {
   actionUpdatePipeline,
   actionRemovePipeline,
 } from './actions';
+
 import { PipelineModel } from './models'
 import CreateForm from '../../components/CreateForm';
 import ATSListItem from '../../components/ATSListItem';
