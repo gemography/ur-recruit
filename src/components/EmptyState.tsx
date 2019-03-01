@@ -22,7 +22,7 @@ class EmptyState extends React.Component<Props> {
     const { classes, title, subTitle, ctaTitle, icon, onAction } = this.props;
 
     return (
-      <Grid container spacing={40}>
+      <Grid className={classes.root} container spacing={40}>
         <Grid item>
           <Typography color="inherit" variant="h4" className={classes.title}>
             { title }
@@ -44,9 +44,7 @@ class EmptyState extends React.Component<Props> {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    display: "flex",
-    margin: theme.spacing.unit * 4,
-    marginTop: 0
+    padding: theme.spacing.unit * 4
   },
   title: {
     color: theme.palette.primary.dark,

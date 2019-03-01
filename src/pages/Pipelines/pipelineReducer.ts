@@ -74,7 +74,7 @@ const pipelineReducer: Reducer<PipelineState> = (state = initialState, action: P
       pipelines: [
         ...state.pipelines.filter(pipeline=> pipeline._id !== action._id)
       ],
-      selectedPipeline: state.selectedPipeline._id === action._id? {} as PipelineModel : state.selectedPipeline
+      selectedPipeline: (state.selectedPipeline && state.selectedPipeline._id === action._id)? {} as PipelineModel : state.selectedPipeline
     };
   }
   if (action.type === PipelineActionType.ACTION_CREATE_WORKFLOW) {
