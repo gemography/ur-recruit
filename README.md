@@ -29,19 +29,19 @@
     - [Typescript](#typescript)
     - [React DnD](#react-dnd)
     - [Uuid](#uuid)
-    - [Classnames] (#classnames)
+    - [Classnames](#classnames)
 
 # Scripts
   ## Install dependencies
-    ```
-      npm install
-    ```
+
+    $ npm install
+
   ## Running
-    ```
+
       $ sudo service mongod start
       $ npm start
       $ node server.js
-    ```
+
 # Tech-Stack
 ## Back-End Dependencies
 ### Cors
