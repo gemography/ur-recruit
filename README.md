@@ -38,9 +38,9 @@
 
   ## Running
 
-      $ sudo service mongod start
-      $ npm start
-      $ node server.js
+    $ sudo service mongod start
+    $ npm start
+    $ node server.js
 
 # Tech-Stack
 ## Back-End Dependencies
