@@ -262,7 +262,7 @@ export const actionCreateWorkflow = (pipeline_id: string, name: string) => {
 export const actionUpdateWorkflow = (_id: string, name: string) => {
   return async (dispatch: Dispatch) => {
     try {
-      axios.put(`${Api.baseUrl}/workflows/${_id}`, { name });
+      await axios.put(`${Api.baseUrl}/workflows/${_id}`, { name });
       dispatch(dispatchUpdateWorkflow({_id, name} as WorkflowModel))
     } catch (e) {
       console.log(e)

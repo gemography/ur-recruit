@@ -10,7 +10,7 @@ class IfElseCondition extends React.Component<Props> {
     const { value } = this.props;
     return (
       <>
-        <Typography variant="subtitle2" color="primary" align="center">The candidate gets the tag</Typography>
+        <Typography variant="subtitle2" color="primary" align="center">if/else</Typography>
         <Typography variant="subtitle1" color="primary" align="center">{`
           ${value || "..."}
         `}</Typography>

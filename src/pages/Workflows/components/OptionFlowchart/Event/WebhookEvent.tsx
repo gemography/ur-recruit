@@ -22,10 +22,10 @@ class WebhookEvent extends React.Component<Props> {
           />
         }
         <Typography variant="subtitle2" color="secondary" align="center">
-          When POST request is sent to
+          When POST request is sent to the webhook
         </Typography>
         <Typography variant="subtitle1" color="secondary" align="center">{`
-          ${Api.webhookUrl + item.value || "..."}
+          ${item.value? Api.webhookUrl + item.value : "..."}
         `}</Typography>
       </>
     );

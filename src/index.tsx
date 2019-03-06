@@ -4,7 +4,6 @@ import * as serviceWorker from './serviceWorker';
 import ReduxRoot from './ReduxRoot';
 
 const rootEl = document.getElementById('root');
-ReactDOM.render(<ReduxRoot />, rootEl);
 
 const ATSApp = require('./ReduxRoot').default;
 ReactDOM.render(
